@@ -10,264 +10,9 @@
     href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet" 
   />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <script>
-        window.addEventListener('DOMContentLoaded',function(){
-           setTimeout(function(){
-              const idToType={'pu-shield':'shields','pu-health':'healthBoosts','pu-damage':'damageBoosts','pu-speed':'speedBoosts','pu-freeze':'timeFreezes','pu-invinc':'invinciblities'}
-              Object.keys(idToType).forEach(function(id){
-                var el=document.getElementById(id);
-                if(!el){
-                    return;
-                }
-                el.style.cursor='pointer';
-                el.onclick=function(){
-                    if(!window.gameState || !window.gameState.aiEnabled){
-                        return;
-                    }
-                    var type=idToType[id];
-                    if(window.gameState.useInventoryItem && window.gameState.useInventoryItem(type)){
-                        switch(type){
-                            case 'shields':window.gameState.activeItems.player.shield=true;break;
-                            case 'healthBoosts':window.gameState.activeItems.player.healthBoost=true;
-                            window.gameState.player.health=Math.min((window.gameState.Player.health || 300)+50,1000);
-                            break;
-                            case 'damageBoosts':window.gameState.activeItems.player.damageBoosts=true;break;
-                            case 'speedBoosts':window.gameState.activeItems.player.speedBoost=true;break;
-                            case 'timeFreezes':window.gameState.timerFrozen=true;
-                            setTimeout(function(){
-                                if(window.gameState){
-                                    window.gameState.timerFrozen=false;
-                                }
-                            },5000); break;
-                            case'invincibilities':window.gameState.activeItems.player.invincible=true;
-                            window.gameState.invincibleTimers.player=240;
-                            break;
-                        }
-                        if(window.showNotification) window.showNotification('Powerup used');
-                        if(window.updatePowerupHUD)window.updatePowerupHUD();
-                    }
-                }
-              });
-           },800);
-        })
-    </script>
-    <style>
-        *{
-            box-sizing:border-box;
-            font-family:'Press Start 2P','Roboto','Segoe UI',Arial,sans-serif;
-            margin:0;
-            padding:0;
-            -webkit-font-smoothing:antialiased;
-            -moz-osx-font-smoothing:grayscale;
-            text-rendering:optimizeLegibility;
-        }
-        body{
-            overflow:hidden;
-            background:#000;
-        }
-        #startScreen,#howToPlayScreen{
-            position:fixed;
-            top:0;
-            left:0;
-            width:100vw;
-            height:100vh;
-            background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);
-            display:flex;
-            flex-direction:column;
-            justify-content:center;
-            align-items:center;
-            text-align:center;
-            gap: 12px;
-            z-index: 1000;
-            padding:40px 20px;
-        }
-        #howToPlayScreen{
-            display:none;
-        }
-        .screen-title{
-            font-size:clamp(24px,5vw,48px);
-            color:#fff;
-            text-shadow:4px 4px 0px #ff0000;
-            margin:0 0 28px 0;
-            text-align: center;
-            max-width: 92vw;
-        }
-        .btn{
-            font-family: 'Press Start 2P','Roboto',Arial,sans-serif;
-            font-size:clamp(12px,2vm,18px);
-            padding:12px 26px;
-            margin:12px;
-            background: linear-gradient(180deg,#ff5252 0%,#e53935 100%);
-            color:#fff;
-            border:3px solid rgba(255, 255, 255, 0.9);
-            cursor:pointer;
-            transition:transform 0.12s ease,box-shadow 0.12s ease;
-            box-shadow: 6px 8px 0px rgba(0, 0, 0, 0.75);
-            text-transform: uppercase;
-            border-radius:8px;
-            letter-spacing: 1px;
-            display:inline-block;
-            vertical-align: middle;
-            will-change: transform;
-            transform: translateZ(0);
-        }
-        .btn:hover{
-            transform:scale(1.02) translateZ(0);
-            box-shadow: 10px 12px 0px rgba(0, 0, 0, 0.85);
-        }
-        .btn:active{
-            transform: scale(0.995) translateZ(0);
-            box-shadow: 4px 5px 0px rgba(0, 0, 0, 0.7);
-        }
-        .rules-container{
-            max-width: 760px;
-            background: rgba(0, 0, 0, 0.88);
-            border: 4px solid #fff;
-            padding: 28px 26px;
-            color: #ffffff;
-            font-family: Inter,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
-            font-weight: 400;
-            -webkit-font-smoothing:antialiased;
-            -moz-osx-font-smoothing:grayscale;
-            text-rendering: optimizeLegibility;
-            line-height: 1.9;
-            font-size: clamp(13px,1.9vw,16px);
-            max-height: 78vh;
-            overflow-y: auto;
-            margin: 18px auto;
-            letter-spacing: 0.2px;
-            text-align: left;
-        }
-        .rules-container h3{
-            font-family: Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
-            font-weight: 700;
-            font-size: clamp(14px,2.2vw,18px);
-            margin-top: 14px;
-            margin-bottom: 8px;
-            color: #ff6b6b;
-            letter-spacing: 0.6px;
-        }
-        .rules-container li{
-            margin-bottom:8px;
-            line-height: 1.6;
-        }
-        .rules-container  h3{
-            color: #ff0000;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            font-size: clamp(12px,2vw,16px);;
-        }
-        .rules-container ul{
-            list-style: none;
-            padding-left: 20px;
-        }
-        .rules-container li:before{
-            content:"▶";
-            color: #ff0000;
-            margin-right: 10px;
-        }
-        #gameContainer{
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            display: none;
-        }
-        #gameWrapper{
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #000;
-        }
-        #gameCanvas{
-            display: block;
-            border: 4px solid white;
-        }
-        .ui-overlay{
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-        .health-timer-container{
-            position:absolute;
-            display: flex;
-            width: 100%;
-            align-items: center;
-            padding: 20px;
-            gap: 10px;
-        }
-        .health-bar{
-            position: relative;
-            width: 100%;
-            display: flex;
-            justify-content: flex-end;
-            border: 4px solid white;
-        }
-        .health-bar-bg{
-            background-color: red;
-            height: 30px;
-            width: 100%;
-        }
-        .health-bar-fill{
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 100%;
-            transition: width 0.3s, background-color 0.3s;
-        }
-        #playerHealth{
-            background:#4169e1;
-            right: 0;
-        }
-        #enemyHealth{
-            background: #4169e1;
-            left: 0;
-        }
-        #timer{
-            background-color: #000;
-            min-width: 80px;
-            height: 50px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            border: 4px solid white;
-            font-size: clamp(12px,2vw,20px);
-        }
-        #displayText{
-            position: absolute;
-            color: white;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 36px;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            font-size: clamp(28px,5.5vw,58px);
-            text-shadow: 4px 4px 0px red;
-            background: rgba(0, 0, 0, 0.87);
-            pointer-events: none;
-            z-index: 100;
-        }
-        #displaytextMsg{   
-            text-align:center;
-            line-height:1.35;
-            pointer-events: none;
-        }      
-
-    </style>
     <canvas id="confettiCanvas"></canvas>
     <div id="modalOverlay">
         <div id="modalBox">
@@ -284,7 +29,7 @@
             <p class="ss-eyebrow">BATTLE ARENA</p>
             <h1 class="ss-main-title">SAMURAI <br>FIGHTER</h1>
             <p class="ss-tagline">Choose your warrior &nbsp;&bull;&nbsp; Enter the arena &nbsp;&bull;&nbsp; Prove your blade</p>
-            <div class="ss-divider"><div class="ss-divider-gem"></div>
+            <div class="ss-divider"><div class="ss-divider-gem"></div></div>
         </div>
         <div class="ss-fighters">
             <div class="ss-card p1">
@@ -301,6 +46,26 @@
                 <input type="text" id="player2NameInput" placeholder="Enter NAME" maxlength="15" class="ss-card-input" value="Player 2" />
             </div>
         </div>
+
+        <div class="ss-mode-row">
+            <div id="mode2P" class="ss-mode-pill active" onclick="window.selectMode('2p')">2 Players</div>
+            <div id="modeCOOP" class="ss-mode-pill" onclick="window.selectMode('co-op')">VS CO-Op</div>
+        </div>
+        <div id="difficultySelector">
+            <select id="aiDifficulty" class="diff-select">
+                <option value="easy">Easy</option>
+                <option value="normal" selected>Normal</option>
+                <option value="hard">Hard</option>
+            </select>
+        </div>
+        <div class="ss-actions">
+            <button class="btn ss-start-btn" onclick="window.startGame()">START GAME</button>
+            <div class="ss-sec-row">
+                <button class="btn ss-sec-btn" onclick="window.showShop()">SHOP</button>
+                <button class="btn ss-sec-btn" onclick="window.showHowToPlay()">How To Play</button>
+            </div>
+        </div>
      </div>
+
 </body>
 </html>        
