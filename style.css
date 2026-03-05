@@ -32,7 +32,7 @@ body{
 }
 #startScreen::before{
     content: '';
-    position: absolute;
+    position: absolute; 
     inset: 0;
     background:radial-gradient(ellipse 80% 44% at 50% -4%, rgba(0,130,255,0.22) 0%, transparent 68%),
     radial-gradient(ellipse 50% 36% at 0% 100%,rgba(0,60,200,0.13) 0%,transparent 55%),
@@ -40,7 +40,7 @@ body{
     z-index: 0;
     pointer-events: none;
 }
-#startScreen::after{
+#startScreen::after{ 
     content: '';
     position: absolute;
     inset: 0;
@@ -148,7 +148,7 @@ body{
     max-width: 720px;
     margin-bottom: 20px;
 }
-.ss-card{
+.ss-card{ 
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -262,7 +262,7 @@ body{
     transition: all 0.18s ease;
     white-space: nowrap;
 }
-.ss-mode-pill.active{
+.ss-mode-pill.active{   
     background: linear-gradient(135deg,#0077cc 0%,#004fa3 100%);
     color: #fff;
     border-color: transparent;
@@ -345,3 +345,233 @@ body{
     transform: none;
 }
   
+/* how to play screen */
+#howToPlayScreen{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg,#1a1a2e 0%, #16213e 100%);
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  z-index: 1000;
+  padding: 40px 20px;
+}
+
+.rules-container{
+    max-width: 760px;
+    background: rgba(0,0,0,0.88);
+    border: 4px solid #fff;
+    padding: 28px 26px;
+    color: #ffffff;
+    font-family: Inter,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    text-rendering: optimizeLegibility;
+    line-height: 1.9;
+    font-size: clamp(13px,1.9vw,16px);
+    max-height: 78vh;
+    overflow-y: auto;
+    margin: 18px auto;
+    letter-spacing: 0.2px;
+    text-align: left;
+}
+
+.rules-container h3{
+    font-family: Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+    font-weight: 700;
+    font-size: clamp(14px,2.2vw,18px);
+    margin-top: 14px;
+    margin-bottom: 8px;
+    color: #ff6b6b;
+    letter-spacing: 0.6px;
+}
+
+.rules-container li{
+    margin-bottom: 8px;
+    line-height: 1.6;
+    color: white;
+}
+
+.rules-container ul{
+    list-style: none;
+    padding-left: 20px;
+}
+
+.rules-container li:before{
+    content: "▶";
+    color: #ff0000;
+    margin-right: 10px;
+}
+
+/* game container */
+#gameContainer{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+}
+
+#gameWrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+}
+#gameCanvas{
+    display: block;
+    border: 4px solid white;
+}
+
+#loadingScreen{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: white;
+    font-size: 24px;
+    z-index: 1001;
+    display: none;
+}
+
+.ui-overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.health-timer-container{
+    position: absolute;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 20px;
+    gap: 10px;
+}
+
+.health-bar{
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    border: 4px solid white;
+}
+
+.health-bar-bg{
+    background-color: red;
+    height: 30px;
+    width: 100%;
+}
+
+.health-bar-fill{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    transition: width 0.3s, background-color 0.3s;
+}
+
+#playerHealth{
+    background: #4169e1;
+    right: 0;
+
+}
+
+#enemyHealth{
+    background: #4169e1;
+    left: 0;
+}
+
+#timer{
+    background-color: black;
+    min-width: 80px;
+    height: 50px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border: 4px solid white;
+    font-size: clamp(12px,2vw,20px);
+}
+
+#displayText{
+    position: absolute;
+    color: white;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    font-size: clamp(28px,5.5vw,58px);
+    text-shadow: 4px 4px 0px #ff0000;
+    background: rgba(0, 0, 0, 0.87);
+    pointer-events: none;
+    z-index: 100;
+}
+
+#displayTextMsg{
+    text-align: center;
+    line-height: 1.35;
+    pointer-events: none;
+}
+
+#gameOverButtons{
+    display: none;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    pointer-events: all;
+}
+.gameOverButtons .btn{
+    margin: 0;
+    min-width: 210px;
+    pointer-events: all;
+}
+
+.player-label{
+    position: absolute;
+    top: 70px;
+    color: white;
+    font-size: clamp(10px,1.5vw,14px);
+    text-shadow: 2px 2px 0px #000;
+    padding: 5px 10px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid white;
+}
+
+.player-label.left{
+    left: 20px;
+}
+.player-label.right{
+    right: 20px;
+}
+
+#fightCountdown{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+transform: translate(-50%,-50%);
+color: white;
+font-size: 60px;
+text-shadow: 4px 4px 0px #ff0000;
+display: none;
+z-index: 100;
+}
