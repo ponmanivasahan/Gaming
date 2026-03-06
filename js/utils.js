@@ -7,7 +7,6 @@ function rectangularCollision({rectangle1,rectangle2}){
 
 let timer=30;
 let timerId;
-
 function decreaseTimer(){
   if(timer>0 && window.gameState && window.gameState.gameStarted && !window.gameState.isPaused){
     timerId=setTimeout(decreaseTimer,1000);
@@ -86,7 +85,7 @@ function determineWinner({player,enemy,timerId}){
       }
       document.querySelector('#displayTextMsg').innerHTML=msg;
       setTimeout(()=>{
-        document.querySelector('displayText').style.display='none';
+        document.querySelector('#displayText').style.display='none';
         if(window.startRound) window.startRound();
       },2200);
     }
@@ -126,7 +125,7 @@ function determineWinner({player,enemy,timerId}){
     let frame;
     function draw(){
       ctx.clearRect(0,0,canvas.width,canvas.height);
-      let alive = false;
+      let alive = false;   
       particles.forEach(p=>{
         p.x += p.vx;
         p.y += p.vy;

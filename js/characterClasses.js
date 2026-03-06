@@ -1,9 +1,9 @@
 class CharacterClass{
   constructor({name,stats,color,secondaryColor}){
-    this.name = name;
-    this.stats = stats;
-    this.color = color;
-    this.secondaryColor = secondaryColor;
+    this.name =name;
+    this.stats =stats;
+    this.color =color;
+    this.secondaryColor =secondaryColor;
   }
 
   drawIcon(ctx,x,y,size){
@@ -90,7 +90,7 @@ class CharacterClass{
 
 const characterClasses ={
   warrior: new CharacterClass({
-    name: 'Warrior',
+    name:'Warrior',
     stats:{
       baseHealth: 100,
       baseDamage: 25,
@@ -99,26 +99,26 @@ const characterClasses ={
       attackRange: 20,
       description: 'High damage, slow movement'
     },
-    color: '#ff4444',
-    secondaryColor: '#cc0000'
+    color:'#ff4444',
+    secondaryColor:'#cc0000'
   }),
   
   archer: new CharacterClass({
-    name: 'Archer',
+    name:'Archer',
     stats:{
       baseHealth: 70,
       baseDamage: 15,
       attackSpeed: 1.5,
       moveSpeed: 180,
       attackRange: 80,
-      description: 'Ranged attacks, fast movement'
+      description:'Ranged attacks,fast movement'
     },
-    color: '#44ff44',
-    secondaryColor: '#00cc00'
+    color:'#44ff44',
+    secondaryColor:'#00cc00'
   }),
   
   mage: new CharacterClass({
-    name: 'Mage',
+    name:'Mage',
     stats:{
       baseHealth: 60,
       baseDamage: 30,
@@ -128,12 +128,12 @@ const characterClasses ={
       areaOfEffect: 40,
       description: 'Area damage, magic attacks'
     },
-    color: '#4444ff',
-    secondaryColor: '#0000cc'
+    color:'#4444ff',
+    secondaryColor:'#0000cc'
   }),
   
   tank: new CharacterClass({
-    name: 'Tank',
+    name:'Tank',
     stats:{
       baseHealth: 150,
       baseDamage: 10,
