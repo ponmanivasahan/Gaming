@@ -19,48 +19,52 @@ class Sprite{
     this.framesHold = 5;
     this.offset = offset;
     this.facing = facing;
-  }
+  }  
 
-  draw(){
+draw(){
     if (!window.c) return;
+
+    let img = this.image;
+    let framesMax = this.framesMax;
+
+    // If image is broken/not loaded, fall back to idle sprite
+    if (!img || !img.complete || img.naturalWidth === 0){
+        const idleSprite = this.sprites && this.sprites.idle;
+        if (!idleSprite || !idleSprite.image || !idleSprite.image.complete || idleSprite.image.naturalWidth === 0) return;
+        img = idleSprite.image;
+        framesMax = idleSprite.framesMax;  // ← use idle's OWN framesMax, not the broken sprite's
+    }
+
     const ctx = window.c;
-    const frameWidth = this.image.width / this.framesMax;
-    const frameHeight = this.image.height;
-    const drawWidth = frameWidth * this.scale;
-    const drawHeight = frameHeight * this.scale;
-    const drawX = this.position.x - this.offset.x;
+    const frameWidth  = img.width / framesMax;   // ← uses correct framesMax
+    const frameHeight = img.height;
+    const drawWidth   = frameWidth  * this.scale;
+    const drawHeight  = frameHeight * this.scale;
+    const drawX = this.position.x - this.offset.x;  
     const drawY = this.position.y - this.offset.y;
 
     if (this.facing === -1){
-      ctx.save();
-      ctx.scale(-1, 1);
-      ctx.drawImage(
-        this.image,
-        this.framesCurrent * frameWidth,
-        0,
-        frameWidth,
-        frameHeight,
-        -(drawX + drawWidth),
-        drawY,
-        drawWidth,
-        drawHeight
-      );
-      ctx.restore();
-      return;
+        ctx.save();
+        ctx.scale(-1, 1);
+        ctx.drawImage(
+            img,
+            this.framesCurrent * frameWidth, 0,
+            frameWidth, frameHeight,
+            -(drawX + drawWidth), drawY,
+            drawWidth, drawHeight
+        );
+        ctx.restore();
+        return;
     }
 
     ctx.drawImage(
-      this.image,
-      this.framesCurrent * frameWidth,
-      0,
-      frameWidth,
-      frameHeight,
-      drawX,
-      drawY,
-      drawWidth,
-      drawHeight
+        img,
+        this.framesCurrent * frameWidth, 0,
+        frameWidth, frameHeight,
+        drawX, drawY,
+        drawWidth, drawHeight
     );
-  }
+}
 
   animateFrames(){
     this.framesElapsed++;
@@ -126,11 +130,11 @@ class Fighter extends Sprite{
     this.isSpecialAttack = false;
     
     for(const sprite in this.sprites){
-      if (this.sprites[sprite]){
+    if(this.sprites[sprite]){
         this.sprites[sprite].image = new Image();
         this.sprites[sprite].image.src = this.sprites[sprite].imageSrc;
-      }
     }
+}
   }
 
   update(){
@@ -154,10 +158,14 @@ class Fighter extends Sprite{
       this.velocity.y = 0;
     }
     
-    if(this.position.y + this.height + this.velocity.y >= window.canvas.height - 96){
-      this.velocity.y = 0;
-      this.position.y = 330;
-    } else this.velocity.y += window.gravity;
+    // NEW — always calculates correct floor for any canvas height
+const floorY = window.canvas.height - 96;
+if(this.position.y + this.height + this.velocity.y >= floorY){
+    this.velocity.y = 0;
+    this.position.y = floorY - this.height;   // snaps exactly to floor
+} else {
+    this.velocity.y += window.gravity;
+}
   }
 
   attack(){
