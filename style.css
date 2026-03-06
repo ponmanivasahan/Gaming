@@ -1,12 +1,12 @@
-*{
+* {
     box-sizing: border-box;
-    font-family: 'Press Start 2P','Roboto','Segoe UI',Arial, Helvetica, sans-serif;
+    font-family: 'Rajdhani', 'Inter', 'Segoe UI', Arial, sans-serif;
     margin: 0;
-    padding: 0;                   
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-}        
+}    
 body{
     overflow:hidden;
     background: black;
@@ -171,15 +171,8 @@ body{
     border: 1px solid rgba(0, 200, 255, 0.22);
     border-radius: 16px 0 0 16px;
 }
-.ss-card.p2{
-    border:1px solid rgba(50, 150, 255, 0.22);
-    border-radius: 0 16px 16px 0;
-}
 .ss-card.p1::before{
     background: linear-gradient(90deg,transparent,rgba(0,220,255,0.65),transparent);
-}
-.ss-card.p2::before{
-    background: linear-gradient(90deg,transparent,rgba(50,150,255,0.65),transparent);
 }
 .ss-card-lbl{
     font-family: 'Press Start 2p',cursive;
@@ -188,9 +181,6 @@ body{
 }
 .ss-card.p1 .ss-card-lbl{
     color: #67e8f9;
-}
-.ss-card.p2 .ss-card-lbl{
-    color: #93c5fd;
 }
 .ss-card-input{
     font-family: 'Press Start 2P',cursive;
@@ -212,13 +202,6 @@ body{
     border-color: #22d3ee;
     box-shadow: 0 0 0 3px rgba(0, 220, 255, 0.15);
 }
-.ss-card.p2 .ss-card-input{
-    border: 1.5px solid rgba(60,150, 255, 0.30);
-}
-.ss-card.p2 .ss-card-input:focus{
-    border-color: #60a5fa;
-    box-shadow: 0 0 0 3px rgba(60, 150, 255, 0.15);
-}
 .ss-vs-col{
     display: flex;
     flex-direction: column;
@@ -239,38 +222,6 @@ body{
     font-size: clamp(11px,1.7vw,18px);
     color: rgba(0, 210, 255, 0.70);
     letter-spacing: 4px;
-}
-.ss-mode-row{
-    display: flex;
-    background: rgba(255,255,255,0.8);
-    border-radius: 1.5px solid rgba(255,255,255,0.08);
-    border-radius: 999px;
-    padding: 4px;
-    margin-bottom: 14px;
-}
-.ss-mode-pill{
-    font-family: 'Press Start 2P',cursive;
-    font-size: clamp(6px,0.82vw,8px);
-    letter-spacing: 2px;
-    padding: 9px 24px;
-    border-radius: 999px;
-    cursor: pointer;
-    user-select: none;
-    color: rgba(255, 255, 255, 0.62);
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    transition: all 0.18s ease;
-    white-space: nowrap;   
-}
-.ss-mode-pill.active{   
-    background: linear-gradient(135deg,#0077cc 0%,#004fa3 100%);
-    color: #fff;
-    border-color: transparent;
-    box-shadow: 0 2px 14px rgba(0,120,220,0.55),inset 0 1px 0 rgba(255, 255, 255, 0.14);
-}
-.ss-mode-pill:not(.active):hover{
-    color: #fff;
-    background: rgba(255, 255, 255, 0.12);
 }
 .difficultySelector{
     overflow: hidden;
@@ -316,7 +267,7 @@ body{
     margin: 0;
     letter-spacing: 3px;
 }
-.ss-sec-row{
+.ss-sec-row{   
     display: flex;
     gap: 10px;
     width: 100%;
@@ -411,26 +362,31 @@ body{
 }
 
 /* game container */
-#gameContainer{
+#gameContainer {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    display: none;
+    background: black;
+    z-index: 500;
 }
 
-#gameWrapper{
+#gameWrapper {
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: center;
     align-items: center;
-    background: #000;
+    justify-content: center;
+    position: relative;
 }
-#gameCanvas{
+
+#gameCanvas {
     display: block;
-    border: 4px solid white;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;    /* stretches to fill, no letter-boxing */
 }
 
 #loadingScreen{
@@ -495,7 +451,7 @@ body{
     left: 0;
 }
 
-#timer{
+#timer {
     background-color: black;
     min-width: 80px;
     height: 50px;
@@ -505,7 +461,9 @@ body{
     justify-content: center;
     color: white;
     border: 4px solid white;
-    font-size: clamp(12px,2vw,20px);
+    font-family: 'Rajdhani', sans-serif;   /* add this */
+    font-weight: 700;                       /* add this */
+    font-size: clamp(16px, 2.5vw, 26px);
 }
 
 #displayText{
@@ -517,10 +475,12 @@ body{
     justify-content: center;
     gap: 36px;
     top: 0;
-    right: 0;
-    bottom: 0;
+    right: 0;  
+    bottom: 0;     
     left: 0;
-    font-size: clamp(28px,5.5vw,58px);
+    font-family: 'Rajdhani', sans-serif;
+font-weight: 700;
+font-size: clamp(28px, 5.5vw, 58px);
     text-shadow: 4px 4px 0px #ff0000;
     background: rgba(0, 0, 0, 0.87);
     pointer-events: none;
@@ -546,11 +506,13 @@ body{
     pointer-events: all;
 }
 
-.player-label{
+.player-label {
     position: absolute;
     top: 70px;
     color: white;
-    font-size: clamp(10px,1.5vw,14px);
+    font-family: 'Rajdhani', sans-serif;   /* add this */
+    font-weight: 600;
+    font-size: clamp(13px, 1.8vw, 18px);
     text-shadow: 2px 2px 0px #000;
     padding: 5px 10px;
     background: rgba(0, 0, 0, 0.7);
@@ -562,16 +524,74 @@ body{
 }
 .player-label.right{
     right: 20px;
+}   
+@keyframes countdownPop {
+    0%   { transform: translate(-50%, -50%) scale(0.3); opacity: 0; letter-spacing: 20px; }
+    30%  { transform: translate(-50%, -50%) scale(1.25); opacity: 1; letter-spacing: 4px; }
+    55%  { transform: translate(-50%, -50%) scale(0.95); opacity: 1; }
+    70%  { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+    85%  { transform: translate(-50%, -50%) scale(1);    opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1.1);  opacity: 0; }
 }
 
-#fightCountdown{
+#fightCountdown {
     position: absolute;
     top: 50%;
     left: 50%;
-transform: translate(-50%,-50%);
-color: white;
-font-size: 60px;
-text-shadow: 4px 4px 0px #ff0000;
-display: none;
-z-index: 100;
+    transform: translate(-50%, -50%);
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: clamp(64px, 12vw, 130px);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 30px currentColor,
+        4px 4px 0px rgba(0, 0, 0, 0.6);    
+    display: none;
+    z-index: 100;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+#fightCountdown.countdown-pop {
+    animation: countdownPop 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ── Powerup HUD ───────────────────────────────────── */
+#powerupHUD {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.55);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 8px 16px;
+    pointer-events: none;
+}
+
+.pu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-width: 32px;
+}
+
+.pu-icon {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.pu-count {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #FFD700;
+    line-height: 1;
 }

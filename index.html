@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head>  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Samurai Fighter - Battle Arena</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">  <link rel="stylesheet" href="style.css">
   <link rel="icon" href="data:," />    
 </head>
-<body>
+<body>  
   <canvas id="confettiCanvas"></canvas>
   
   <div id="modalOverlay">
@@ -20,55 +19,26 @@
     </div>
   </div>
 
-  <!-- Start Screen -->
-  <div id="startScreen">
-    <div class="ss-coin-badge"><span id="startScreenCoins">500</span>&nbsp;COINS</div>
-    <div class="ss-inner">
-      <div class="ss-accent-bar"></div>
-      <p class="ss-eyebrow">BATTLE ARENA</p>
-      <h1 class="ss-main-title">SAMURAI<br>FIGHTER</h1>
-      <p class="ss-tagline">Choose your warrior &nbsp;&bull;&nbsp; Enter the arena &nbsp;&bull;&nbsp; Prove your blade</p>
-      <div class="ss-divider"><div class="ss-divider-gem"></div></div>
-      
-      <div class="ss-fighters">
-        <div class="ss-card p1">
-          <span class="ss-card-lbl">PLAYER 1</span>
-          <input type="text" id="player1NameInput" placeholder="ENTER NAME" maxlength="15" class="ss-card-input" value="Player 1" />
-        </div>
-        <div class="ss-vs-col">
-          <div class="ss-vs-line"></div>
-          <span class="ss-vs-text">VS</span>
-          <div class="ss-vs-line"></div>
-        </div>
-        <div class="ss-card p2">
-          <span class="ss-card-lbl" id="p2SlotLabel">PLAYER 2</span>
-          <input type="text" id="player2NameInput" placeholder="ENTER NAME" maxlength="15" class="ss-card-input" value="Player 2" />
-        </div>
-      </div>
+ <!-- Start Screen -->
+<div id="startScreen">
+  <div class="ss-coin-badge"><span id="startScreenCoins">500</span>&nbsp;COINS</div>
+  <div class="ss-inner">
+    <div class="ss-accent-bar"></div>
+    <p class="ss-eyebrow">BATTLE ARENA</p>
+    <h1 class="ss-main-title">SAMURAI</h1>
+    <p class="ss-tagline">Enter the arena &nbsp;&bull;&nbsp; Prove your blade</p>
+    <div class="ss-divider"><div class="ss-divider-gem"></div></div>
 
-      <div class="ss-mode-row">
-        <div id="mode2P" class="ss-mode-pill active" onclick="window.selectMode('2p')">2 PLAYERS</div>
-        <div id="modeCOOP" class="ss-mode-pill" onclick="window.selectMode('co-op')">VS CO-Op</div>
-      </div>
-
-      <div id="difficultySelector">
-        <select id="aiDifficulty" class="diff-select">
-          <option value="easy">EASY</option>
-          <option value="normal" selected>NORMAL</option>
-          <option value="hard">HARD</option>
-        </select>
-      </div>
-
-      <div class="ss-actions">
-        <button class="btn ss-start-btn" onclick="window.startGame()">START GAME</button>
-        <div class="ss-sec-row">
-          <button class="btn ss-sec-btn" onclick="window.showShop()">SHOP</button>
-          <button class="btn ss-sec-btn" onclick="window.showHowToPlay()">HOW TO PLAY</button>
-        </div>
+    <div class="ss-actions">
+      <button class="btn ss-start-btn" onclick="window.startGame()">START GAME</button>
+      <div class="ss-sec-row">
+        <button class="btn ss-sec-btn" onclick="window.showShop()">SHOP</button>
+        <button class="btn ss-sec-btn" onclick="window.showHowToPlay()">HOW TO PLAY</button>
       </div>
     </div>
   </div>
-
+</div>
+       
   <!-- Shop Screen -->
   <div id="shopScreen">
     <div class="shop-panel">
@@ -142,156 +112,156 @@
   </div>
 
   <!-- How To Play Screen -->
-  <div id="howToPlayScreen">
-    <h1 class="screen-title">HOW TO PLAY</h1>
-    <div class="rules-container">
-      <h3> GAME OBJECTIVE</h3>
-      <ul>
-        <li>2-player fighting game on one keyboard — or play vs CO-Op</li>
-        <li>Win <strong>2 out of 3 rounds</strong> to claim the match</li>
-        <li>Reduce opponent's health to zero to win a round instantly</li>
-        <li>Or have more health when the 30-second timer runs out</li>
-        <li>Earn coins each round — spend them in the Shop for power-ups</li>
-      </ul>
-            
-      <h3> PLAYER 1 CONTROLS (Left Fighter)</h3>
-      <ul>
-        <li><strong>A</strong> — Move Left</li>
-        <li><strong>D</strong> — Move Right</li>
-        <li><strong>W</strong> — Jump</li>
-        <li><strong>SPACEBAR</strong> — Attack</li>
-        <li><strong>SHIFT</strong> — Block (reduces damage to 5)</li>
-        <li><strong>E</strong> — Special / Ultimate Attack (when charge bar is full)</li>
-      </ul>
+ <!-- How To Play Screen -->
+<div id="howToPlayScreen">
+  <h1 class="screen-title">HOW TO PLAY</h1>
+  <div class="rules-container">
 
-      <h3> PLAYER 2 CONTROLS (Right Fighter)</h3>
-      <ul>
-        <li><strong>← Arrow</strong> — Move Left</li>
-        <li><strong>→ Arrow</strong> — Move Right</li>
-        <li><strong>↑ Arrow</strong> — Jump</li>
-        <li><strong>↓ Arrow</strong> — Attack</li>
-        <li><strong>RIGHT CTRL</strong> — Block (reduces damage to 5)</li>
-        <li><strong>ENTER ↵</strong> — Special / Ultimate Attack (when charge bar is full)</li>
-      </ul>
+    <h3>GAME OBJECTIVE</h3>
+    <ul>
+      <li>2-player fighting game — both players share one keyboard</li>
+      <li>Win <strong>2 out of 3 rounds</strong> to claim the match</li>
+      <li>Reduce your opponent's health to zero to win a round instantly</li>
+      <li>Or have more health when the 30-second timer runs out</li>
+      <li>Earn coins each round — spend them in the Shop for power-ups</li>
+    </ul>
 
-      <h3> IN-GAME ITEM HOTKEYS</h3>
-      <ul>
-        <li>Items are offered before each round via pop-up — or activate mid-round:</li>
-        <li><strong>P1 Keys:</strong> 1 = Shield &nbsp;|&nbsp; 2 = Health Boost &nbsp;|&nbsp; 3 = Damage Boost</li>
-        <li><strong>P1 Keys:</strong> 4 = Speed Boost &nbsp;|&nbsp; 5 = Time Freeze &nbsp;|&nbsp; 6 = Invincibility</li>
-        <li><strong>P2 Keys:</strong> 7 = Shield &nbsp;|&nbsp; 8 = Health Boost &nbsp;|&nbsp; 9 = Damage Boost</li>
-        <li><strong>P2 Keys:</strong> 0 = Speed Boost &nbsp;|&nbsp; – = Time Freeze &nbsp;|&nbsp; = = Invincibility</li>
-      </ul>
+    <h3>PLAYER 1 CONTROLS (Left Fighter)</h3>
+    <ul>
+      <li><strong>A</strong> — Move Left</li>
+      <li><strong>D</strong> — Move Right</li>
+      <li><strong>W</strong> — Jump</li>
+      <li><strong>SPACEBAR</strong> — Attack</li>
+      <li><strong>SHIFT</strong> — Block (reduces any hit to 5 damage)</li>
+      <li><strong>E</strong> — Special / Ultimate Attack (when charge bar is full)</li>
+    </ul>
 
-      <h3> SPECIAL ATTACK (ULTIMATE)</h3>
-      <ul>
-        <li>Land hits to charge your Special bar shown at the bottom of the screen</li>
-        <li>Normal hit: <strong>+15</strong> charge &nbsp;|&nbsp; Critical hit: <strong>+30</strong> charge</li>
-        <li><strong>E</strong> (Player 1) — Unleash Special when bar is FULL</li>
-        <li><strong>ENTER ↵</strong> (Player 2) — Unleash Special when bar is FULL</li>
-        <li>Special Attack deals <strong>3× damage</strong> — 60 normal / 120 on a critical hit!</li>
-      </ul>
+    <h3>PLAYER 2 CONTROLS (Right Fighter)</h3>
+    <ul>
+      <li><strong>← Arrow</strong> — Move Left</li>
+      <li><strong>→ Arrow</strong> — Move Right</li>
+      <li><strong>↑ Arrow</strong> — Jump</li>
+      <li><strong>↓ Arrow</strong> — Attack</li>
+      <li><strong>RIGHT CTRL</strong> — Block (reduces any hit to 5 damage)</li>
+      <li><strong>ENTER ↵</strong> — Special / Ultimate Attack (when charge bar is full)</li>
+    </ul>
 
-      <h3> BEST OF 3 ROUNDS</h3>
-      <ul>  
-        <li>Each match is Best of 3 — first to win 2 rounds is the champion</li>       
-        <li>Round dots shown beside the timer (● = round won)</li>
-        <li>Health, positions and special charge reset between rounds</li>
-        <li>Item pop-ups appear at the start of each round</li>
-      </ul>
+    <h3>IN-GAME ITEM HOTKEYS</h3>
+    <ul>
+      <li>Items are offered before each round — or activate them mid-round:</li>
+      <li><strong>P1 Keys:</strong> 1 = Shield &nbsp;|&nbsp; 2 = Health Boost &nbsp;|&nbsp; 3 = Damage Boost</li>
+      <li><strong>P1 Keys:</strong> 4 = Speed Boost &nbsp;|&nbsp; 5 = Time Freeze &nbsp;|&nbsp; 6 = Invincibility</li>
+    </ul>
 
-      <h3> COMBAT SYSTEM</h3>
-      <ul>
-        <li>Normal attack deals <strong>20</strong> damage</li>
-        <li>Critical hits (20% chance) deal <strong>40</strong> damage</li>
-        <li>Special Attack deals <strong>60</strong> damage (120 on critical!)</li>
-        <li>Blocking reduces any hit to only <strong>5</strong> damage</li>
-        <li>Shield item <em>completely blocks</em> the next hit</li>
-        <li>Combo counter tracks consecutive hits — try to chain them!</li>
-        <li>Both players start with <strong>300 HP</strong> per round; 30-second timer per round</li>
-      </ul>
+    <h3>SPECIAL ATTACK (ULTIMATE)</h3>
+    <ul>
+      <li>Land hits to fill your Special bar at the bottom of the screen</li>
+      <li>Normal hit: <strong>+15</strong> charge &nbsp;|&nbsp; Critical hit: <strong>+30</strong> charge</li>
+      <li><strong>E</strong> — Player 1 unleashes Special when bar is FULL</li>
+      <li><strong>ENTER ↵</strong> — Player 2 unleashes Special when bar is FULL</li>
+      <li>Special Attack deals <strong>3× damage</strong> — 60 normal / 120 on a critical!</li>
+    </ul>
 
-      <h3>🛒 SHOP ITEMS</h3>
-      <ul>
-        <li>🛡️ <strong>Shield — 100 coins</strong>: Blocks the very next hit completely</li>
-        <li>❤️ <strong>Health Boost — 150 coins</strong>: Start a round with +50 extra HP</li>
-        <li>⚡ <strong>Damage Boost — 200 coins</strong>: Deal 1.5× damage for the whole round</li>
-        <li>🏃 <strong>Speed Boost — 175 coins</strong>: Move 70% faster for the round</li>
-        <li>❄️ <strong>Time Freeze — 250 coins</strong>: Freeze the round timer for 5 seconds</li>
-        <li>⭐ <strong>Invincibility — 350 coins</strong>: Immune to all damage for 4 seconds</li>
-        <li>You start each session with 500 coins; win rounds to earn more</li>
-      </ul>
+    <h3>BEST OF 3 ROUNDS</h3>
+    <ul>
+      <li>First player to win 2 rounds is the match champion</li>
+      <li>Round dots shown beside the timer (● = round won)</li>
+      <li>Health, position, and special charge reset between rounds</li>
+      <li>Item pop-ups appear at the start of each round</li>
+    </ul>
 
-      <h3>⏸️ PAUSE MENU</h3>
-      <ul>
-        <li><strong>ESC</strong> — Pause / Resume game</li>
-        <li><strong>R</strong> — Watch instant replay of the last 5 seconds</li>
-        <li><strong>M</strong> — View match statistics overlay</li>
-        <li><strong>Q</strong> — Quit to main menu</li>
-        <li><strong>CTRL + M</strong> — Open match stats without pausing</li>
-      </ul>
-    </div>
-    <button class="btn" onclick="window.backToMenu()">Back to Menu</button>
+    <h3>COMBAT SYSTEM</h3>
+    <ul>
+      <li>Normal attack deals <strong>20</strong> damage</li>
+      <li>Critical hits (20% chance) deal <strong>40</strong> damage</li>
+      <li>Special Attack deals <strong>60</strong> damage (120 on critical!)</li>
+      <li>Blocking reduces any hit to only <strong>5</strong> damage</li>
+      <li>Shield item <em>completely blocks</em> the next hit</li>
+      <li>Combo counter tracks consecutive hits — try to chain them!</li>
+      <li>Both players start with <strong>300 HP</strong> per round; 30-second timer</li>
+    </ul>
+
+    <h3>🛒 SHOP ITEMS</h3>
+    <ul>
+      <li>🛡️ <strong>Shield — 100 coins</strong>: Blocks the very next hit completely</li>
+      <li>❤️ <strong>Health Boost — 150 coins</strong>: Start a round with +50 extra HP</li>
+      <li>⚡ <strong>Damage Boost — 200 coins</strong>: Deal 1.5× damage for the whole round</li>
+      <li>🏃 <strong>Speed Boost — 175 coins</strong>: Move 70% faster for the round</li>
+      <li>❄️ <strong>Time Freeze — 250 coins</strong>: Freeze the round timer for 5 seconds</li>
+      <li>⭐ <strong>Invincibility — 350 coins</strong>: Immune to all damage for 4 seconds</li>
+      <li>You start each session with 500 coins; win rounds to earn more</li>
+    </ul>
+
+    <h3>⏸️ PAUSE MENU</h3>
+    <ul>
+      <li><strong>ESC</strong> — Pause / Resume game</li>
+      <li><strong>R</strong> — Watch instant replay of the last 5 seconds</li>
+      <li><strong>M</strong> — View match statistics overlay</li>
+      <li><strong>Q</strong> — Quit to main menu</li>
+      <li><strong>CTRL + M</strong> — Open match stats without pausing</li>
+    </ul>
+
   </div>
+  <button class="btn" onclick="window.backToMenu()">Back to Menu</button>
+</div>
 
-  <!-- Game Container -->
-  <div id="gameContainer">
-    <div id="gameWrapper"> 
-      <div id="loadingScreen">Loading</div>
-      <div style="position: relative; display: inline-block">
-        <div class="ui-overlay"> 
-          <div class="player-label left" id="player1NameLabel">PLAYER 1</div>
-          <div class="player-label right" id="player2NameLabel">PLAYER 2</div>
-          
-          <div class="health-timer-container">
-            <div class="health-bar" style="border-left: 4px solid white; border-top: 4px solid white; border-bottom: 4px solid white; border-right: none;">
-              <div class="health-bar-bg"></div> 
-              <div id="playerHealth" class="health-bar-fill"></div>
-            </div>
-            <div id="timer">30</div>
-            <div class="health-bar" style="border-right: 4px solid white; border-top: 4px solid white; border-bottom: 4px solid white; border-left: none;">
-              <div class="health-bar-bg"></div>
-              <div id="enemyHealth" class="health-bar-fill"></div>
-            </div>
+ <!-- Game Container -->
+<div id="gameContainer">
+  <div id="gameWrapper">
+    <div id="loadingScreen">Loading</div>
+    <div style="position: relative; width: 100%; height: 100%;">
+      <div class="ui-overlay">
+
+        <div class="player-label left" id="player1NameLabel">PLAYER 1</div>
+        <div class="player-label right" id="player2NameLabel">PLAYER 2</div>
+
+        <div class="health-timer-container">
+          <div class="health-bar">
+            <div class="health-bar-bg"></div>
+            <div id="playerHealth" class="health-bar-fill"></div>
           </div>
-
-          <div id="displayText">
-            <div id="displayTextMsg">Tie</div>
-            <div id="gameOverButtons">
-              <button class="btn" onclick="window.restartGame()">Play Again</button>
-              <button class="btn" onclick="window.returnToMenu()">Main Menu</button>
-            </div>
-          </div>     
-
-          <div id="fightCountdown">READY</div>
-
-          <div id="powerupHUD">
-            <div class="pu-item" id="pu-shield"><span class="pu-icon">🛡️</span><span class="pu-count" id="pu-shield-n">0</span></div>
-            <div class="pu-item" id="pu-health"><span class="pu-icon">❤️</span><span class="pu-count" id="pu-health-n">0</span></div>
-            <div class="pu-item" id="pu-damage"><span class="pu-icon">⚡</span><span class="pu-count" id="pu-damage-n">0</span></div>
-            <div class="pu-item" id="pu-speed"><span class="pu-icon">🏃</span><span class="pu-count" id="pu-speed-n">0</span></div>
-            <div class="pu-item" id="pu-freeze"><span class="pu-icon">❄️</span><span class="pu-count" id="pu-freeze-n">0</span></div>
-            <div class="pu-item" id="pu-invinc"><span class="pu-icon">⭐</span><span class="pu-count" id="pu-invinc-n">0</span></div>
+          <div id="timer">30</div>
+          <div class="health-bar">
+            <div class="health-bar-bg"></div>
+            <div id="enemyHealth" class="health-bar-fill"></div>
           </div>
         </div>
-        <canvas id="gameCanvas"></canvas>
+
+        <div id="displayText">
+          <div id="displayTextMsg">Tie</div>
+          <div id="gameOverButtons">
+            <button class="btn" onclick="window.restartGame()">Play Again</button>
+            <button class="btn" onclick="window.returnToMenu()">Main Menu</button>
+          </div>
+        </div>
+
+        <div id="fightCountdown">READY</div>
+
+        <div id="powerupHUD">
+          <div class="pu-item" id="pu-shield"><span class="pu-icon">🛡️</span><span class="pu-count" id="pu-shield-n">0</span></div>
+          <div class="pu-item" id="pu-health"><span class="pu-icon">❤️</span><span class="pu-count" id="pu-health-n">0</span></div>
+          <div class="pu-item" id="pu-damage"><span class="pu-icon">⚡</span><span class="pu-count" id="pu-damage-n">0</span></div>
+          <div class="pu-item" id="pu-speed"><span class="pu-icon">🏃</span><span class="pu-count" id="pu-speed-n">0</span></div>
+          <div class="pu-item" id="pu-freeze"><span class="pu-icon">❄️</span><span class="pu-count" id="pu-freeze-n">0</span></div>
+          <div class="pu-item" id="pu-invinc"><span class="pu-icon">⭐</span><span class="pu-count" id="pu-invinc-n">0</span></div>
+        </div>
+
       </div>
+      <canvas id="gameCanvas"></canvas>
     </div>
-  </div>
+  </div>     
+</div>     
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js" integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="js/utils.js"></script>
-  <script src="js/classes.js"></script>
-  <script src="js/characterClasses.js"></script>
-  <!-- <script src="js/powerups.js"></script> -->
-  <script src="js/effectsUI.js"></script>  
-  <!-- <script src="js/soundSystem.js"></script> -->
-  <!-- <script src="js/gameState.js"></script> -->
-  <!-- <script src="js/inputHandler.js"></script> -->
-  <!-- <script src="js/aiController.js"></script> -->
-  <!-- <script src="js/combatSystem.js"></script> -->
-  <script src="js/gameRenderer.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/classes.js"></script>
+<script src="js/characterClasses.js"></script>
+<script src="js/effectsUI.js"></script>
+<script src="js/gameState.js"></script>
+<script src="js/inputHandler.js"></script>
+<script src="js/combatSystem.js"></script>
+<script src="js/gameRenderer.js"></script>
 <script src="js/gameInitalizer.js"></script>
-  <script src="js/index.js"></script>
+<script src="js/index.js"></script>
 </body>
 </html>
