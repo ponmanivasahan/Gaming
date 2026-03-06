@@ -5,12 +5,10 @@ class EffectsUI{
         this.iconSize=32;
         this.spacing=40;
     }
-
     draw(ctx,scale){
         if(!window.gameState || !window.gameState.powerupManager) return;
         const activeEffects=window.gameState.powerupManager.getActiveEffects();
         if(activeEffects.length===0) return;
-
         ctx.save();
         ctx.scale(scale,scale);
         activeaeffects.forEach((effect,index)=>{
@@ -62,7 +60,6 @@ class EffectsUI{
                 ctx.closePath();
                 ctx.fill();
                 break;
-    
         }
     }
     getEffectColor(type){
@@ -71,7 +68,6 @@ class EffectsUI{
             case 'damage':return '#ff8800';
         }
     }
-
     getMaxDuration(type){
         switch(type){
             case 'damage':return 5;
