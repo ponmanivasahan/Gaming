@@ -10,7 +10,7 @@ class InputHandler{
             ArrowLeft:{pressed:false},
             ArrowRight:{pressed:false},
             Control:{pressed:false}
-        };
+        };     
         this.setupEventListeners();    
     } 
     setupEventListeners(){

@@ -24,12 +24,12 @@ class GameState{
     }
     
    initCanvas() {
-    this.canvas        = document.getElementById('gameCanvas');
-    this.ctx           = this.canvas.getContext('2d');
-    this.canvas.width  = window.innerWidth;   // fill screen width
-    this.canvas.height = window.innerHeight;  // fill screen height
-    window.canvas  = this.canvas;
-    window.c       = this.ctx;
+    this.canvas= document.getElementById('gameCanvas');
+    this.ctx= this.canvas.getContext('2d');
+    this.canvas.width = window.innerWidth;   
+    this.canvas.height= window.innerHeight;
+    window.canvas = this.canvas;
+    window.c = this.ctx;
     window.gravity = this.gravity;
     return this;
 }

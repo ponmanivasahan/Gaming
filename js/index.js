@@ -48,6 +48,11 @@ function showHowToPlay(){
     document.getElementById('howToPlayScreen').style.display='flex';
 }
   
+function backToMenu(){
+    document.getElementById('howToPlayScreen').style.display='none';
+    document.getElementById('startScreen').style.display='flex';
+}
 window.startGame=startGame;
 window.startNewGame=startNewGame;
 window.showHowToPlay=showHowToPlay;
+window.backToMenu=backToMenu;
