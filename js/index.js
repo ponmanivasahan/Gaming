@@ -18,14 +18,14 @@ function initGameSystems(){
 }
 
 function startGame(){
-    const p1Input=doocument.getElementById('player1NameInput');
+   const p1Input=document.getElementById('player1NameInput');
     const p2Input=document.getElementById('player2NameInput');
     const isCOOP=window.selectMode=='co-op';
     const player1Name=(p1Input ? p1Input.value.trim() : '') || 'Player 1';
     const player2Name=isCOOP ? 'CO-op' : ((p2Input ? p2Input.value.trim() : '') || 'Player2');
     localStorage.setItem('player1Name',player1Name);
     localStorage.setItem('player2Name',player2Name);
-
+  
     const p1Label=document.getElementById('player1NameLabel');
     const p2Label=document.getElementById('player2NameLabel');
     if(p1Label) p1Label.textContent=player1Name;
