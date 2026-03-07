@@ -14,14 +14,12 @@
     .ic-16 { width:16px; height:16px; }
     .ic-18 { width:18px; height:18px; }
     .ic-20 { width:20px; height:20px; }
-    .ic-22 { width:22px; height:22px; }
+    .ic-22 { width:22px; height:22px; } 
     .ic-36 { width:36px; height:36px; }
     .ic-48 { width:48px; height:48px; }
   </style>
 </head>
 <body>
-
-<!-- ===== SVG ICON SPRITE SHEET ===== -->
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none; position:absolute;">
   <defs>
     <symbol id="icon-shield" viewBox="0 0 32 32">
@@ -162,11 +160,7 @@
   </defs>
 </svg>
 
-<!-- ===== CONFETTI CANVAS ===== -->
 <canvas id="confettiCanvas" style="display:none;position:fixed;top:0;left:0;pointer-events:none;z-index:2000;"></canvas>
-
-<!-- ===== MODAL OVERLAY ===== -->
-<!-- BUG FIX: modal was in HTML but closeModal() was never defined — now defined in index.js -->
 <div id="modalOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9000;align-items:center;justify-content:center;">
   <div id="modalBox" style="background:#111;border:3px solid white;padding:32px 40px;text-align:center;border-radius:8px;max-width:380px;">
     <div id="modalMessage" style="color:white;font-family:'Rajdhani',sans-serif;font-size:22px;margin-bottom:20px;"></div>
@@ -174,31 +168,35 @@
   </div>
 </div>
 
-<!-- ===== START SCREEN ===== -->
+<!--  START SCREEN  -->
 <div id="startScreen">
+  <div class="ss-hud-bar">
   <div class="ss-coin-badge">
-    <svg class="ic ic-20"><use href="#icon-coin"></use></svg>
+    <svg class="ic ic-20"><use href="#icon-coin"></use></svg> 
     &nbsp;<span id="startScreenCoins">500</span>&nbsp;COINS
+  </div>
+
+  <button class="shop-trigger-btn" id="shopTriggerBtn" onclick="window.showShop()" aria-label="Open Shop">
+    <svg class="ic ic-20"><use href="#icon-cart"></use></svg>
+    <span class="shop-trigger-label">SHOP</span>
+  </button>
   </div>
   <div class="ss-inner">
     <div class="ss-accent-bar"></div>
     <p class="ss-eyebrow">BATTLE ARENA</p>
     <h1 class="ss-main-title">SAMURAI</h1>
-    <p class="ss-tagline">Enter the arena &nbsp;&bull;&nbsp; Prove your blade</p>
+    <p class="ss-tagline">Enter the Battle Field &nbsp;&bull;&nbsp; Prove your blade</p>
     <div class="ss-divider"><div class="ss-divider-gem"></div></div>
     <div class="ss-actions">
       <button class="btn ss-start-btn" onclick="window.startGame()">START GAME</button>
       <div class="ss-sec-row">
-        <!-- SHOP COMMENTED OUT
         <button class="btn ss-sec-btn" onclick="window.showShop()">SHOP</button>
-        -->
         <button class="btn ss-sec-btn" onclick="window.showHowToPlay()">HOW TO PLAY</button>
       </div>
     </div>
   </div>
-</div>
-
-<!-- ===== SHOP SCREEN (COMMENTED OUT) =====
+</div>      
+<!-- SHOP SCREEN -->
 <div id="shopScreen" style="display:none;">
   <div class="shop-panel">
     <h1 class="screen-title">
@@ -207,7 +205,7 @@
     </h1>
     <div class="shop-coin-display">
       <svg class="ic ic-22"><use href="#icon-coin"></use></svg>
-      <span id="coinDisplay">500</span> Coins
+      <span id="coinDisplay">500</span>Coins
     </div>
     <div class="rules-container shop-grid">
 
@@ -269,9 +267,8 @@
     <button class="btn shop-back-btn" onclick="window.closeShop()">Back to Menu</button>
   </div>
 </div>
-===== END SHOP SCREEN ===== -->
 
-<!-- ===== HOW TO PLAY SCREEN ===== -->
+<!-- HOW TO PLAY SCREEN -->
 <div id="howToPlayScreen" style="display:none;">
   <h1 class="screen-title">HOW TO PLAY</h1>
   <div class="rules-container">
@@ -329,8 +326,6 @@
   </div>
   <button class="btn" onclick="window.backToMenu()">Back to Menu</button>
 </div>
-
-<!-- ===== GAME CONTAINER ===== -->
 <div id="gameContainer" style="display:none;">
   <div id="gameWrapper">
     <div id="loadingScreen" style="display:none;">Loading...</div>
@@ -353,8 +348,6 @@
         </div>
 
         <div id="fightCountdown">READY</div>
-
-        <!-- BUG FIX: #displayText must be inside the game container and .ui-overlay so it overlays the canvas -->
         <div id="displayText">
           <div id="displayTextMsg"></div>
         </div>
@@ -391,8 +384,49 @@
     </div>
   </div>
 </div>
+<div class="shop-backdrop" id="shopBackdrop" onclick="window.closeShop()"></div>
+<div class="shop-panel" id="shopPanel" role="dialog" aria-label="Shop">
+  <div class="shop-panel-header">
+    <div class="shop-panel-title">
+      <svg class="ic ic-22"><use href="#icon-cart"></use></svg>
+      ARMORY
+    </div>
+    <div class="shop-panel-wallet">
+      <svg class="ic ic-16"><use href="#icon-coin"></use></svg>
+      <span id="coinDisplay">500</span>
+    </div>
+    <button class="shop-panel-close" onclick="window.closeShop()" aria-label="Close">✕</button>
+  </div>
 
-<!-- ===== SCRIPTS (order matters!) ===== -->
+  <div class="shop-panel-items">
+    <div class="sp-item" style="--sp-color:#4d79ff;">
+      <div class="sp-item-icon"><svg class="ic ic-36"><use href="#icon-shield"></use></svg></div>
+      <div class="sp-item-body">
+        <div class="sp-item-name">Shield</div>
+        <div class="sp-item-desc">Absorbs one full hit so you take zero damage.</div>
+        <div class="sp-item-owned">Owned: <strong id="shieldCount">0</strong></div>
+      </div>
+      <div class="sp-item-action">
+        <div class="sp-item-price"><svg class="ic ic-13"><use href="#icon-coin"></use></svg>100</div>
+        <button class="sp-buy-btn" onclick="window.buyItem('shields',100)">BUY</button>
+      </div>
+    </div>
+
+    <div class="sp-item" style="--sp-color:#ff5555;">
+      <div class="sp-item-icon"><svg class="ic ic-36"><use href="#icon-heart"></use></svg></div>
+      <div class="sp-item-body">
+        <div class="sp-item-name">Health Boost</div>
+        <div class="sp-item-desc">Enter the round with +50 bonus HP on your bar</div>
+        <div class="sp-item-owned">Owned:<strong id="healthBoostCount">0</strong></div>
+      </div>
+      <div class="sp-item-action">
+        <div class="sp-item-price"><svg class="ic ic-13"><use href="#icon-coin"></use></svg>150</div>
+        <button class="sp-buy-btn" onclick="window.buyItem('healthBoosts',150)">BUY</button>
+      </div>
+    </div>
+    
+  </div>
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"
         integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
