@@ -1,4 +1,4 @@
-Samurai Mack : FIGHT LEGENDARY
+Samurai Mack : FIGHT LEGENDARY  A Retero Style Game
 
 A full-screen 2-player fighting game built with vanilla JavaScript to demonstrate core game physics, canvas rendering, and game-loop architecture.
 
@@ -70,5 +70,3 @@ Author
 Built with passion and curiosity by PONMANI VASAN
 
 This project represents my journey of learning JavaScript and experimenting with game development.
-
- i  

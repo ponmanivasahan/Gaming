@@ -1,31 +1,25 @@
-class CharacterClass{
-  constructor({name,stats,color,secondaryColor}){
-    this.name =name;
-    this.stats =stats;
-    this.color =color;
-    this.secondaryColor =secondaryColor;
+// js/characterClasses.js
+
+class CharacterClass {
+  constructor({ name, stats, color, secondaryColor }) {
+    this.name = name;
+    this.stats = stats;
+    this.color = color;
+    this.secondaryColor = secondaryColor;
   }
 
-  drawIcon(ctx,x,y,size){
+  drawIcon(ctx, x, y, size) {
     ctx.save();
-    switch(this.name){
-      case 'Warrior':
-        this.drawWarriorIcon(ctx,x,y,size);
-        break;
-      case 'Archer':
-        this.drawArcherIcon(ctx,x,y,size);
-        break;
-      case 'Mage':
-        this.drawMageIcon(ctx,x,y,size);
-        break;
-      case 'Tank':
-        this.drawTankIcon(ctx,x,y,size);
-        break;
+    switch (this.name) {
+      case 'Warrior': this.drawWarriorIcon(ctx, x, y, size); break;
+      case 'Archer':  this.drawArcherIcon(ctx, x, y, size);  break;
+      case 'Mage':    this.drawMageIcon(ctx, x, y, size);    break;
+      case 'Tank':    this.drawTankIcon(ctx, x, y, size);    break;
     }
     ctx.restore();
   }
 
-  drawWarriorIcon(ctx,x,y,size){
+  drawWarriorIcon(ctx, x, y, size) {
     ctx.fillStyle = this.color;
     ctx.fillRect(x + size * 0.4, y + size * 0.2, size * 0.2, size * 0.6);
     ctx.fillStyle = this.secondaryColor;
@@ -38,7 +32,7 @@ class CharacterClass{
     ctx.fill();
   }
 
-  drawArcherIcon(ctx,x,y,size){
+  drawArcherIcon(ctx, x, y, size) {
     ctx.strokeStyle = this.color;
     ctx.lineWidth = size * 0.08;
     ctx.beginPath();
@@ -54,7 +48,7 @@ class CharacterClass{
     ctx.fill();
   }
 
-  drawMageIcon(ctx,x,y,size){
+  drawMageIcon(ctx, x, y, size) {
     ctx.strokeStyle = this.secondaryColor;
     ctx.lineWidth = size * 0.06;
     ctx.beginPath();
@@ -71,7 +65,7 @@ class CharacterClass{
     ctx.fill();
   }
 
-  drawTankIcon(ctx,x,y,size){
+  drawTankIcon(ctx, x, y, size) {
     ctx.fillStyle = this.color;
     ctx.beginPath();
     ctx.moveTo(x + size * 0.5, y);
@@ -88,10 +82,10 @@ class CharacterClass{
   }
 }
 
-const characterClasses ={
+const characterClasses = {
   warrior: new CharacterClass({
-    name:'Warrior',
-    stats:{
+    name: 'Warrior',
+    stats: {
       baseHealth: 100,
       baseDamage: 25,
       attackSpeed: 1.0,
@@ -99,27 +93,27 @@ const characterClasses ={
       attackRange: 20,
       description: 'High damage, slow movement'
     },
-    color:'#ff4444',
-    secondaryColor:'#cc0000'
+    color: '#ff4444',
+    secondaryColor: '#cc0000'
   }),
-  
+
   archer: new CharacterClass({
-    name:'Archer',
-    stats:{
+    name: 'Archer',
+    stats: {
       baseHealth: 70,
       baseDamage: 15,
       attackSpeed: 1.5,
       moveSpeed: 180,
       attackRange: 80,
-      description:'Ranged attacks,fast movement'
+      description: 'Ranged attacks, fast movement'
     },
-    color:'#44ff44',
-    secondaryColor:'#00cc00'
+    color: '#44ff44',
+    secondaryColor: '#00cc00'
   }),
-  
+
   mage: new CharacterClass({
-    name:'Mage',
-    stats:{
+    name: 'Mage',
+    stats: {
       baseHealth: 60,
       baseDamage: 30,
       attackSpeed: 0.8,
@@ -128,13 +122,13 @@ const characterClasses ={
       areaOfEffect: 40,
       description: 'Area damage, magic attacks'
     },
-    color:'#4444ff',
-    secondaryColor:'#0000cc'
+    color: '#4444ff',
+    secondaryColor: '#0000cc'
   }),
-  
+
   tank: new CharacterClass({
-    name:'Tank',
-    stats:{
+    name: 'Tank',
+    stats: {
       baseHealth: 150,
       baseDamage: 10,
       attackSpeed: 0.7,
@@ -150,17 +144,17 @@ const characterClasses ={
 
 let selectedClass = null;
 
-function getSelectedClass(){
+function getSelectedClass() {
   return selectedClass || characterClasses.warrior;
 }
 
-function setPlayerClass(className){
+function setPlayerClass(className) {
   selectedClass = characterClasses[className];
   localStorage.setItem('selectedClass', className);
   return selectedClass;
 }
 
-function loadPlayerClass(){
+function loadPlayerClass() {
   const saved = localStorage.getItem('selectedClass');
   if (saved && characterClasses[saved]) {
     selectedClass = characterClasses[saved];
