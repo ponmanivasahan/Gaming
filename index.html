@@ -14,13 +14,14 @@
     .ic-16 { width:16px; height:16px; }
     .ic-18 { width:18px; height:18px; }
     .ic-20 { width:20px; height:20px; }
-    .ic-22 { width:22px; height:22px; } 
+    .ic-22 { width:22px; height:22px; }
     .ic-36 { width:36px; height:36px; }
     .ic-48 { width:48px; height:48px; }
   </style>
 </head>
 <body>
-<svg xmlns="http://www.w3.org/2000/svg" style="display:none; position:absolute;">
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none;position:absolute;">
   <defs>
     <symbol id="icon-shield" viewBox="0 0 32 32">
       <defs>
@@ -36,7 +37,7 @@
       <path d="M16 2 L28 6 L28 17 Q28 26 16 30 Q4 26 4 17 L4 6 Z" fill="url(#sh-rim)" stroke="#1122aa" stroke-width="1"/>
       <path d="M16 4 L26 7.5 L26 17 Q26 24.5 16 28 Q6 24.5 6 17 L6 7.5 Z" fill="url(#sh-face)"/>
       <rect x="15" y="5" width="2" height="22" rx="1" fill="#aabbff" opacity="0.7"/>
-      <rect x="6"  y="14" width="20" height="2" rx="1" fill="#1122bb" opacity="0.45"/>
+      <rect x="6" y="14" width="20" height="2" rx="1" fill="#1122bb" opacity="0.45"/>
       <circle cx="10" cy="10" r="1.3" fill="#aabbff"/>
       <circle cx="22" cy="10" r="1.3" fill="#aabbff"/>
       <path d="M8 7 L13 7 L10 12 Z" fill="white" opacity="0.18"/>
@@ -49,7 +50,8 @@
           <stop offset="100%" stop-color="#cc0000"/>
         </radialGradient>
       </defs>
-      <path d="M16 27 C16 27 3 19 3 11.5 A5.5 5.5 0 0 1 13.5 8 L16 10.5 L18.5 8 A5.5 5.5 0 0 1 29 11.5 C29 19 16 27 16 27 Z" fill="url(#hrt-fill)" stroke="#990000" stroke-width="0.8"/>
+      <path d="M16 27 C16 27 3 19 3 11.5 A5.5 5.5 0 0 1 13.5 8 L16 10.5 L18.5 8 A5.5 5.5 0 0 1 29 11.5 C29 19 16 27 16 27 Z"
+            fill="url(#hrt-fill)" stroke="#990000" stroke-width="0.8"/>
       <path d="M9.5 10.5 Q12 8.5 14 11" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.55"/>
       <circle cx="10.5" cy="11" r="1.6" fill="white" opacity="0.45"/>
     </symbol>
@@ -125,8 +127,10 @@
         </radialGradient>
       </defs>
       <circle cx="16" cy="16" r="14" fill="url(#str-glow)"/>
-      <polygon points="16,3 19.5,12.5 30,12.5 21.5,18.5 24.5,28 16,22.5 7.5,28 10.5,18.5 2,12.5 12.5,12.5" fill="#996600" opacity="0.38" transform="translate(0.5,0.5)"/>
-      <polygon points="16,3 19.5,12.5 30,12.5 21.5,18.5 24.5,28 16,22.5 7.5,28 10.5,18.5 2,12.5 12.5,12.5" fill="url(#str-fill)" stroke="#cc8800" stroke-width="0.5"/>
+      <polygon points="16,3 19.5,12.5 30,12.5 21.5,18.5 24.5,28 16,22.5 7.5,28 10.5,18.5 2,12.5 12.5,12.5"
+               fill="#996600" opacity="0.38" transform="translate(0.5,0.5)"/>
+      <polygon points="16,3 19.5,12.5 30,12.5 21.5,18.5 24.5,28 16,22.5 7.5,28 10.5,18.5 2,12.5 12.5,12.5"
+               fill="url(#str-fill)" stroke="#cc8800" stroke-width="0.5"/>
       <polygon points="16,5 17.8,11 20.5,11 18,13.5 19,17 16,15" fill="white" opacity="0.28"/>
     </symbol>
 
@@ -142,12 +146,14 @@
       <circle cx="16"   cy="16"   r="12.5" fill="url(#coin-fill)"/>
       <circle cx="16"   cy="16"   r="12.5" fill="none" stroke="#cc9900" stroke-width="1.4"/>
       <circle cx="16"   cy="16"   r="10.5" fill="none" stroke="#ffe566" stroke-width="0.7" opacity="0.55"/>
-      <text x="16" y="21" text-anchor="middle" font-family="Georgia,serif" font-size="13" font-weight="bold" fill="#7a5200" opacity="0.85">$</text>
+      <text x="16" y="21" text-anchor="middle" font-family="Georgia,serif"
+            font-size="13" font-weight="bold" fill="#7a5200" opacity="0.85">$</text>
       <ellipse cx="11" cy="11" rx="3" ry="1.8" fill="white" opacity="0.32" transform="rotate(-30,11,11)"/>
     </symbol>
 
     <symbol id="icon-cart" viewBox="0 0 32 32">
-      <path d="M2 4 L5 4 L9 20 L26 20 L29 9 L8 9" stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M2 4 L5 4 L9 20 L26 20 L29 9 L8 9"
+            stroke="white" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       <line x1="11" y1="9" x2="12" y2="20" stroke="white" stroke-width="1.1" opacity="0.45"/>
       <line x1="15" y1="9" x2="15" y2="20" stroke="white" stroke-width="1.1" opacity="0.45"/>
       <line x1="19" y1="9" x2="18" y2="20" stroke="white" stroke-width="1.1" opacity="0.45"/>
@@ -160,115 +166,153 @@
   </defs>
 </svg>
 
-<canvas id="confettiCanvas" style="display:none;position:fixed;top:0;left:0;pointer-events:none;z-index:2000;"></canvas>
-<div id="modalOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9000;align-items:center;justify-content:center;">
-  <div id="modalBox" style="background:#111;border:3px solid white;padding:32px 40px;text-align:center;border-radius:8px;max-width:380px;">
-    <div id="modalMessage" style="color:white;font-family:'Rajdhani',sans-serif;font-size:22px;margin-bottom:20px;"></div>
+<canvas id="confettiCanvas"
+  style="display:none;position:fixed;top:0;left:0;pointer-events:none;z-index:2000;"></canvas>
+
+<!-- Modal Overlay with blur -->
+<div id="modalOverlay"
+  style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+         z-index:9000;align-items:center;justify-content:center;">
+  <div id="modalBox"
+    style="background:#111;padding:32px 40px;
+           text-align:center;border-radius:12px;max-width:400px;width:90%;box-shadow:0 0 30px rgba(0,0,0,0.8);">
+    <div id="modalMessage"
+      style="color:white;font-family:'Rajdhani',sans-serif;font-size:22px;margin-bottom:20px;">
+    </div>
     <div id="modalButtons"></div>
   </div>
 </div>
 
-<!--  START SCREEN  -->
+<!-- Start Screen with Shop -->
 <div id="startScreen">
   <div class="ss-hud-bar">
-  <div class="ss-coin-badge">
-    <svg class="ic ic-20"><use href="#icon-coin"></use></svg> 
-    &nbsp;<span id="startScreenCoins">500</span>&nbsp;COINS
+    <div class="ss-coin-badge">
+      <svg class="ic ic-20"><use href="#icon-coin"></use></svg>
+      &nbsp;<span id="startScreenCoins">500</span>&nbsp;COINS
+    </div>
+    <button class="shop-trigger-btn" onclick="window.showShop()" aria-label="Open Shop">
+      <svg class="ic ic-20"><use href="#icon-cart"></use></svg>
+      <span class="shop-trigger-label">SHOP</span>
+    </button>
   </div>
 
-  <button class="shop-trigger-btn" id="shopTriggerBtn" onclick="window.showShop()" aria-label="Open Shop">
-    <svg class="ic ic-20"><use href="#icon-cart"></use></svg>
-    <span class="shop-trigger-label">SHOP</span>
-  </button>
-  </div>
   <div class="ss-inner">
     <div class="ss-accent-bar"></div>
     <p class="ss-eyebrow">BATTLE ARENA</p>
     <h1 class="ss-main-title">SAMURAI</h1>
-    <p class="ss-tagline">Enter the Battle Field &nbsp;&bull;&nbsp; Prove your blade</p>
+    <p class="ss-tagline">Enter the arena &nbsp;&bull;&nbsp; Prove your blade</p>
     <div class="ss-divider"><div class="ss-divider-gem"></div></div>
     <div class="ss-actions">
       <button class="btn ss-start-btn" onclick="window.startGame()">START GAME</button>
       <div class="ss-sec-row">
-        <button class="btn ss-sec-btn" onclick="window.showShop()">SHOP</button>
         <button class="btn ss-sec-btn" onclick="window.showHowToPlay()">HOW TO PLAY</button>
       </div>
     </div>
   </div>
-</div>      
-<!-- SHOP SCREEN -->
-<div id="shopScreen" style="display:none;">
-  <div class="shop-panel">
-    <h1 class="screen-title">
-      <svg class="ic ic-36"><use href="#icon-cart"></use></svg>
-      SHOP
-    </h1>
-    <div class="shop-coin-display">
-      <svg class="ic ic-22"><use href="#icon-coin"></use></svg>
-      <span id="coinDisplay">500</span>Coins
+
+  <!-- Shop Panel (Now inside start screen) -->
+  <div class="shop-backdrop" id="shopBackdrop" onclick="window.closeShop()"></div>
+  <div class="shop-panel" id="shopPanel" role="dialog" aria-label="Shop">
+    <div class="shop-panel-header">
+      <div class="shop-panel-title">
+        <svg class="ic ic-22"><use href="#icon-cart"></use></svg>
+        ARMORY
+      </div>
+      <div class="shop-panel-wallet">
+        <svg class="ic ic-16"><use href="#icon-coin"></use></svg>
+        <span id="coinDisplay">500</span>
+      </div>
+      <button class="shop-panel-close" onclick="window.closeShop()" aria-label="Close shop">✕</button>
     </div>
-    <div class="rules-container shop-grid">
 
-      <div class="shop-item" style="background:rgba(68,68,255,0.2);border:3px solid #4444ff;">
-        <div class="shop-item-icon"><svg class="ic ic-48"><use href="#icon-shield"></use></svg></div>
-        <h3 style="color:#4444ff;">Shield</h3>
-        <p class="shop-item-desc">Blocks one hit during battle</p>
-        <div class="shop-item-price"><svg class="ic ic-16"><use href="#icon-coin"></use></svg> 100 Coins</div>
-        <div class="shop-item-owned">Owned: <span id="shieldCount">0</span></div>
-        <button class="btn" onclick="window.buyItem('shields',100)">Buy</button>
+    <div class="shop-panel-items">
+      <div class="sp-item" style="--sp-color:#4d79ff;">
+        <div class="sp-item-icon"><svg class="ic ic-36"><use href="#icon-shield"></use></svg></div>
+        <div class="sp-item-body">
+          <div class="sp-item-name">Shield</div>
+          <div class="sp-item-desc">Absorbs one full hit so you take zero damage.</div>
+          <div class="sp-item-owned">Owned: <strong id="shieldCount">0</strong></div>
+        </div>
+        <div class="sp-item-action">
+          <div class="sp-item-price"><svg class="ic ic-13"><use href="#icon-coin"></use></svg> 100</div>
+          <button class="sp-buy-btn" onclick="window.buyItem('shields',100)">BUY</button>
+        </div>
       </div>
 
-      <div class="shop-item" style="background:rgba(255,68,68,0.2);border:3px solid #ff4444;">
-        <div class="shop-item-icon"><svg class="ic ic-48"><use href="#icon-heart"></use></svg></div>
-        <h3 style="color:#ff4444;">Health Boost</h3>
-        <p class="shop-item-desc">Start with +50 extra health</p>
-        <div class="shop-item-price"><svg class="ic ic-16"><use href="#icon-coin"></use></svg> 150 Coins</div>
-        <div class="shop-item-owned">Owned: <span id="healthBoostCount">0</span></div>
-        <button class="btn" onclick="window.buyItem('healthBoosts',150)">Buy</button>
+      <div class="sp-item" style="--sp-color:#ff5555;">
+        <div class="sp-item-icon"><svg class="ic ic-36"><use href="#icon-heart"></use></svg></div>
+        <div class="sp-item-body">
+          <div class="sp-item-name">Health Boost</div>
+          <div class="sp-item-desc">Enter the round with +50 bonus HP on your bar.</div>
+          <div class="sp-item-owned">Owned: <strong id="healthBoostCount">0</strong></div>
+        </div>
+        <div class="sp-item-action">
+          <div class="sp-item-price"><svg class="ic ic-13"><use href="#icon-coin"></use></svg> 150</div>
+          <button class="sp-buy-btn" onclick="window.buyItem('healthBoosts',150)">BUY</button>
+        </div>
       </div>
 
-      <div class="shop-item" style="background:rgba(255,136,0,0.2);border:3px solid #ff8800;">
-        <div class="shop-item-icon"><svg class="ic ic-48"><use href="#icon-bolt"></use></svg></div>
-        <h3 style="color:#ff8800;">Damage Boost</h3>
-        <p class="shop-item-desc">Deal 1.5x damage for one match</p>
-        <div class="shop-item-price"><svg class="ic ic-16"><use href="#icon-coin"></use></svg> 200 Coins</div>
-        <div class="shop-item-owned">Owned: <span id="damageBoostCount">0</span></div>
-        <button class="btn" onclick="window.buyItem('damageBoosts',200)">Buy</button>
+      <div class="sp-item" style="--sp-color:#ff9500;">
+        <div class="sp-item-icon"><svg class="ic ic-36"><use href="#icon-bolt"></use></svg></div>
+        <div class="sp-item-body">
+          <div class="sp-item-name">Damage Boost</div>
+          <div class="sp-item-desc">Deal 1.5× damage for an entire match.</div>
+          <div class="sp-item-owned">Owned: <strong id="damageBoostCount">0</strong></div>
+        </div>
+        <div class="sp-item-action">
+          <div class="sp-item-price"><svg class="ic ic-13"><use href="#icon-coin"></use></svg> 200</div>
+          <button class="sp-buy-btn" onclick="window.buyItem('damageBoosts',200)">BUY</button>
+        </div>
       </div>
 
-      <div class="shop-item" style="background:rgba(68,255,68,0.15);border:3px solid #44ff44;">
-        <div class="shop-item-icon"><svg class="ic ic-48"><use href="#icon-runner"></use></svg></div>
-        <h3 style="color:#44ff44;">Speed Boost</h3>
-        <p class="shop-item-desc">Run 70% faster for the whole round</p>
-        <div class="shop-item-price"><svg class="ic ic-16"><use href="#icon-coin"></use></svg> 175 Coins</div>
-        <div class="shop-item-owned">Owned: <span id="speedBoostCount">0</span></div>
-        <button class="btn" onclick="window.buyItem('speedBoosts',175)">Buy</button>
+      <div class="sp-item" style="--sp-color:#33dd66;">
+        <div class="sp-item-icon"><svg class="ic ic-36"><use href="#icon-runner"></use></svg></div>
+        <div class="sp-item-body">
+          <div class="sp-item-name">Speed Boost</div>
+          <div class="sp-item-desc">Move 70% faster for the whole round.</div>
+          <div class="sp-item-owned">Owned: <strong id="speedBoostCount">0</strong></div>
+        </div>
+        <div class="sp-item-action">
+          <div class="sp-item-price"><svg class="ic ic-13"><use href="#icon-coin"></use></svg> 175</div>
+          <button class="sp-buy-btn" onclick="window.buyItem('speedBoosts',175)">BUY</button>
+        </div>
       </div>
 
-      <div class="shop-item" style="background:rgba(100,200,255,0.15);border:3px solid #64c8ff;">
-        <div class="shop-item-icon"><svg class="ic ic-48"><use href="#icon-snowflake"></use></svg></div>
-        <h3 style="color:#64c8ff;">Time Freeze</h3>
-        <p class="shop-item-desc">Freeze the round timer for 5 secs</p>
-        <div class="shop-item-price"><svg class="ic ic-16"><use href="#icon-coin"></use></svg> 250 Coins</div>
-        <div class="shop-item-owned">Owned: <span id="timeFreezeCount">0</span></div>
-        <button class="btn" onclick="window.buyItem('timeFreezes',250)">Buy</button>
+      <div class="sp-item" style="--sp-color:#44ccee;">
+        <div class="sp-item-icon"><svg class="ic ic-36"><use href="#icon-snowflake"></use></svg></div>
+        <div class="sp-item-body">
+          <div class="sp-item-name">Time Freeze</div>
+          <div class="sp-item-desc">Pause the round timer for 5 seconds.</div>
+          <div class="sp-item-owned">Owned: <strong id="timeFreezeCount">0</strong></div>
+        </div>
+        <div class="sp-item-action">
+          <div class="sp-item-price"><svg class="ic ic-13"><use href="#icon-coin"></use></svg> 250</div>
+          <button class="sp-buy-btn" onclick="window.buyItem('timeFreezes',250)">BUY</button>
+        </div>
       </div>
 
-      <div class="shop-item" style="background:rgba(255,215,0,0.15);border:3px solid #FFD700;">
-        <div class="shop-item-icon"><svg class="ic ic-48"><use href="#icon-star"></use></svg></div>
-        <h3 style="color:#FFD700;">Invincibility</h3>
-        <p class="shop-item-desc">Immune to all damage for 4 seconds</p>
-        <div class="shop-item-price"><svg class="ic ic-16"><use href="#icon-coin"></use></svg> 350 Coins</div>
-        <div class="shop-item-owned">Owned: <span id="invincibilityCount">0</span></div>
-        <button class="btn" onclick="window.buyItem('invincibilities',350)">Buy</button>
+      <div class="sp-item" style="--sp-color:#FFD700;">
+        <div class="sp-item-icon"><svg class="ic ic-36"><use href="#icon-star"></use></svg></div>
+        <div class="sp-item-body">
+          <div class="sp-item-name">Invincibility</div>
+          <div class="sp-item-desc">Immune to all damage for 4 full seconds.</div>
+          <div class="sp-item-owned">Owned: <strong id="invincibilityCount">0</strong></div>
+        </div>
+        <div class="sp-item-action">
+          <div class="sp-item-price"><svg class="ic ic-13"><use href="#icon-coin"></use></svg> 350</div>
+          <button class="sp-buy-btn" onclick="window.buyItem('invincibilities',350)">BUY</button>
+        </div>
       </div>
-
     </div>
-    <button class="btn shop-back-btn" onclick="window.closeShop()">Back to Menu</button>
+
+    <div class="shop-panel-footer">
+      Power-ups activate at the start of your next battle &nbsp;·&nbsp; Use keys 1–6 in-game
+    </div>
   </div>
+  <div class="shop-toast" id="shopToast"></div>
 </div>
 
-<!-- HOW TO PLAY SCREEN -->
+<!-- How To Play Screen -->
 <div id="howToPlayScreen" style="display:none;">
   <h1 class="screen-title">HOW TO PLAY</h1>
   <div class="rules-container">
@@ -291,12 +335,12 @@
     </ul>
     <h3>PLAYER 2 CONTROLS (Right Fighter)</h3>
     <ul>
-      <li><strong>← Arrow</strong> — Move Left</li>
-      <li><strong>→ Arrow</strong> — Move Right</li>
-      <li><strong>↑ Arrow</strong> — Jump</li>
-      <li><strong>↓ Arrow</strong> — Attack</li>
-      <li><strong>RIGHT CTRL</strong> — Block (reduces any hit to 5 damage)</li>
-      <li><strong>ENTER ↵</strong> — Special / Ultimate Attack (when charge bar is full)</li>
+      <li><strong>&larr; Arrow</strong> — Move Left</li>
+      <li><strong>&rarr; Arrow</strong> — Move Right</li>
+      <li><strong>&uarr; Arrow</strong> — Jump</li>
+      <li><strong>&darr; Arrow</strong> — Attack</li>
+      <li><strong>CTRL (Left/Right)</strong> — Block (reduces any hit to 5 damage)</li>
+      <li><strong>ENTER</strong> — Special / Ultimate Attack (when charge bar is full)</li>
     </ul>
     <h3>SPECIAL ATTACK (ULTIMATE)</h3>
     <ul>
@@ -317,6 +361,14 @@
       <li>Blocking reduces any hit to only <strong>5</strong> damage</li>
       <li>Both players start with <strong>300 HP</strong> per round; 30-second timer</li>
     </ul>
+    <h3>IN-GAME POWERUPS</h3>
+    <ul>
+      <li>Buy powerups in the Shop before the match</li>
+      <li>During the game, <strong>click a HUD icon</strong> or press its number key to use it</li>
+      <li><strong>1</strong> Shield &nbsp;·&nbsp; <strong>2</strong> Health &nbsp;·&nbsp;
+          <strong>3</strong> Damage &nbsp;·&nbsp; <strong>4</strong> Speed &nbsp;·&nbsp;
+          <strong>5</strong> Freeze &nbsp;·&nbsp; <strong>6</strong> Invincibility</li>
+    </ul>
     <h3>⏸ PAUSE MENU</h3>
     <ul>
       <li><strong>ESC</strong> — Pause / Resume game</li>
@@ -326,24 +378,26 @@
   </div>
   <button class="btn" onclick="window.backToMenu()">Back to Menu</button>
 </div>
+
+<!-- Game Container (No Shop here) -->
 <div id="gameContainer" style="display:none;">
   <div id="gameWrapper">
     <div id="loadingScreen" style="display:none;">Loading...</div>
     <div style="position:relative;width:100%;height:100%;">
 
       <div class="ui-overlay">
-        <div class="player-label left"  id="player1NameLabel">PLAYER 1</div>
-        <div class="player-label right" id="player2NameLabel">PLAYER 2</div>
+        <!-- Player names without borders -->
+        <div class="player-name left" id="player1NameLabel">PLAYER 1</div>
+        <div class="player-name right" id="player2NameLabel">PLAYER 2</div>
 
+        <!-- Health bars only (no shop) -->
         <div class="health-timer-container">
           <div class="health-bar">
-            <div class="health-bar-bg"></div>
-            <div id="playerHealth" class="health-bar-fill"></div>
+            <div id="playerHealth" class="health-bar-fill" style="width:100%;"></div>
           </div>
           <div id="timer">30</div>
           <div class="health-bar">
-            <div class="health-bar-bg"></div>
-            <div id="enemyHealth" class="health-bar-fill"></div>
+            <div id="enemyHealth" class="health-bar-fill" style="width:100%;"></div>
           </div>
         </div>
 
@@ -384,52 +438,10 @@
     </div>
   </div>
 </div>
-<div class="shop-backdrop" id="shopBackdrop" onclick="window.closeShop()"></div>
-<div class="shop-panel" id="shopPanel" role="dialog" aria-label="Shop">
-  <div class="shop-panel-header">
-    <div class="shop-panel-title">
-      <svg class="ic ic-22"><use href="#icon-cart"></use></svg>
-      ARMORY
-    </div>
-    <div class="shop-panel-wallet">
-      <svg class="ic ic-16"><use href="#icon-coin"></use></svg>
-      <span id="coinDisplay">500</span>
-    </div>
-    <button class="shop-panel-close" onclick="window.closeShop()" aria-label="Close">✕</button>
-  </div>
 
-  <div class="shop-panel-items">
-    <div class="sp-item" style="--sp-color:#4d79ff;">
-      <div class="sp-item-icon"><svg class="ic ic-36"><use href="#icon-shield"></use></svg></div>
-      <div class="sp-item-body">
-        <div class="sp-item-name">Shield</div>
-        <div class="sp-item-desc">Absorbs one full hit so you take zero damage.</div>
-        <div class="sp-item-owned">Owned: <strong id="shieldCount">0</strong></div>
-      </div>
-      <div class="sp-item-action">
-        <div class="sp-item-price"><svg class="ic ic-13"><use href="#icon-coin"></use></svg>100</div>
-        <button class="sp-buy-btn" onclick="window.buyItem('shields',100)">BUY</button>
-      </div>
-    </div>
-
-    <div class="sp-item" style="--sp-color:#ff5555;">
-      <div class="sp-item-icon"><svg class="ic ic-36"><use href="#icon-heart"></use></svg></div>
-      <div class="sp-item-body">
-        <div class="sp-item-name">Health Boost</div>
-        <div class="sp-item-desc">Enter the round with +50 bonus HP on your bar</div>
-        <div class="sp-item-owned">Owned:<strong id="healthBoostCount">0</strong></div>
-      </div>
-      <div class="sp-item-action">
-        <div class="sp-item-price"><svg class="ic ic-13"><use href="#icon-coin"></use></svg>150</div>
-        <button class="sp-buy-btn" onclick="window.buyItem('healthBoosts',150)">BUY</button>
-      </div>
-    </div>
-    
-  </div>
-</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"
-        integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="js/utils.js"></script>
 <script src="js/classes.js"></script>
 <script src="js/characterClasses.js"></script>

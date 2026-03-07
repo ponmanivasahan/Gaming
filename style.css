@@ -1,5 +1,4 @@
 /* style.css */
-
 * {
   box-sizing: border-box;
   font-family: 'Rajdhani','Inter','Segoe UI', Arial, sans-serif;
@@ -15,7 +14,28 @@ body {
   background: black;
 }
 
-/* ===== SHARED BUTTON ===== */
+:root {
+  --shop-bg:#080816;
+  --shop-surface:#0f0f22;
+  --shop-border:rgba(255,255,255,0.07);
+  --shop-accent:#00d4c8;
+  --shop-accent-dim: rgba(0,212,200,0.18);
+  --shop-gold:#FFD700;
+  --shop-muted:rgba(255,255,255,0.42);
+  --shop-panel-w:430px;
+  --shop-ease:cubic-bezier(0.16,1,0.3,1);
+}
+
+/* Icon sizes */
+.ic-13 { width:13px; height:13px; }
+.ic-16 { width:16px; height:16px; }
+.ic-18 { width:18px; height:18px; }
+.ic-20 { width:20px; height:20px; }
+.ic-22 { width:22px; height:22px; }
+.ic-36 { width:36px; height:36px; }
+.ic-48 { width:48px; height:48px; }
+
+/* Button styles */
 .btn {
   font-family: 'Press Start 2P', 'Rajdhani', cursive;
   font-size: clamp(9px, 1.1vw, 12px);
@@ -27,19 +47,20 @@ body {
   padding: 12px 28px;
   cursor: pointer;
   transition: transform 0.1s, box-shadow 0.1s, background 0.15s;
-  box-shadow: 0 4px 14px rgba(200, 0, 0, 0.35);
+  box-shadow: 0 4px 14px rgba(200,0,0,0.35);
 }
+
 .btn:hover {
   background: linear-gradient(135deg, #ff2222, #aa0000);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 0, 0, 0.45);
-}
-.btn:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(200, 0, 0, 0.3);
+  box-shadow: 0 6px 20px rgba(255,0,0,0.45);
 }
 
-/* ===== SCREEN TITLE ===== */
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(200,0,0,0.3);
+}
+
 .screen-title {
   font-family: 'Press Start 2P', cursive;
   font-size: clamp(18px, 3vw, 32px);
@@ -51,7 +72,7 @@ body {
   gap: 12px;
 }
 
-/* ===== START SCREEN ===== */
+/* Start Screen */
 #startScreen {
   position: fixed;
   top: 0; left: 0;
@@ -65,6 +86,7 @@ body {
   z-index: 1000;
   overflow: hidden;
 }
+
 #startScreen::before {
   content: '';
   position: absolute;
@@ -76,6 +98,7 @@ body {
   z-index: 0;
   pointer-events: none;
 }
+
 #startScreen::after {
   content: '';
   position: absolute;
@@ -88,18 +111,78 @@ body {
   pointer-events: none;
 }
 
-.ss-coin-badge {
+.ss-hud-bar {
   position: absolute;
   top: 16px; right: 22px;
   z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ss-coin-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-family: 'Press Start 2P', cursive;
   font-size: clamp(7px, 0.85vw, 9px);
-  color: #FFD700;
+  color: var(--shop-gold);
   background: rgba(255,215,0,0.07);
   border: 1.5px solid rgba(255,215,0,0.22);
   border-radius: 999px;
   padding: 6px 16px;
   letter-spacing: 1.5px;
+}
+
+.shop-trigger-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background: rgba(0,212,200,0.08);
+  border: 1.5px solid rgba(0,212,200,0.35);
+  border-radius: 10px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s, transform 0.12s, box-shadow 0.18s;
+  position: relative;
+  min-width: 56px;
+  color: white;
+}
+
+.shop-trigger-btn:hover {
+  background: rgba(0,212,200,0.18);
+  border-color: var(--shop-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 18px rgba(0,212,200,0.28);
+}
+
+.shop-trigger-btn:active { transform: translateY(0); }
+
+.shop-trigger-label {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 6px;
+  color: var(--shop-accent);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.shop-trigger-btn::after {
+  content: '';
+  position: absolute;
+  top: -4px; right: -4px;
+  width: 9px; height: 9px;
+  background: var(--shop-gold);
+  border-radius: 50%;
+  border: 1.5px solid #06060e;
+  animation: shopDotPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes shopDotPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(255,215,0,0.7); }
+  55%      { box-shadow: 0 0 0 5px rgba(255,215,0,0); }
 }
 
 .ss-inner {
@@ -165,14 +248,17 @@ body {
   max-width: 560px;
   margin-bottom: 26px;
 }
+
 .ss-divider::before {
   content: ''; flex: 1; height: 1px;
   background: linear-gradient(90deg, transparent, rgba(0,160,255,0.40));
 }
+
 .ss-divider::after {
   content: ''; flex: 1; height: 1px;
   background: linear-gradient(90deg, rgba(0,160,255,0.40), transparent);
 }
+
 .ss-divider-gem {
   width: 7px; height: 7px;
   background: #bb0000;
@@ -225,6 +311,7 @@ body {
   color: rgba(255,255,255,0.90);
   transition: border-color 0.15s, color 0.15s, background 0.15s, box-shadow 0.15s;
 }
+
 .ss-sec-btn:hover {
   background: rgba(255,255,255,0.16);
   border-color: #fff;
@@ -233,7 +320,6 @@ body {
   transform: none;
 }
 
-/* ===== HOW TO PLAY SCREEN ===== */
 #howToPlayScreen {
   position: fixed;
   top: 0; left: 0;
@@ -246,95 +332,8 @@ body {
   gap: 12px;
   z-index: 1000;
   padding: 40px 20px;
-  /* display:none set inline in HTML, toggled to flex by JS */
 }
 
-/* ===== SHOP SCREEN ===== */
-#shopScreen {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background: linear-gradient(135deg, #0a0a1a 0%, #12122a 100%);
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  padding: 24px 20px;
-  /* display:none set inline in HTML, toggled to flex by JS */
-}
-
-.shop-panel {
-  width: 100%;
-  max-width: 900px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
-.shop-coin-display {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #FFD700;
-  font-family: 'Press Start 2P', cursive;
-  font-size: clamp(10px, 1.4vw, 14px);
-  letter-spacing: 2px;
-  margin-bottom: 4px;
-}
-
-.shop-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  max-height: 62vh;
-}
-
-.shop-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding: 16px 12px;
-  border-radius: 10px;
-  text-align: center;
-}
-
-.shop-item h3 {
-  font-family: 'Press Start 2P', cursive;
-  font-size: clamp(8px, 0.9vw, 10px);
-  letter-spacing: 1px;
-  margin: 0;
-}
-
-.shop-item-desc {
-  color: rgba(255,255,255,0.72);
-  font-size: clamp(10px, 1.2vw, 13px);
-  line-height: 1.4;
-}
-
-.shop-item-price {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: #FFD700;
-  font-family: 'Rajdhani', sans-serif;
-  font-weight: 700;
-  font-size: clamp(11px, 1.3vw, 14px);
-}
-
-.shop-item-owned {
-  color: rgba(255,255,255,0.55);
-  font-size: clamp(10px, 1.1vw, 12px);
-}
-
-.shop-back-btn {
-  margin-top: 8px;
-  background: rgba(255,255,255,0.08);
-  border-color: rgba(255,255,255,0.45);
-}
-
-/* ===== RULES CONTAINER ===== */
 .rules-container {
   max-width: 760px;
   background: rgba(0,0,0,0.88);
@@ -351,6 +350,7 @@ body {
   letter-spacing: 0.2px;
   text-align: left;
 }
+
 .rules-container h3 {
   font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   font-weight: 700;
@@ -360,29 +360,30 @@ body {
   color: #ff6b6b;
   letter-spacing: 0.6px;
 }
+
 .rules-container li {
   margin-bottom: 8px;
   line-height: 1.6;
   color: white;
 }
+
 .rules-container ul {
   list-style: none;
   padding-left: 20px;
 }
+
 .rules-container li::before {
   content: "▶";
   color: #ff0000;
   margin-right: 10px;
 }
 
-/* ===== GAME CONTAINER ===== */
 #gameContainer {
   position: fixed;
   top: 0; left: 0;
   width: 100vw; height: 100vh;
   background: black;
   z-index: 500;
-  /* display:none set inline in HTML */
 }
 
 #gameWrapper {
@@ -403,7 +404,7 @@ body {
 #loadingScreen {
   position: absolute;
   top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%,-50%);
   color: white;
   font-size: 24px;
   z-index: 1001;
@@ -411,7 +412,6 @@ body {
   letter-spacing: 3px;
 }
 
-/* ===== UI OVERLAY ===== */
 .ui-overlay {
   position: absolute;
   top: 0; left: 0;
@@ -419,68 +419,99 @@ body {
   pointer-events: none;
 }
 
-/* ===== HEALTH BAR ===== */
+
+.player-name {
+  position: absolute;
+  top: 20px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 0 15px rgba(0,0,0,0.8), 0 0 30px currentColor;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.player-name.left {
+  left: 30px;
+  color: #4d79ff;
+}
+
+.player-name.right {
+  right: 30px;
+  color: #ff5555;
+}
+
+.player-label {
+  display: none;
+}
+
 .health-timer-container {
   position: absolute;
+  top: 80px;
+  left: 0;
+  right: 0;
   display: flex;
-  width: 100%;
   align-items: center;
-  padding: 20px;
-  gap: 10px;
+  justify-content: center;
+  padding: 0 20px;
+  gap: 20px;
+  z-index: 15;
 }
+
 
 .health-bar {
   position: relative;
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  border: 4px solid white;
-}
-
-.health-bar-bg {
-  background-color: red;
+  width: 300px;
   height: 30px;
-  width: 100%;
+  border: 3px solid white;
+  border-radius: 15px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.3); 
 }
-
 .health-bar-fill {
   position: absolute;
-  top: 0; bottom: 0;
-  width: 100%;
-  transition: width 0.3s, background-color 0.3s;
+  top: 0;
+  height: 100%;
+  transition: width 0.2s ease;
 }
 
 #playerHealth {
-  background: #4169e1;
-  right: 0;
+  left: 0;
+  background: linear-gradient(90deg, #4169e1, #1e3c8a);
 }
 
 #enemyHealth {
-  background: #4169e1;
-  left: 0;
+  right: 0;
+  background: linear-gradient(90deg, #dc143c, #8b0000);
 }
 
-/* ===== TIMER ===== */
+.health-bar-bg {
+  display: none;
+}
+
 #timer {
   background-color: black;
   min-width: 80px;
   height: 50px;
-  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  border: 4px solid white;
+  border: 3px solid white;
+  border-radius: 10px;
   font-family: 'Rajdhani', sans-serif;
   font-weight: 700;
-  font-size: clamp(16px, 2.5vw, 26px);
+  font-size: 26px;
+  background: linear-gradient(135deg, #1a1a1a, #000);
 }
 
-/* ===== DISPLAY TEXT (round/match winner overlay) ===== */
+/* Display Text */
 #displayText {
   position: absolute;
   color: white;
-  display: none; /* toggled to flex by JS */
+  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -490,10 +521,10 @@ body {
   font-weight: 700;
   font-size: clamp(28px, 5.5vw, 58px);
   text-shadow:
-    0 0 30px rgba(255, 200, 50, 0.9),
-    0 0 60px rgba(255, 140, 0, 0.6),
-    3px 3px 0px rgba(150, 0, 0, 0.8);
-  background: rgba(0, 0, 0, 0.87);
+    0 0 30px rgba(255,200,50,0.9),
+    0 0 60px rgba(255,140,0,0.6),
+    3px 3px 0px rgba(150,0,0,0.8);
+  background: rgba(0,0,0,0.87);
   pointer-events: none;
   z-index: 100;
 }
@@ -512,36 +543,20 @@ body {
   filter: drop-shadow(0 0 20px rgba(255,180,0,0.7));
 }
 
-/* ===== PLAYER LABELS ===== */
-.player-label {
-  position: absolute;
-  top: 70px;
-  color: white;
-  font-family: 'Rajdhani', sans-serif;
-  font-weight: 600;
-  font-size: clamp(13px, 1.8vw, 18px);
-  text-shadow: 2px 2px 0px #000;
-  padding: 5px 10px;
-  background: rgba(0,0,0,0.7);
-  border: 2px solid white;
-}
-.player-label.left  { left: 20px; }
-.player-label.right { right: 20px; }
-
-/* ===== FIGHT COUNTDOWN ===== */
+/* Fight Countdown */
 @keyframes countdownPop {
-  0%   { transform: translate(-50%, -50%) scale(0.3); opacity: 0; letter-spacing: 20px; }
-  30%  { transform: translate(-50%, -50%) scale(1.25); opacity: 1; letter-spacing: 4px; }
-  55%  { transform: translate(-50%, -50%) scale(0.95); opacity: 1; }
-  70%  { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
-  85%  { transform: translate(-50%, -50%) scale(1);    opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(1.1);  opacity: 0; }
+  0%   { transform: translate(-50%,-50%) scale(0.3);  opacity: 0; letter-spacing: 20px; }
+  30%  { transform: translate(-50%,-50%) scale(1.25); opacity: 1; letter-spacing: 4px; }
+  55%  { transform: translate(-50%,-50%) scale(0.95); opacity: 1; }
+  70%  { transform: translate(-50%,-50%) scale(1.05); opacity: 1; }
+  85%  { transform: translate(-50%,-50%) scale(1);    opacity: 1; }
+  100% { transform: translate(-50%,-50%) scale(1.1);  opacity: 0; }
 }
 
 #fightCountdown {
   position: absolute;
   top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%,-50%);
   font-family: 'Rajdhani', sans-serif;
   font-weight: 700;
   font-size: clamp(64px, 12vw, 130px);
@@ -553,11 +568,12 @@ body {
   pointer-events: none;
   white-space: nowrap;
 }
+
 #fightCountdown.countdown-pop {
-  animation: countdownPop 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: countdownPop 0.9s cubic-bezier(0.22,1,0.36,1) forwards;
 }
 
-/* ===== POWERUP HUD ===== */
+/* Powerup HUD */
 #powerupHUD {
   position: absolute;
   bottom: 16px;
@@ -591,4 +607,285 @@ body {
   font-weight: 700;
   color: #FFD700;
   line-height: 1;
+}
+
+/* Shop Styles */
+.shop-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0);
+  pointer-events: none;
+  z-index: 800;
+  transition: background 0.38s ease;
+}
+
+.shop-backdrop.open {
+  background: rgba(0,0,0,0.72);
+  pointer-events: all;
+}
+
+.shop-panel {
+  position: fixed;
+  top: 0; right: 0;
+  width: var(--shop-panel-w);
+  max-width: 96vw;   
+  height: 100vh;
+  background: var(--shop-bg);
+  border-left: 1px solid rgba(0,212,200,0.14);
+  transform: translateX(100%);
+  transition: transform 0.52s var(--shop-ease);
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.shop-panel.open {
+  transform: translateX(0);
+  box-shadow: -8px 0 60px rgba(0,0,0,0.7), -1px 0 0 rgba(0,212,200,0.1);
+}
+
+.shop-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 2px; height: 100%;
+  background: linear-gradient(180deg, var(--shop-accent) 0%, rgba(0,212,200,0.3) 50%, transparent 100%);
+  z-index: 1;
+}
+
+.shop-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 22px 22px 18px;
+  border-bottom: 1px solid var(--shop-border);
+  background: linear-gradient(180deg, rgba(0,212,200,0.06) 0%, transparent 100%);
+  flex-shrink: 0;
+}
+
+.shop-panel-title {
+  flex: 1;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(14px, 2vw, 18px);
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: #fff;
+  text-shadow: 0 0 22px rgba(0,212,200,0.45);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.shop-panel-wallet {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(14px, 1.8vw, 18px);
+  font-weight: 700;
+  color: var(--shop-gold);
+  background: rgba(255,215,0,0.07);
+  border: 1px solid rgba(255,215,0,0.2);
+  border-radius: 8px;
+  padding: 6px 14px;
+  letter-spacing: 1px;
+}
+
+.shop-panel-close {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--shop-muted);
+  width: 32px; height: 32px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  flex-shrink: 0;
+}
+
+.shop-panel-close:hover {
+  border-color: var(--shop-accent);
+  color: #fff;
+  background: var(--shop-accent-dim);
+}
+
+.shop-panel-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.shop-panel-items::-webkit-scrollbar { width: 3px; }
+.shop-panel-items::-webkit-scrollbar-track { background: transparent; }
+.shop-panel-items::-webkit-scrollbar-thumb {
+  background: rgba(0,212,200,0.3);
+  border-radius: 3px;
+}
+
+.sp-item {
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--sp-color) 28%, transparent);
+  background: color-mix(in srgb, var(--sp-color) 7%, #09091a);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s, background 0.2s, transform 0.16s, box-shadow 0.2s;
+}
+
+.sp-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, rgba(255,255,255,0.05) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.sp-item:hover {
+  border-color: color-mix(in srgb, var(--sp-color) 65%, transparent);
+  background: color-mix(in srgb, var(--sp-color) 14%, #09091a);
+  transform: translateX(-3px);
+  box-shadow: 4px 0 22px color-mix(in srgb, var(--sp-color) 18%, transparent);
+}
+
+.sp-item-icon {
+  width: 56px; height: 56px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--sp-color) 14%, #111);
+  border: 1px solid color-mix(in srgb, var(--sp-color) 35%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sp-item-body { min-width: 0; }
+
+.sp-item-name {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.sp-item-desc {
+  font-size: clamp(11px, 1.3vw, 13px);
+  color: var(--shop-muted);
+  line-height: 1.4;
+  margin-bottom: 5px;
+}
+
+.sp-item-owned {
+  font-size: 11px;
+  color: var(--shop-muted);
+  letter-spacing: 0.5px;
+}
+
+.sp-item-owned strong {
+  color: color-mix(in srgb, var(--sp-color) 90%, white);
+  font-weight: 700;
+}
+
+.sp-item-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.sp-item-price {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--shop-gold);
+  font-family: 'Cinzel', serif;
+  font-size: clamp(11px, 1.4vw, 13px);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.sp-buy-btn {
+  background: color-mix(in srgb, var(--sp-color) 16%, #0d0d20);
+  border: 1.5px solid color-mix(in srgb, var(--sp-color) 60%, transparent);
+  color: #fff;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 7px;
+  letter-spacing: 1px;
+  padding: 8px 13px;
+  border-radius: 7px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s, box-shadow 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+
+.sp-buy-btn:hover {
+  background: color-mix(in srgb, var(--sp-color) 30%, #0d0d20);
+  border-color: color-mix(in srgb, var(--sp-color) 90%, white);
+  transform: scale(1.06);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--sp-color) 38%, transparent);
+}
+
+.sp-buy-btn:active { transform: scale(0.96); }
+
+@keyframes spFlash {
+  0%   { background: rgba(255,255,255,0.18); }
+  100% { background: color-mix(in srgb, var(--sp-color) 7%, #09091a); }
+}
+
+.sp-item.sp-purchased {
+  animation: spFlash 0.45s ease-out forwards;
+}
+
+.shop-panel-footer {
+  padding: 12px 20px;  
+  border-top: 1px solid var(--shop-border);
+  background: rgba(0,0,0,0.25);
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--shop-muted);
+  flex-shrink: 0;
+}
+
+.shop-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  background: rgba(8,8,22,0.96);
+  border: 1px solid rgba(0,212,200,0.35);
+  border-radius: 10px;
+  padding: 10px 22px;
+  color: var(--shop-accent);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  opacity: 0;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  z-index: 1100;
+  pointer-events: none;  
+  white-space: nowrap;
+}
+
+.shop-toast.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);  
 }

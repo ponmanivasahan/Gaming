@@ -1,25 +1,22 @@
 // js/inputHandler.js
-
 class InputHandler {
   constructor(gameState) {
     this.gameState = gameState;
-    this.keys = {
-      // Player 1
-      a:     { pressed: false },
-      d:     { pressed: false },
-      Shift: { pressed: false },
-      // Player 2
-      ArrowLeft:  { pressed: false },
-      ArrowRight: { pressed: false },
-      Control:    { pressed: false }
+    this.keys ={
+      //player 1
+      a:{pressed:false},  
+      d:{pressed:false},    
+      Shift:{pressed:false},
+      //player 2
+      ArrowLeft:{pressed:false},
+      ArrowRight:{ pressed:false},
+      Control:{pressed:false}
     };
-    this.setupEventListeners();
+    this.setupEventListeners();  
   }
 
-  setupEventListeners() {
-    window.addEventListener('keydown', (event) => {
-
-      // --- Pause / overlay keys (always handled first) ---
+  setupEventListeners(){
+    window.addEventListener('keydown',(event) =>{
       if (event.key === 'Escape') {
         if (this.gameState.showMatchStats) {
           this.gameState.showMatchStats = false;
@@ -57,10 +54,6 @@ class InputHandler {
       }
 
       if (!this.gameState.gameStarted) return;
-
-      // --- Player 1 ---
-      // BUG FIX: early return when player is dead was placed BEFORE the enemy
-      // key handling, which also blocked enemy controls. Split into separate guards.
       switch (event.key) {
         case 'd':
           if (this.gameState.player && !this.gameState.player.dead) {
@@ -85,7 +78,7 @@ class InputHandler {
           }
           break;
         case ' ':
-          event.preventDefault(); // prevent page scroll
+          event.preventDefault(); 
           if (this.gameState.player && !this.gameState.player.dead) {
             this.gameState.player.attack();
           }
@@ -97,7 +90,7 @@ class InputHandler {
           }
           break;
 
-        // --- Player 2 ---
+        //player2
         case 'ArrowRight':
           event.preventDefault();
           if (this.gameState.enemy && !this.gameState.enemy.dead) {
@@ -141,13 +134,13 @@ class InputHandler {
     window.addEventListener('keyup', (event) => {
       switch (event.key) {
         // Player 1
-        case 'a':         this.keys.a.pressed         = false; break;
-        case 'd':         this.keys.d.pressed          = false; break;
-        case 'Shift':     this.keys.Shift.pressed      = false; break;
+        case 'a':this.keys.a.pressed= false; break;
+        case 'd':this.keys.d.pressed = false; break;
+        case 'Shift':this.keys.Shift.pressed = false; break;
         // Player 2
-        case 'ArrowLeft':  this.keys.ArrowLeft.pressed  = false; break;
-        case 'ArrowRight': this.keys.ArrowRight.pressed = false; break;
-        case 'Control':    this.keys.Control.pressed    = false; break;
+        case 'ArrowLeft': this.keys.ArrowLeft.pressed  = false; break;
+        case 'ArrowRight':this.keys.ArrowRight.pressed = false; break;
+        case 'Control': this.keys.Control.pressed    = false; break;
       }
     });
   }
