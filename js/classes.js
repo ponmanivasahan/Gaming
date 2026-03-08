@@ -1,4 +1,3 @@
-// js/classes.js
 class Sprite {
   constructor({
     position,
@@ -47,7 +46,12 @@ class Sprite {
     const drawX = this.position.x - this.offset.x;
     const drawY = this.position.y - this.offset.y;
 
-    if (this.facing === -1) {
+    // Determine the rendering orientation. Some sprite sheets are drawn flipped (e.g., left-facing by default)
+    // and in that case we invert the facing value only for rendering.
+    const spriteFlip = (typeof this.flipSprite !== 'undefined' && this.flipSprite) ? -1 : 1;
+    const renderFacing = (this.facing || 1) * spriteFlip;
+
+    if (renderFacing === -1) {
       ctx.save();
       ctx.scale(-1, 1);
       ctx.drawImage(
@@ -98,6 +102,7 @@ class Fighter extends Sprite {
     offset = { x: 0, y: 0 },
     sprites,
     facing = 1,
+    flipSprite = false,
     attackBox = { offset: {}, width: undefined, height: undefined }
   }) {
     super({
@@ -139,6 +144,7 @@ class Fighter extends Sprite {
     this.invincible = false;
     this.speedBoostActive = false;
     this.hitCooldown = false;
+    this.flipSprite = flipSprite;
 
     for (const sprite in this.sprites) {
       if (this.sprites[sprite]) {

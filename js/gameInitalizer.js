@@ -1,4 +1,3 @@
-// js/gameInitalizer.js
 class GameInitalizer {
   constructor(gameState) {
     this.gameState = gameState;
@@ -28,9 +27,13 @@ class GameInitalizer {
       countdown.classList.remove('countdown-pop');
       this.gameState.gameStarted = true;
 
-      window.timer = 30;
-      const timerEl = document.getElementById('timer');
-      if (timerEl) timerEl.innerHTML = window.timer;
+      if (typeof resetTimer === 'function') {
+        resetTimer(30);
+      } else {
+        window.timer = 30;
+        const timerEl = document.getElementById('timer');
+        if (timerEl) timerEl.innerHTML = window.timer;
+      }
 
       if (typeof decreaseTimer === 'function') decreaseTimer();
       if (this.gameState.renderer) this.gameState.renderer.animate();
@@ -96,7 +99,8 @@ class GameInitalizer {
       position: { x: 300, y: 100 },
       velocity: { x: 0, y: 0 },
       color: 'blue',
-      facing: 1,
+      facing: -1, 
+      flipSprite: true, 
       imageSrc: './images/kenji/Idle.png',
       framesMax: 4,
       scale: 2.5,
@@ -132,7 +136,7 @@ class GameInitalizer {
         }
       },
       attackBox: {
-        offset: { x: -150, y: 50 },
+        offset: { x: 150, y: 50 },
         width: 180,
         height: 50
       }

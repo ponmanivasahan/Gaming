@@ -9,40 +9,81 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
   );
 }
 
-let timer = 30;
 let timerId;
+ 
+function resetTimer(value = 30) {
+  if (typeof timerId !== 'undefined') {
+    clearTimeout(timerId);
+    timerId = undefined;
+  }
+
+  window.timer = Math.max(0, value);
+  const timerEl = document.querySelector('#timer');
+  if (timerEl) timerEl.innerHTML = window.timer;
+}
 
 function decreaseTimer() {
-  if (timer > 0 && window.gameState && window.gameState.gameStarted && !window.gameState.isPaused) {
-    timerId = setTimeout(decreaseTimer, 1000);
-    if (!window.gameState.timerFrozen) {
-      timer--;    
-      const timerEl = document.querySelector('#timer');
-      if (timerEl) timerEl.innerHTML = timer;
+  if (!window.gameState || !window.gameState.gameStarted || window.gameState.isPaused) {
+    return;
+  }
+
+  if (typeof window.timer !== 'number' || isNaN(window.timer)) {
+    window.timer = 30;
+  }
+
+  if (window.timer > 0) {
+    if (typeof timerId !== 'undefined') {
+      clearTimeout(timerId);
+      timerId = undefined;
     }
-    if (timer === 0) {   
+
+    timerId = setTimeout(decreaseTimer, 1000);
+
+    if (!window.gameState.timerFrozen) {
+      window.timer = Math.max(0, window.timer - 1);
+      const timerEl = document.querySelector('#timer');
+      if (timerEl) timerEl.innerHTML = window.timer;
+    }
+
+    if (window.timer === 0) {
+      if (typeof timerId !== 'undefined') {
+        clearTimeout(timerId);
+        timerId = undefined;
+      }
       determineWinner({ player: window.gameState.player, enemy: window.gameState.enemy });
+    }
+  } else {
+        if (typeof timerId !== 'undefined') {
+      clearTimeout(timerId);
+      timerId = undefined;
     }
   }
 }
+
+
+window.resetTimer = resetTimer;
 
 function determineWinner({ player, enemy }) {
   if (!window.gameState) return;
   window.gameState.gameStarted = false;
   window.gameState.isPaused = false;
 
+  if (typeof timerId !== 'undefined') {
+    clearTimeout(timerId);
+    timerId = undefined;
+  }
+
   if (window.gameState.animationId) {
     cancelAnimationFrame(window.gameState.animationId);
     window.gameState.animationId = null;
   }
 
-  const player1Name = localStorage.getItem('player1Name') || 'Player 1';
-  const player2Name = localStorage.getItem('player2Name') || 'Player 2';
+  const player1Name = localStorage.getItem('player1Name') || 'SAMURAI';
+  const player2Name = localStorage.getItem('player2Name') || 'KENJI';
   const roundsNeeded = 2;
 
   let roundWinner = 'tie';
 
-  // Determine round winner
   if (player && enemy) {
     if (player.health > enemy.health) {
       roundWinner = 'player';
@@ -61,7 +102,6 @@ function determineWinner({ player, enemy }) {
     window.gameState.rounds.enemy >= roundsNeeded ||
     window.gameState.rounds.current > window.gameState.rounds.max;
 
-  // BUG FIX: Use querySelector (not getElementById with '#' prefix) — getElementById does NOT use '#'
   const displayText = document.querySelector('#displayText');
   const displayMsg = document.querySelector('#displayTextMsg');
 
@@ -87,7 +127,6 @@ function determineWinner({ player, enemy }) {
         }
       }, 3000);
     } else {
-      // Round (not match) result
       if (roundWinner === 'player') {
         displayMsg.innerHTML = `${player1Name}<br><span style="font-size:0.5em;color:#FFD700;font-family:'Cinzel Decorative','Cinzel',serif;letter-spacing:3px;">Wins Round ${window.gameState.rounds.current - 1}</span>`;
       } else if (roundWinner === 'enemy') {
@@ -113,7 +152,6 @@ function launchConfetti() {
   const canvas = document.getElementById('confettiCanvas');
   if (!canvas) return;
 
-  // BUG FIX: was "width.innerWidth" — should be "window.innerWidth"
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   canvas.style.display = 'block';
@@ -137,7 +175,6 @@ function launchConfetti() {
       rotV: (Math.random() - 0.5) * 0.1,
       w: 8 + Math.random() * 10,
       h: 4 + Math.random() * 8,
-      // BUG FIX: COLORS.Length → COLORS.length (JS is case-sensitive)
       color: COLORS[Math.floor(Math.random() * COLORS.length)],
       alpha: 0.8 + Math.random() * 0.2,
       gravity: 0.1,

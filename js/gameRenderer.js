@@ -34,7 +34,11 @@ class GameRenderer {
       const keys = gs.inputHandler ? gs.inputHandler.keys : null;
       const player = gs.player;
       const enemy = gs.enemy;
-      
+
+      const direction = Math.sign(enemy.position.x - player.position.x) || 1;
+      player.facing = direction;
+      enemy.facing  = -direction;
+
       if (player && !player.dead && keys) {
         player.velocity.x = 0;
         
@@ -55,8 +59,6 @@ class GameRenderer {
           player.switchSprite('fall');
         }
         
-
-        player.facing = player.position.x < enemy.position.x ? 1 : -1;
         player.isBlocking = keys.Shift?.pressed || false;
       }
 
@@ -71,7 +73,7 @@ class GameRenderer {
           enemy.switchSprite('run'); 
         } else { 
           enemy.switchSprite('idle'); 
-        }
+        }   
 
         if (enemy.velocity.y < 0) {
           enemy.switchSprite('jump');
@@ -79,7 +81,6 @@ class GameRenderer {
           enemy.switchSprite('fall');
         }
         
-        enemy.facing = enemy.position.x > player.position.x ? 1 : -1;
         enemy.isBlocking = keys.Control?.pressed || false;
       }
 

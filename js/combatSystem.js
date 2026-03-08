@@ -5,20 +5,20 @@ class CombatSystem {
   }
 
   rectangularCollision(rect1, rect2) {
-    console.log('Attack Box:',{
-      x:rect1.attackBox.position.x,
-      y:rect1.attackBox.position.y,
-      width:rect1.attackBox.width,
-      height:rect1.attackBox.height,
-      rightEdge:rect1.attackBox.position.x+rect1.attackBox.width,
-    });
-    console.log('Target:',{
-      x:rect2.position.x,
-      y:rect2.position.y,
-      width:rect2.width,
-      height:rect2.height,
-      rightEdge:rect2.position.x+rect2.width
-    });
+    // console.log('Attack Box:',{
+    //   x:rect1.attackBox.position.x,
+    //   y:rect1.attackBox.position.y,
+    //   width:rect1.attackBox.width,
+    //   height:rect1.attackBox.height,
+    //   rightEdge:rect1.attackBox.position.x+rect1.attackBox.width,
+    // });
+    // console.log('Target:',{
+    //   x:rect2.position.x,
+    //   y:rect2.position.y,
+    //   width:rect2.width,
+    //   height:rect2.height,
+    //   rightEdge:rect2.position.x+rect2.width
+    // });
     return (
       rect1.attackBox.position.x + rect1.attackBox.width >= rect2.position.x &&
       rect1.attackBox.position.x <= rect2.position.x + rect2.width &&
@@ -33,7 +33,7 @@ class CombatSystem {
     if (player.isAttacking) {
       if (player.framesCurrent >= 2 && player.framesCurrent <= 4) {
         if (this.rectangularCollision(player, enemy)) {
-          console.log("Player hit enemy!");
+          // console.log("Player hit enemy!");
           
           if (!player.hasHit) {
             player.hasHit = true;
@@ -55,7 +55,7 @@ class CombatSystem {
               enemy.takeHit(isCrit, damage);
               player.specialCharge = Math.min(player.specialChargeMax, player.specialCharge + (isCrit ? 30 : 15));
               
-              console.log(`Enemy took ${damage} damage, health: ${enemy.health}`);
+              // console.log(`Enemy took ${damage} damage, health: ${enemy.health}`);
             }
           }
         }
@@ -67,11 +67,11 @@ class CombatSystem {
       }
     }
     if (enemy.isAttacking) {
-      console.log('Enemy attacking, frame:', enemy.framesCurrent);
+      // console.log('Enemy attacking, frame:', enemy.framesCurrent);
       
       if (enemy.framesCurrent >= 0 && enemy.framesCurrent <= 4) {
         if (this.rectangularCollision(enemy, player)) {
-          console.log(" Enemy hit player!");
+          // console.log(" Enemy hit player!");
           
           if (!enemy.hasHit) {
             enemy.hasHit = true;
@@ -92,7 +92,7 @@ class CombatSystem {
               player.takeHit(isCrit, damage);
               enemy.specialCharge = Math.min(enemy.specialChargeMax, enemy.specialCharge + (isCrit ? 30 : 15));
               
-              console.log(`Player took ${damage} damage, health: ${player.health}`);
+              // console.log(`Player took ${damage} damage, health: ${player.health}`);
               
               const playerHealthEl = document.getElementById('playerHealth');
               if (playerHealthEl) {
@@ -102,14 +102,14 @@ class CombatSystem {
             }
           }
         } else {
-          console.log(' No collision detected');
+          // console.log(' No collision detected');
         }
       }
       
       if (enemy.framesCurrent === enemy.framesMax - 1) {
         enemy.hasHit = false;
         enemy.isAttacking = false;
-        console.log('Enemy attack ended');
+        // console.log('Enemy attack ended');
       }
     }
 

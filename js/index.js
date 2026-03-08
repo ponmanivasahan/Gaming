@@ -24,8 +24,8 @@ function startGame() {
 }
 
 function launchGame(player1Name, player2Name) {
-  const p1 = (player1Name || '').trim() || 'Player 1';
-  const p2 = (player2Name || '').trim() || 'Player 2';
+  const p1 = (player1Name || '').trim() || 'Samurai';
+  const p2 = (player2Name || '').trim() || 'Kenji';
   localStorage.setItem('player1Name', p1);
   localStorage.setItem('player2Name', p2);
   const p1Label = document.getElementById('player1NameLabel');
@@ -47,9 +47,14 @@ function startRound() {
   if (!gameState) return;
   gameState.gameEnding = false;
   gameState.gameStarted = false;
-  window.timer = 30;
-  const timerEl = document.querySelector('#timer');
-  if (timerEl) timerEl.innerHTML = window.timer;
+
+  if (typeof resetTimer === 'function') {
+    resetTimer(30);
+  } else {
+    window.timer = 30;
+    const timerEl = document.querySelector('#timer');
+    if (timerEl) timerEl.innerHTML = window.timer;
+  }
 
   if (gameState.player) {
     gameState.player.health = 300;
