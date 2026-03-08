@@ -4,28 +4,28 @@ let gameRenderer;
 let gameInitializer; 
 let combatSystem;
 
-function initGameSystems() {     
+function initGameSystems() {
   if (gameState) return;
   
   gameState = new GameState();
   gameState.initCanvas();  
-  gameState.inputHandler = new InputHandler(gameState);   
+  gameState.inputHandler = new InputHandler(gameState);
   combatSystem = new CombatSystem(gameState);
-  gameState.combatSystem = combatSystem;  
+  gameState.combatSystem = combatSystem;
   const renderer = new GameRenderer(gameState);      
   gameState.renderer = renderer;
   gameInitializer = new GameInitalizer(gameState);
   window.gameState = gameState;
-  if(typeof window.PowerupManager==='function'){
-    gameState.powerupManager=new window.PowerupManager(gameState);
-  }      
-
-  if(typeof window.setupPowerupHud==='function'){
+  if (typeof window.powerupManager === 'function') {
+    gameState.powerupManager = new window.powerupManager(gameState);
+  }
+  if (typeof window.setupPowerupHud === 'function') {
     window.setupPowerupHud();
   }
+
   gameState.updateCoinDisplays(); 
-} 
-    
+}
+
 function startGame() {
   showNameEntryModal();
 }
@@ -42,19 +42,19 @@ function launchGame(player1Name, player2Name) {
 
   document.getElementById('startScreen').style.display = 'none';
   document.getElementById('gameContainer').style.display = 'block';
-  const loadEl = document.getElementById('loadingScreen');
-  if (loadEl) loadEl.style.display = 'block';
-  setTimeout(() => {
-    if (loadEl) loadEl.style.display = 'none';
-    startNewGame();
-  }, 120);
+  // const loadEl = document.getElementById('loadingScreen');
+  // if (loadEl) loadEl.style.display = 'block';
+  // setTimeout(() => {
+  //   if (loadEl) loadEl.style.display = 'none';
+  //   startNewGame();
+  // }, 120);
+  startNewGame();
 }
 
 function startRound() {
   if (!gameState) return;
   gameState.gameEnding = false;
   gameState.gameStarted = false;
-
   if (typeof resetTimer === 'function') {
     resetTimer(30);
   } else {
@@ -63,13 +63,17 @@ function startRound() {
     if (timerEl) timerEl.innerHTML = window.timer;
   }
 
+  const canvasWidth = gameState.canvas ? gameState.canvas.width : 0;
+  const leftStartX = 100;
+  const rightStartX = Math.max(280, canvasWidth - 260);
+
   if (gameState.player) {
     gameState.player.health = 300;
     gameState.player.maxHealth = 300;
     gameState.player.dead = false;
     gameState.player.isAttacking = false;
     gameState.player.specialCharge = 0;
-    gameState.player.position.x = 100;
+    gameState.player.position.x = leftStartX;
     gameState.player.position.y = 0;
     gameState.player.velocity = { x: 0, y: 0 };
     gameState.player.switchSprite('idle');
@@ -80,8 +84,8 @@ function startRound() {
     gameState.enemy.dead = false;
     gameState.enemy.isAttacking = false;
     gameState.enemy.specialCharge = 0;
-    gameState.enemy.position.x = 500;
-    gameState.enemy.position.y = 100;
+    gameState.enemy.position.x = rightStartX;
+    gameState.enemy.position.y = 0;
     gameState.enemy.velocity = { x: 0, y: 0 };
     gameState.enemy.switchSprite('idle');
   }
@@ -178,13 +182,13 @@ function showNameEntryModal() {
 window._confirmNames = function () {
   const n1 = document.getElementById('nameInput1');
   const n2 = document.getElementById('nameInput2');
-  const p1 = (n1 ? n1.value.trim() : '') || 'SAMURAI';
-  const p2 = (n2 ? n2.value.trim() : '') || 'KENJI';
+  const p1 = (n1 ? n1.value.trim() : '') || 'Player 1';
+  const p2 = (n2 ? n2.value.trim() : '') || 'Player 2';
   document.getElementById('modalOverlay').style.display = 'none';
   launchGame(p1, p2);
 };
 
-let _shopToastTimer = null;  
+let _shopToastTimer = null;
 function showShopToast(msg) {
   const el = document.getElementById('shopToast');
   if (!el) return;
@@ -192,6 +196,21 @@ function showShopToast(msg) {
   el.classList.add('visible');
   clearTimeout(_shopToastTimer);
   _shopToastTimer = setTimeout(() => el.classList.remove('visible'), 2200);
+}
+
+let _gameMessageTimer = null;
+function showGameMessage(msg, duration = 1200) {
+  const el = document.getElementById('gameMessage');
+  if (!el) return;
+  el.textContent = msg;
+  el.style.animation = 'none';
+    void el.offsetWidth;
+  el.style.animation = 'messagePop 1.0s ease';
+
+  clearTimeout(_gameMessageTimer);
+  _gameMessageTimer = setTimeout(() => {
+    el.style.animation = 'none';
+  }, duration);
 }
 
 function showShop() {
@@ -203,9 +222,9 @@ function showShop() {
 }
 
 function closeShop() {
-  const panel    = document.getElementById('shopPanel');
+  const panel = document.getElementById('shopPanel');
   const backdrop = document.getElementById('shopBackdrop');
-  if (panel)    panel.classList.remove('open');
+  if (panel) panel.classList.remove('open');
   if (backdrop) backdrop.classList.remove('open');
 }
 
@@ -279,6 +298,14 @@ window.buyItem = buyItem;
 window.updateShopDisplay = updateShopDisplay;
 window.showShopToast = showShopToast;
 
+
+
+// document.addEventListener('DOMContentLoaded', () => {
+//   showInitialLoader();
+// });
+
 document.addEventListener('DOMContentLoaded', () => {
   initGameSystems();
+  document.getElementById('startScreen').style.display = 'flex';
 });
+

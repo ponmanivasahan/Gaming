@@ -6,7 +6,7 @@ class powerupManager{
     }
 
     getActiveEffects(){
-        return thisactiveEffects;
+        return this.activeEffects;
     }
     activate(type){
         if(!this.gameState) return false;
@@ -54,7 +54,7 @@ class powerupManager{
                 if(typeof window.showGameMessage==='function') window.showGameMessage('❤️  Health boosted!',1200);
                 break;
             case 'damageBoosts':
-                thisgameState.activeDamageBoost=true;
+                this.gameState.activeDamageBoost=true;
                 addEffect('damage',5);
                 showToast('⚡  Damage boosted!');
                 if(typeof window.showGameMessage==='function') window.showGameMessage('⚡  Damage boosted!',1200);
@@ -71,9 +71,9 @@ class powerupManager{
                 showToast('⏱  Time Frozen!');
                 if(typeof window.showGameMessage==='function') window.showGameMessage('⏱  Time Frozen!',1200);
                 break;
-            case 'invinciblities':      
+            case 'invincibilities':      
                 player.invincible=true;
-                addEffect('invinciblity',4);
+                addEffect('invincibility',4);
                 showToast('✨ Invincibility!');
                 if(typeof window.showGameMessage==='function') window.showGameMessage('✨ Invincibility!',1200);
                 break;
@@ -106,7 +106,7 @@ class powerupManager{
         case 'timeFreeze':
             this.gameState.timerFrozen=false;
             break;
-        case 'invinciblity':
+        case 'invincibility':
             player.invincible=false;
             break;
     }

@@ -13,7 +13,7 @@ class CombatSystem {
     //   rightEdge:rect1.attackBox.position.x+rect1.attackBox.width,
     // });
     // console.log('Target:',{
-    //   x:rect2.position.x,
+    //   x:rect2.position.x,      
     //   y:rect2.position.y,
     //   width:rect2.width,
     //   height:rect2.height,
@@ -56,7 +56,7 @@ class CombatSystem {
               player.specialCharge = Math.min(player.specialChargeMax, player.specialCharge + (isCrit ? 30 : 15));
               
               // console.log(`Enemy took ${damage} damage, health: ${enemy.health}`);
-            }
+            }         
           }
         }
       }

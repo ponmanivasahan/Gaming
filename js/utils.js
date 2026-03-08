@@ -1,31 +1,32 @@
 // js/utils.js
+
+
+
 function rectangularCollision({ rectangle1, rectangle2 }) {
   return (
     rectangle1.attackBox.position.x + rectangle1.attackBox.width >= rectangle2.position.x &&
-    rectangle1.attackBox.position.x <= rectangle2.position.x + rectangle2.width &&
-    rectangle1.attackBox.position.y + rectangle1.attackBox.height >= rectangle2.position.y &&
-    rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height
-  );
-}
-let timerId;
- 
-function resetTimer(value = 30) {
-  if (typeof timerId !== 'undefined') {
-    clearTimeout(timerId);
-    timerId = undefined;
-  }
-
-  window.timer = Math.max(0, value);
-  const timerEl = document.querySelector('#timer');
-  if (timerEl) timerEl.innerHTML = window.timer;
-}
+    rectangle1.attackBox.position.x <= rectangle2.position.x + rectangle2.width &&     
+    rectangle1.attackBox.position.y + rectangle1.attackBox.height >= rectangle2.position.y &&   
+    rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height      
+  );           
+}   
+let timerId;         
+function resetTimer(value = 30) {        
+  if (typeof timerId !== 'undefined') {        
+    clearTimeout(timerId);                
+    timerId = undefined;            
+  }     
+  window.timer = Math.max(0, value);     
+  const timerEl = document.querySelector('#timer');      
+  if (timerEl) timerEl.innerHTML = window.timer; 
+}      
 
 function decreaseTimer() {
   if (!window.gameState || !window.gameState.gameStarted || window.gameState.isPaused) {
     return;
-  }
-
-  if (typeof window.timer !== 'number' || isNaN(window.timer)) {
+  }   
+    
+  if (typeof window.timer !== 'number' || isNaN(window.timer)) {    
     window.timer = 30;
   }
 
@@ -34,18 +35,18 @@ function decreaseTimer() {
       clearTimeout(timerId);
       timerId = undefined;
     }
-
+    
     timerId = setTimeout(decreaseTimer, 1000);
-
+        
     if (!window.gameState.timerFrozen) {
       window.timer = Math.max(0, window.timer - 1);
       const timerEl = document.querySelector('#timer');
-      if (timerEl) timerEl.innerHTML = window.timer;
+      if (timerEl) timerEl.innerHTML = window.timer;            
     }
-
+        
     if (window.timer === 0) {
       if (typeof timerId !== 'undefined') {
-        clearTimeout(timerId);
+        clearTimeout(timerId);        
         timerId = undefined;
       }
       determineWinner({ player: window.gameState.player, enemy: window.gameState.enemy });
@@ -58,7 +59,7 @@ function decreaseTimer() {
   }
 }
 window.resetTimer = resetTimer;
-function determineWinner({ player, enemy }) {
+function determineWinner({ player, enemy }) {    
   if (!window.gameState) return;
   window.gameState.gameStarted = false;
   window.gameState.isPaused = false;
@@ -149,9 +150,9 @@ function launchConfetti() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   canvas.style.display = 'block';
-  canvas.style.position = 'fixed';
+  canvas.style.position = 'fixed';                               
   canvas.style.top = '0';
-  canvas.style.left = '0';
+  canvas.style.left = '0'; 
   canvas.style.pointerEvents = 'none';
   canvas.style.zIndex = '2000';
 
@@ -162,8 +163,8 @@ function launchConfetti() {
   for (let i = 0; i < count; i++) {
     particles.push({
       x: Math.random() * canvas.width,
-      y: -20 - Math.random() * 100,
-      vx: (Math.random() - 0.5) * 8,
+      y: -20 - Math.random() * 100,  
+      vx: (Math.random() - 0.5) * 8,      
       vy: 2 + Math.random() * 6,
       rot: Math.random() * Math.PI * 2,
       rotV: (Math.random() - 0.5) * 0.1,
@@ -195,7 +196,7 @@ function launchConfetti() {
       ctx.fillStyle = p.color;
       ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
       ctx.restore();
-    });
+    });   
 
     if (alive) {
       frame = requestAnimationFrame(drawConfetti);
@@ -205,6 +206,6 @@ function launchConfetti() {
     }
   }
 
-  if (frame) cancelAnimationFrame(frame);
+  if (frame) cancelAnimationFrame(frame);    
   drawConfetti();
-}
+}   

@@ -578,7 +578,8 @@ body {
   border: 1.5px solid rgba(255,255,255,0.15);
   border-radius: 12px;
   padding: 8px 16px;
-  pointer-events: none;
+  pointer-events: auto;
+  z-index: 50;
 }
 
 .pu-item {
@@ -587,6 +588,8 @@ body {
   align-items: center;
   gap: 2px;
   min-width: 32px;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .pu-icon { font-size: 18px; line-height: 1; }
