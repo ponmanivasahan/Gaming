@@ -2,6 +2,8 @@
 class GameRenderer {
   constructor(gameState) {
     this.gameState = gameState;
+    this.lastTimestamp=null;
+    this.effectsUI=typeof EffectsUI==='function' ? new EffectsUI() : null;
   }
 
   animate() {
@@ -10,7 +12,9 @@ class GameRenderer {
     const canvas = gs.canvas;
     
     if (!gs || !ctx || !canvas) return;
-    
+    const now=performance.now();
+    const delta=this.lastTimestamp ?(now-this.lastTimestamp)/1000:0;
+    this.lastTimestamp=now;
     gs.animationId = requestAnimationFrame(() => this.animate());
 
 
@@ -22,7 +26,7 @@ class GameRenderer {
       ctx.drawImage(gs.background.image, 0, 0, canvas.width, canvas.height);
     }
     if (gs.isPaused) {
-      if (gs.player) gs.player.draw();
+      if (gs.player) gs.player.draw();  
       if (gs.enemy)  gs.enemy.draw();
       this._drawPauseMenu(ctx, canvas);
       return;
@@ -34,6 +38,9 @@ class GameRenderer {
       const keys = gs.inputHandler ? gs.inputHandler.keys : null;
       const player = gs.player;
       const enemy = gs.enemy;
+      if(gs.powerupManager){
+        gs.powerupManager.update(delta);
+      }
 
       const direction = Math.sign(enemy.position.x - player.position.x) || 1;
       player.facing = direction;
@@ -91,6 +98,9 @@ class GameRenderer {
       this._updateHealthUI(player, enemy);
       
       this._drawBlockIndicators(ctx, player, enemy);
+      if(this.effectsUI){
+        this.effectsUI.draw(ctx,1);
+      }
     
 
       if (!gs.gameEnding && ((player && player.dead) || (enemy && enemy.dead))) {

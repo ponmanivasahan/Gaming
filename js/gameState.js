@@ -21,9 +21,7 @@ class GameState {
     this.timerFrozen = false;
     this.gravity = 0.7;
     this.rounds = { player: 0, enemy: 0, current: 1, max: 3 };
-
-    // BUG FIX: key mismatch — was "timerFreezes" and "invinciblities" (typos)
-    // Unified to match localStorage keys used in buyItem and updateShopDisplay
+    this.activeDamageBoost=false;
     this.items = {
       shields:        parseInt(localStorage.getItem('shields')        || '0'),
       healthBoosts:   parseInt(localStorage.getItem('healthBoosts')   || '0'),
@@ -61,6 +59,11 @@ class GameState {
     this.animationId  = null;
     this.coinsEarned  = 0;
     this.rounds = { player: 0, enemy: 0, current: 1, max: 3 };
+    this.timerFrozen=false;
+    this.activeDamageBoost=false;
+    if(this.powerupManager){
+      this.powerupManager.activeEffects=[];
+    }
   }
 
   addCoins(amount) {

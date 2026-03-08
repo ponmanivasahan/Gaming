@@ -9,11 +9,11 @@
   text-rendering: optimizeLegibility;
 }
 
-body {
+body {       
   overflow: hidden;
   background: black;
 }
-
+   
 :root {
   --shop-bg:#080816;
   --shop-surface:#0f0f22;
@@ -26,7 +26,6 @@ body {
   --shop-ease:cubic-bezier(0.16,1,0.3,1);
 }
 
-/* Icon sizes */
 .ic-13 { width:13px; height:13px; }
 .ic-16 { width:16px; height:16px; }
 .ic-18 { width:18px; height:18px; }
@@ -35,7 +34,6 @@ body {
 .ic-36 { width:36px; height:36px; }
 .ic-48 { width:48px; height:48px; }
 
-/* Button styles */
 .btn {
   font-family: 'Press Start 2P', 'Rajdhani', cursive;
   font-size: clamp(9px, 1.1vw, 12px);
@@ -71,8 +69,6 @@ body {
   align-items: center;
   gap: 12px;
 }
-
-/* Start Screen */
 #startScreen {
   position: fixed;
   top: 0; left: 0;
@@ -372,12 +368,11 @@ body {
   padding-left: 20px;
 }
 
-.rules-container li::before {
+.rules-container li::before {     
   content: "▶";
   color: #ff0000;
   margin-right: 10px;
 }
-
 #gameContainer {
   position: fixed;
   top: 0; left: 0;
@@ -497,7 +492,7 @@ body {
   height: 50px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; 
   color: white;
   border: 3px solid white;
   border-radius: 10px;
@@ -507,7 +502,6 @@ body {
   background: linear-gradient(135deg, #1a1a1a, #000);
 }
 
-/* Display Text */
 #displayText {
   position: absolute;
   color: white;
@@ -542,8 +536,6 @@ body {
   background-clip: text;
   filter: drop-shadow(0 0 20px rgba(255,180,0,0.7));
 }
-
-/* Fight Countdown */
 @keyframes countdownPop {
   0%   { transform: translate(-50%,-50%) scale(0.3);  opacity: 0; letter-spacing: 20px; }
   30%  { transform: translate(-50%,-50%) scale(1.25); opacity: 1; letter-spacing: 4px; }
@@ -572,8 +564,6 @@ body {
 #fightCountdown.countdown-pop {
   animation: countdownPop 0.9s cubic-bezier(0.22,1,0.36,1) forwards;
 }
-
-/* Powerup HUD */
 #powerupHUD {
   position: absolute;
   bottom: 16px;
@@ -608,8 +598,6 @@ body {
   color: #FFD700;
   line-height: 1;
 }
-
-/* Shop Styles */
 .shop-backdrop {
   position: fixed;
   inset: 0;
@@ -710,7 +698,7 @@ body {
 .shop-panel-close:hover {
   border-color: var(--shop-accent);
   color: #fff;
-  background: var(--shop-accent-dim);
+  background: var(--shop-accent-dim);     
 }
 
 .shop-panel-items {
@@ -733,7 +721,7 @@ body {
   display: grid;
   grid-template-columns: 60px 1fr auto;
   align-items: center;
-  gap: 14px;
+  gap: 14px;    
   padding: 14px;
   border-radius: 12px;
   border: 1px solid color-mix(in srgb, var(--sp-color) 28%, transparent);

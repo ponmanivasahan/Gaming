@@ -4,21 +4,28 @@ let gameRenderer;
 let gameInitializer; 
 let combatSystem;
 
-function initGameSystems() {
+function initGameSystems() {     
   if (gameState) return;
   
   gameState = new GameState();
   gameState.initCanvas();  
-  gameState.inputHandler = new InputHandler(gameState);
+  gameState.inputHandler = new InputHandler(gameState);   
   combatSystem = new CombatSystem(gameState);
-  gameState.combatSystem = combatSystem;
+  gameState.combatSystem = combatSystem;  
   const renderer = new GameRenderer(gameState);      
   gameState.renderer = renderer;
   gameInitializer = new GameInitalizer(gameState);
-  window.gameState = gameState;      
-  gameState.updateCoinDisplays(); 
-}
+  window.gameState = gameState;
+  if(typeof window.PowerupManager==='function'){
+    gameState.powerupManager=new window.PowerupManager(gameState);
+  }      
 
+  if(typeof window.setupPowerupHud==='function'){
+    window.setupPowerupHud();
+  }
+  gameState.updateCoinDisplays(); 
+} 
+    
 function startGame() {
   showNameEntryModal();
 }
@@ -171,13 +178,13 @@ function showNameEntryModal() {
 window._confirmNames = function () {
   const n1 = document.getElementById('nameInput1');
   const n2 = document.getElementById('nameInput2');
-  const p1 = (n1 ? n1.value.trim() : '') || 'Player 1';
-  const p2 = (n2 ? n2.value.trim() : '') || 'Player 2';
+  const p1 = (n1 ? n1.value.trim() : '') || 'SAMURAI';
+  const p2 = (n2 ? n2.value.trim() : '') || 'KENJI';
   document.getElementById('modalOverlay').style.display = 'none';
   launchGame(p1, p2);
 };
 
-let _shopToastTimer = null;
+let _shopToastTimer = null;  
 function showShopToast(msg) {
   const el = document.getElementById('shopToast');
   if (!el) return;

@@ -1,5 +1,4 @@
 // js/utils.js
-
 function rectangularCollision({ rectangle1, rectangle2 }) {
   return (
     rectangle1.attackBox.position.x + rectangle1.attackBox.width >= rectangle2.position.x &&
@@ -8,7 +7,6 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
     rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height
   );
 }
-
 let timerId;
  
 function resetTimer(value = 30) {
@@ -59,10 +57,7 @@ function decreaseTimer() {
     }
   }
 }
-
-
 window.resetTimer = resetTimer;
-
 function determineWinner({ player, enemy }) {
   if (!window.gameState) return;
   window.gameState.gameStarted = false;
@@ -77,7 +72,6 @@ function determineWinner({ player, enemy }) {
     cancelAnimationFrame(window.gameState.animationId);
     window.gameState.animationId = null;
   }
-
   const player1Name = localStorage.getItem('player1Name') || 'SAMURAI';
   const player2Name = localStorage.getItem('player2Name') || 'KENJI';
   const roundsNeeded = 2;
@@ -86,7 +80,7 @@ function determineWinner({ player, enemy }) {
 
   if (player && enemy) {
     if (player.health > enemy.health) {
-      roundWinner = 'player';
+      roundWinner = 'player';  
       window.gameState.rounds.player++;
       window.gameState.coins += 50;
       localStorage.setItem('fighterCoins', window.gameState.coins.toString());
