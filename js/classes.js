@@ -125,7 +125,7 @@ class Fighter extends Sprite {
     this.health = 300;
     this.maxHealth = 300;
     this.framesCurrent = 0;
-    this.framesElapsed = 0;   
+    this.framesElapsed = 0;
     this.framesHold = 5;
     this.sprites = sprites;
     this.dead = false;
@@ -165,7 +165,6 @@ class Fighter extends Sprite {
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
 
-
     if (this.position.x < 0) {
       this.position.x = 0;
       this.velocity.x = 0;
@@ -197,6 +196,7 @@ class Fighter extends Sprite {
     if (this.dead || this.isAttacking) return;
     this.switchSprite('attack1');
     this.isAttacking = true;
+    this.framesCurrent = 0;
     console.log(`${this.color} attacked!`);
   }
 
@@ -208,7 +208,6 @@ class Fighter extends Sprite {
     
     const dmg = damage !== null ? damage : (isCritical ? 40 : 20);
     
-  
     this.health = Math.max(0, this.health - dmg);
     this.combo = 0;
     

@@ -463,8 +463,8 @@ body {
 
 .health-bar {
   position: relative;
-  width: 300px;
-  height: 30px;
+  width: 400px;
+  height: 35px;
   border: 3px solid white;
   border-radius: 15px;
   overflow: hidden;
@@ -888,4 +888,14 @@ body {
 .shop-toast.visible {
   opacity: 1;
   transform: translateX(-50%) translateY(0);  
+}
+
+#playerSpecialBar, #enemySpecialBar,
+.special-bar{
+  display:none !important;
+}
+
+.progress-bar,
+.change-bar{
+  display:none !important;
 }

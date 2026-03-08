@@ -42,12 +42,12 @@ class GameInitalizer {
     if (!this.gameState.canvas || !this.gameState.ctx) {
       this.gameState.initCanvas();
     }
+
     this.gameState.background = new Sprite({
       position: { x: 0, y: 0 },
       imageSrc: './images/background1.png'
     });
 
-    //player1
     this.gameState.player = new Fighter({
       position: { x: 100, y: 0 },
       velocity: { x: 0, y: 0 },
@@ -77,7 +77,7 @@ class GameInitalizer {
           framesMax: 6 
         },
         takeHit: { 
-           imageSrc: './images/samuraiMack/Take Hit - white silhouette.png',
+          imageSrc: './images/samuraiMack/TakeHitwhite.png',
           framesMax: 4 
         },
         death: { 
@@ -87,14 +87,13 @@ class GameInitalizer {
       },
       attackBox: { 
         offset: { x: 100, y: 50 }, 
-        width: 160, 
+        width: 180, 
         height: 50 
       }
     });
 
-    //player2
     this.gameState.enemy = new Fighter({
-      position: { x: 800, y: 100 },
+      position: { x: 300, y: 100 },
       velocity: { x: 0, y: 0 },
       color: 'blue',
       facing: 1,
@@ -124,7 +123,7 @@ class GameInitalizer {
           framesMax: 4 
         },
         takeHit: { 
-           imageSrc: './images/kenji/Take hit.png',
+          imageSrc: './images/kenji/Take hit.png',
           framesMax: 3 
         },
         death: { 
@@ -133,12 +132,12 @@ class GameInitalizer {
         }
       },
       attackBox: {
-        offset: { x: 100, y: 50 },
-        width: 170,
+        offset: { x: -150, y: 50 },
+        width: 180,
         height: 50
       }
     });
 
     this.startFightCountdown();
-  }
-}
+  } 
+} 

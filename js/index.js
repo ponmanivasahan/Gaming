@@ -1,23 +1,23 @@
 // js/index.js
 let gameState;
 let gameRenderer;
-let gameInitializer;
+let gameInitializer; 
 let combatSystem;
 
 function initGameSystems() {
   if (gameState) return;
   
   gameState = new GameState();
-  gameState.initCanvas();
+  gameState.initCanvas();  
   gameState.inputHandler = new InputHandler(gameState);
   combatSystem = new CombatSystem(gameState);
   gameState.combatSystem = combatSystem;
-  const renderer = new GameRenderer(gameState);
+  const renderer = new GameRenderer(gameState);      
   gameState.renderer = renderer;
   gameInitializer = new GameInitalizer(gameState);
-  window.gameState = gameState;
-  gameState.updateCoinDisplays();
-}   
+  window.gameState = gameState;      
+  gameState.updateCoinDisplays(); 
+}
 
 function startGame() {
   showNameEntryModal();
@@ -68,7 +68,7 @@ function startRound() {
     gameState.enemy.dead = false;
     gameState.enemy.isAttacking = false;
     gameState.enemy.specialCharge = 0;
-    gameState.enemy.position.x = 800;
+    gameState.enemy.position.x = 500;
     gameState.enemy.position.y = 100;
     gameState.enemy.velocity = { x: 0, y: 0 };
     gameState.enemy.switchSprite('idle');
@@ -256,7 +256,7 @@ document.addEventListener('keydown', (e) => {
 
 window.startGame = startGame;
 window.launchGame = launchGame;
-window.startNewGame = startNewGame;
+window.startNewGame = startNewGame;  
 window.startRound = startRound;
 window.returnToMenu = returnToMenu;
 window.backToMenu = backToMenu;

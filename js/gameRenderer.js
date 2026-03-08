@@ -91,7 +91,6 @@ class GameRenderer {
       
       this._drawBlockIndicators(ctx, player, enemy);
     
-      this._drawSpecialBars(ctx, player, enemy);
 
       if (!gs.gameEnding && ((player && player.dead) || (enemy && enemy.dead))) {
         gs.gameEnding = true;
@@ -101,7 +100,7 @@ class GameRenderer {
           }
         }, 1000);
       }
-    }
+    }   
   }
 
   _updateHealthUI(player, enemy) {
@@ -141,28 +140,12 @@ class GameRenderer {
     ctx.shadowBlur = 0;
   }
 
-  _drawSpecialBars(ctx, player, enemy) {
-    if (!player || !enemy) return;
-    
-    ctx.fillStyle = 'rgba(0,0,0,0.7)';
-    ctx.fillRect(player.position.x, player.position.y - 20, 50, 8);
-    
-    const playerPercent = player.specialCharge / player.specialChargeMax;
-    ctx.fillStyle = '#FFD700';
-    ctx.fillRect(player.position.x, player.position.y - 20, 50 * playerPercent, 8);
-    ctx.fillStyle = 'rgba(0,0,0,0.7)';
-    ctx.fillRect(enemy.position.x, enemy.position.y - 20, 50, 8);
-    
-    const enemyPercent = enemy.specialCharge / enemy.specialChargeMax;
-    ctx.fillStyle = '#FFD700';
-    ctx.fillRect(enemy.position.x, enemy.position.y - 20, 50 * enemyPercent, 8);
-  }
 
   _drawPauseMenu(ctx, canvas) {
     ctx.fillStyle = 'rgba(0,0,0,0.85)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = 'white'; 
     ctx.textAlign = 'center';
     ctx.shadowColor = '#FFD700';
     ctx.shadowBlur = 20;
