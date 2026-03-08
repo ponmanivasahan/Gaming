@@ -39,7 +39,7 @@ class GameState {
     this.canvas = document.getElementById('gameCanvas');
     this.ctx = this.canvas.getContext('2d');
     this.canvas.width  = window.innerWidth;
-    this.canvas.height = window.innerHeight;
+    this.canvas.height = window.innerHeight;  
     window.canvas  = this.canvas;
     window.c       = this.ctx;
     window.gravity = this.gravity;
@@ -59,10 +59,19 @@ class GameState {
     this.animationId  = null;
     this.coinsEarned  = 0;
     this.rounds = { player: 0, enemy: 0, current: 1, max: 3 };
+      this.bloodEffects=[];
     this.timerFrozen=false;
     this.activeDamageBoost=false;
+    this.bloodEffects=[];
     if(this.powerupManager){
       this.powerupManager.activeEffects=[];
+    }
+
+    this.addBloodEffect=(x,y)=>{
+      const radius=12+Math.random()*10;
+      this.bloodEffects.push({
+        x,y,r:radius,alpha:1,age:0,life:0.45+Math.random()*0.35
+      })
     }
   }
 

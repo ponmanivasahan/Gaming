@@ -95,8 +95,10 @@ class GameInitalizer {
       }
     });
 
+    const startX=Math.max(280,(this.gameState.canvas?.width || 800)-260);
+
     this.gameState.enemy = new Fighter({
-      position: { x: 300, y: 100 },
+      position: { x: startX, y: 100 },
       velocity: { x: 0, y: 0 },
       color: 'blue',
       facing: -1, 

@@ -34,6 +34,10 @@ class GameRenderer {
     if (gs.player) gs.player.update();
     if (gs.enemy) gs.enemy.update();
 
+    if(gs.bloodEffects && gs.bloodEffects.length){
+      this._drawBloodEffects(ctx,delta);
+    }
+
     if (gs.gameStarted && gs.player && gs.enemy) {
       const keys = gs.inputHandler ? gs.inputHandler.keys : null;
       const player = gs.player;
@@ -127,6 +131,34 @@ class GameRenderer {
       if (el) {
         const percent = (enemy.health / enemy.maxHealth) * 100;
         el.style.width = Math.max(0, percent) + '%';
+      }
+    }
+  }
+
+  _drawBloodEffects(ctx,delta){
+    if(!this.gameState || !this.gameState.bloodEffects) return;
+    const effects=this.gameState.bloodEffects;
+    for(let i=effects.length-1;i>=0;i--){
+      const e=effects[i];
+      e.age+=delta;
+      const t=Math.min(1,e.age/e.life);
+      const alpha=Math.max(0,1-t);
+      const radius=e.r*(1-t)*0.12;
+
+      ctx.save();
+      ctx.globalAlpha=alpha*0.8;
+      const grad=ctx.createRadialGradient(e.x,e.y,0,e.x,e.y,radius);
+      grad.addColorStop(0,'rgba(200,20,20,0.9)');
+      grad.addColorStop(0.6,'rgba(180,0,0,0.4)');
+      grad.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=grad;
+      ctx.beginPath();
+      ctx.arc(e.x,e.y,radius,0,Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+
+      if(e.age>=e.life){
+        effects.splice(i,1);
       }
     }
   }

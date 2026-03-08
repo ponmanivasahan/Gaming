@@ -29,23 +29,11 @@ class InputHandler {
         return;
       }
 
-      if (event.ctrlKey && event.key.toLowerCase() === 'm') {
-        if (this.gameState.gameStarted && !this.gameState.isReplaying && !this.gameState.gameEnding) {
-          this.gameState.isPaused = true;
-          this.gameState.showMatchStats = true;
-          if (window.showMatchStats) window.showMatchStats();
-        }
-        return;
-      }
-
       if (this.gameState.isPaused) {
         if (event.key.toLowerCase() === 'r') {
           this.gameState.isPaused = false;
           this.gameState.isReplaying = true;
           this.gameState.replayIndex = 0;
-        } else if (event.key.toLowerCase() === 'm') {
-          this.gameState.showMatchStats = true;
-          if (window.showMatchStats) window.showMatchStats();
         } else if (event.key.toLowerCase() === 'q') {
           this.gameState.isPaused = false;
           if (window.returnToMenu) window.returnToMenu();
