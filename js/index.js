@@ -235,7 +235,7 @@ function buyItem(itemName, cost) {
     return;
   }
   gameState.coins -= cost;
-  gameState.items[itemName] = (gameState.items[itemName] || 0) + 1;
+  gameState.items[itemName] = (gameState.items[itemName] || 0) + 1;  
   localStorage.setItem('fighterCoins', gameState.coins.toString());
   localStorage.setItem(itemName, gameState.items[itemName].toString());
   updateShopDisplay();
@@ -298,16 +298,6 @@ window.buyItem = buyItem;
 window.updateShopDisplay = updateShopDisplay;
 window.showShopToast = showShopToast;
 
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  initGameSystems();
-  document.getElementById('startScreen').style.display = 'flex';
-});
-
-
-
 let loadingInterval;
 let loadingComplete=false;
 
@@ -339,7 +329,7 @@ function showInitialLoader(){
   setTimeout(()=>{
     if(loaderImg) loaderImg.style.opacity='0.3';
   },300);
-
+  
   setTimeout(()=>{
     if(loaderPercent) loaderPercent.style.opacity='1';
   },500);

@@ -8,7 +8,7 @@ class GameState {
     this.player = null;
     this.enemy = null;
     this.inputHandler = null;
-    this.combactSystem = null;
+    this.combatSystem = null;
     this.renderer = null;
     this.gameStarted = false;
     this.isPaused = false;

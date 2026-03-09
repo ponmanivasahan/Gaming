@@ -77,10 +77,10 @@ class GameRenderer {
         enemy.velocity.x = 0;
         
         if (keys.ArrowRight?.pressed && enemy.lastKey === 'ArrowRight') { 
-          enemy.velocity.x = 5; 
+          enemy.velocity.x = enemy.speedBoostActive ? 8.5 : 5; 
           enemy.switchSprite('run'); 
         } else if (keys.ArrowLeft?.pressed && enemy.lastKey === 'ArrowLeft') { 
-          enemy.velocity.x = -5; 
+          enemy.velocity.x = enemy.speedBoostActive ? -8.5 : -5; 
           enemy.switchSprite('run'); 
         } else { 
           enemy.switchSprite('idle'); 

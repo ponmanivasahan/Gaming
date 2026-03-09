@@ -212,12 +212,9 @@ class Fighter extends Sprite {
     this.hitCooldown = true;
     setTimeout(() => { this.hitCooldown = false; }, 200);
     
-    const dmg = damage !== null ? damage : (isCritical ? 40 : 20);
-    
-    this.health = Math.max(0, this.health - dmg);
+    // Health is already deducted by combatSystem before calling takeHit.
+    // Only handle animation and death state here.
     this.combo = 0;
-    
-    console.log(`${this.color} took ${dmg} damage, health now: ${this.health}`);
   
     if (this.health <= 0) {
       this.dead = true;
