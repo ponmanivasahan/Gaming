@@ -233,7 +233,7 @@ function buyItem(itemName, cost) {
   if (gameState.coins < cost) {
     showShopToast('⚠  Not enough coins!');
     return;
-  }
+  }  
   gameState.coins -= cost;
   gameState.items[itemName] = (gameState.items[itemName] || 0) + 1;  
   localStorage.setItem('fighterCoins', gameState.coins.toString());
