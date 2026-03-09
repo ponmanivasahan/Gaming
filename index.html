@@ -183,7 +183,20 @@
   </div>
 </div>
 
-
+<!-- Initial Loading Screen (fades in) -->
+<div id="initialLoader" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;z-index:1100;opacity:0;transition:opacity 1.0s ease;">
+  <img id="initialLoaderImg" src="images/start.png" alt="Loading" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(24px);opacity:0;transition:opacity 1s ease, filter 8s ease;" />
+  <div id="loaderOverlay" style="position:absolute;inset:0;background:rgba(0,0,0,0.35);"></div>
+  <div id="loaderParticles" style="position:absolute;inset:0;pointer-events:none;"></div>
+  <div style="position:relative;z-index:2;text-align:center;">
+    <div id="loaderPercent" style="font-family:'Rajdhani',sans-serif;font-size:30px;color:#fff;text-shadow:0 0 12px rgba(0,0,0,0.9);opacity:0;transition:opacity 0.5s ease;">0%</div>
+    <div id="loaderFireBar" style="margin-top:18px; width:280px; height:18px; position:relative; margin-left:auto; margin-right:auto;">
+      <div class="loader-fire-bar" style="position:absolute;inset:0;border:1px solid rgba(255,160,0,0.5);border-radius:12px;overflow:hidden;background:rgba(0,0,0,0.35);"></div>
+      <div class="loader-fire-fill" style="position:absolute;inset:0;width:0%;background:linear-gradient(90deg, rgba(255,200,80,0.92), rgba(255,120,20,0.9), rgba(255,80,0,0.8));box-shadow:0 0 15px rgba(255,120,20,0.45);transition:width 0.25s ease;"></div>
+      <div id="loaderFireFlames" style="position:absolute;bottom:0;left:0;right:0;top:0;pointer-events:none;"></div>
+    </div>
+  </div>
+</div>
 
 <!-- Start Screen with Shop -->
 <div id="startScreen" style="display:none;">
@@ -195,7 +208,7 @@
     <button class="shop-trigger-btn" onclick="window.showShop()" aria-label="Open Shop">
       <svg class="ic ic-20"><use href="#icon-cart"></use></svg>
       <span class="shop-trigger-label">SHOP</span>
-    </button>    
+    </button>
   </div>
 
   <div class="ss-inner">
@@ -212,7 +225,7 @@
     </div>
   </div>
 
-  <!-- Shop Panel (Now inside start screen) -->
+  <!-- Shop Panel -->
   <div class="shop-backdrop" id="shopBackdrop" onclick="window.closeShop()"></div>
   <div class="shop-panel" id="shopPanel" role="dialog" aria-label="Shop">
     <div class="shop-panel-header">
@@ -381,18 +394,15 @@
   <button class="btn" onclick="window.backToMenu()">Back to Menu</button>
 </div>
 
-<!-- Game Container (No Shop here) -->
+<!-- Game Container -->
 <div id="gameContainer" style="display:none;">
   <div id="gameWrapper">
     <div id="loadingScreen" style="display:none;">Loading...</div>
     <div style="position:relative;width:100%;height:100%;">
 
       <div class="ui-overlay">
-        <!-- Player names without borders -->
         <div class="player-name left" id="player1NameLabel">PLAYER 1</div>
         <div class="player-name right" id="player2NameLabel">PLAYER 2</div>
-
-        <!-- Health bars only (no shop) -->
         <div class="health-timer-container">
           <div class="health-bar">
             <div id="playerHealth" class="health-bar-fill" style="width:100%;"></div>
