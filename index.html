@@ -184,16 +184,15 @@
 </div>
 
 <!-- Initial Loading Screen (fades in) -->
-<div id="initialLoader" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;z-index:1100;opacity:0;transition:opacity 1.0s ease;">
-  <img id="initialLoaderImg" src="images/start.png" alt="Loading" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(24px);opacity:0;transition:opacity 1s ease, filter 8s ease;" />
-  <div id="loaderOverlay" style="position:absolute;inset:0;background:rgba(0,0,0,0.35);"></div>
-  <div id="loaderParticles" style="position:absolute;inset:0;pointer-events:none;"></div>
-  <div style="position:relative;z-index:2;text-align:center;">
-    <div id="loaderPercent" style="font-family:'Rajdhani',sans-serif;font-size:30px;color:#fff;text-shadow:0 0 12px rgba(0,0,0,0.9);opacity:0;transition:opacity 0.5s ease;">0%</div>
-    <div id="loaderFireBar" style="margin-top:18px; width:280px; height:18px; position:relative; margin-left:auto; margin-right:auto;">
-      <div class="loader-fire-bar" style="position:absolute;inset:0;border:1px solid rgba(255,160,0,0.5);border-radius:12px;overflow:hidden;background:rgba(0,0,0,0.35);"></div>
-      <div class="loader-fire-fill" style="position:absolute;inset:0;width:0%;background:linear-gradient(90deg, rgba(255,200,80,0.92), rgba(255,120,20,0.9), rgba(255,80,0,0.8));box-shadow:0 0 15px rgba(255,120,20,0.45);transition:width 0.25s ease;"></div>
-      <div id="loaderFireFlames" style="position:absolute;bottom:0;left:0;right:0;top:0;pointer-events:none;"></div>
+<div id="initialLoader" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;z-index:1100;opacity:1;">
+  <img id="initialLoaderImg" src="images/start.png" alt="Loading" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.4;z-index:0;" />
+  <div id="loaderOverlay" style="position:absolute;inset:0;background:rgba(0,0,0,0.5);z-index:1;"></div>
+  <div id="loaderParticles" style="position:absolute;inset:0;pointer-events:none;z-index:2;"></div>
+  <div class="loader-content" style="position:relative;z-index:3;text-align:center;">
+    <div id="loaderPercent" style="font-family:'Rajdhani',sans-serif;font-size:40px;font-weight:700;color:#fff;text-shadow:0 0 20px rgba(255,100,0,0.8);margin-bottom:20px;letter-spacing:4px;">0%</div>
+    <div id="loaderFireBar" style="width:500px;height:30px;position:relative;margin:0 auto;border:2px solid rgba(255,160,0,0.6);border-radius:20px;overflow:hidden;background:rgba(0,0,0,0.6);box-shadow:0 0 30px rgba(255,100,0,0.3);">
+      <div class="loader-fire-fill" style="position:absolute;top:0;left:0;height:100%;width:0%;background:linear-gradient(90deg, #ffaa00, #ff6600, #ff3300);box-shadow:0 0 30px #ff6600;transition:width 0.3s ease;z-index:1;"></div>
+      <div id="loaderFireFlames" style="position:absolute;inset:0;pointer-events:none;z-index:2;"></div>
     </div>
   </div>
 </div>

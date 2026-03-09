@@ -321,15 +321,17 @@ function showInitialLoader(){
   if(!loader) return;
 
   loader.style.display='flex';
-  loader.style.opacity='0';
-  if(loaderImg) loaderImg.style.opacity='0';
-  if(loaderPercent){
-       loaderPercent.textContent='0%';
-       loaderPercent.style.opacity='0';
-  }
-  if(loaderFill) loaderFill.style.width='0%';
+  loader.style.opacity='1';
+  if(loaderImg){
+    loaderImg.style.opacity='0.4';
+    loaderImg.style.filter='blur(0)';
+  } 
   if(loaderFlames) loaderFlames.innerHTML='';
-
+   createSideFlames(loaderFlames);
+   if(loaderPercent){
+       loaderPercent.textContent='0%';
+       loaderPercent.style.opacity='1';
+  }
   setTimeout(()=>{
     loader.style.opacity='1';
   },100);
@@ -342,24 +344,18 @@ function showInitialLoader(){
     if(loaderPercent) loaderPercent.style.opacity='1';
   },500);
 
-  createFlameElements(loaderFlames);
-
   let percent=0;
   clearInterval(loadingInterval);
 
+  const totalSteps=80;
+  const incrementPerStep=100/totalSteps;
+
   loadingInterval=setInterval(()=>{
-    percent+=1;
+    percent+=incrementPerStep;
 
     if(percent<=100){
       if(loaderPercent) loaderPercent.textContent=percent+'%';
-
       if(loaderFill) loaderFill.style.width=percent+'%';
-
-      if(percent===30 || percent===60 || percent===80 || percent===95){
-        createSparks(loaderFlames);
-      }
-
-      flickerFlames();
     }
 
     else{
@@ -381,119 +377,96 @@ function showInitialLoader(){
         },1000);
       },500);
     }
-  },30);
+  },100);
 }
 
-function createFlameElements(container){
-  if(!container) return;
+function createSideFlames(container) {
+  if (!container) return;
+    const leftFlame = document.createElement('div');
+  leftFlame.className = 'flame-side left';
+  container.appendChild(leftFlame);
+  
+  const rightFlame = document.createElement('div');
+  rightFlame.className = 'flame-side right';
+  container.appendChild(rightFlame);
+}
 
-  container.innerHTML='';
-  for(let i=0;i<12;i++){
-    const flame=document.createElement('div');
-     flame.className='flame';
-
-    const size=8+Math.random()*12;
-    const left=(i*25)+(Math.random()*15-7.5);
-    const delay=Math.random()*2;
-    const duration=0.4+Math.random()*0.6;
-
-    flame.style.cssText=`
-    position:absolute;
-    bottom:-5px;
-    left:${left}px;
-    width:${size}px;
-    height:${size*1.8}px;
-    background:radial-gradient(circle at 50% 20%, rgba(255,255,200,0.95),
-    rgba(255,150,50,0.9)40%,
-    rgba(255,80,0,0.5)70%,
-    transparent 90%);
-    border-radius:50% 50% 40% 40%;
-    filter:blur(${1+Math.random()}px);
-    opacity:0.7+Math.random()*0.3;
-    transform-origin:bottom center;
-    animation:flameFlicker ${duration}s ease-in-out infinite;
-    animation-delay:${delay}s;
-    pointer-events:none;
-    z-index:5;
-    `;
-    container.appendChild(flame);
+function createFlameStreaks(container) {
+  if (!container) return;
+    for (let i = 0; i < 3; i++) {
+    const leftStreak = document.createElement('div');
+    leftStreak.className = 'flame-streak left';
+    leftStreak.style.bottom = (5 + i * 8) + 'px';
+    leftStreak.style.animationDelay = (i * 0.3) + 's';
+    container.appendChild(leftStreak);
+    
+    const rightStreak = document.createElement('div');
+    rightStreak.className = 'flame-streak right';
+    rightStreak.style.bottom = (5 + i * 8) + 'px';
+    rightStreak.style.animationDelay = (i * 0.3) + 's';
+    container.appendChild(rightStreak);
   }
 }
 
-function createSparks(container){
-  if(!container) return;
-  const sparkCount=5+Math.floor(Math.random()*8);
-  for(let i=0;i<sparkCount;i++){
-    const spark=document.createElement('div');
-    spark.className='loader-spark';
 
-    const size=4+Math.random()*8;
-    const left=50+(Math.random()*200-100);
-    const direction=Math.random()>0.5 ? 'left':'right';
-    const duration=0.4+Math.random()*0.6;
-    const delay=Math.random()*0.2;
-
-    spark.style.cssText=`position:absolute;
-    bottom:${5+Math.random()*15}px;
-    left:${left}px;
-    width:${size}px;
-    height:${size}px;
-    background:radial-gradient(circle at 40% 40%, rgba(255,255,200,0.95),rgba(255,160,60,0.9),rgba(255,90,20,0.7)70%;);
-    border-radius:50%;
-    filter:blur(${1+Math.random()}px);
-    opacity:0.9;
-    pointer-events:none;
-    z-index:10;
-    animation:${direction==='left' ?' sparkLeft':'sparkRight'} ${duration}s ease-out forwards;
-    animation-delay:${delay}s;
-    `
-
-    container.appendChild(spark);
-
-    setTimeout(()=>{
-      if(spark && spark.parentNode){
-        spark.remove();
+function addFlameAnimation() {
+  if (!document.querySelector('#flameAnimation')) {
+    const style = document.createElement('style');
+    style.id = 'flameAnimation';
+    style.textContent = `
+      @keyframes flameLeft {
+        0%, 100% {
+          transform: skewX(-15deg) translateX(0);
+          opacity: 0.7;
+        }
+        50% {
+          transform: skewX(-15deg) translateX(-10px);
+          opacity: 1;
+          height: 120%;
+        }
       }
-    },(duration+delay)*1000);
-  }
-} 
-
-function flickerFlames(){
-  const flames=document.querySelectorAll('.flame');
-  flames.forEach(flame=>{
-    if(Math.random()>0.7){
-      const scale=0.8+Math.random()*0.6;
-      flame.style.transform=`scaleY(${scale})`;
-
-      setTimeout(()=>{
-        flame.style.transform='scaleY(1)';
-      },50+Math.random()*100);
-    }
-  })
-}
-
-function addFlameAnimation(){
-  if(!document.querySelector('#flameAnimation')){
-    const style=document.createElement('style');
-    style.id='flameAnimation';
-    style.textContent=`@keyframes flameFlicker{
-    0%{transform:translateY(0) scale(1); opacity:0.7;}
-    25%{transform:translateY(-3px) scale(1.1);opacity:0.9;}
-    50%{transform:translateY(0) scale(0.95); opacity:0.8;}
-    75%{transform:translateY(-2px) scale(1.05); opacity:0.95;}
-    100%{transform:translateY(0) scale(1);opacity:0.7;}
-    }
-    @keyframes sparkLeft{
-     0%{transform:translate(0,0) scale(1); opacity:1;}
-     40%{transform:translate(50px,-30px) scale(0.8); opacity:0.9;}
-     100%{transform:translate(90px,-60px) scale(0.4);opacity:0;}
-    }
-
-    @keyframes sparkRight{
-    0%{transform:translate(0,0) scale(1);opacity:1;}
-    40%{transform:translate(-50px,-30px) scale(0.8);opacity:0.9;}
-    100%{transform:translate(-90px,-60px) scale(0.4);opacity:0;}
-    }
+      
+      @keyframes flameRight {
+        0%, 100% {
+          transform: skewX(15deg) translateX(0);
+          opacity: 0.7;
+        }
+        50% {
+          transform: skewX(15deg) translateX(10px);
+          opacity: 1;
+          height: 120%;
+        }
+      }
+      
+      @keyframes streakLeft {
+        0% {
+          transform: translateX(0) scaleX(1);
+          opacity: 0.5;
+        }
+        50% {
+          transform: translateX(-20px) scaleX(1.5);
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(0) scaleX(1);
+          opacity: 0.5;
+        }
+      }
+      
+      @keyframes streakRight {
+        0% {
+          transform: translateX(0) scaleX(1);
+          opacity: 0.5;
+        }
+        50% {
+          transform: translateX(20px) scaleX(1.5);
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(0) scaleX(1);
+          opacity: 0.5;
+        }
+      }
     `;
     document.head.appendChild(style);
   }
