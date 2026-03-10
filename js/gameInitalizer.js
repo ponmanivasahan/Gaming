@@ -1,3 +1,4 @@
+//js/gameInitalizer.js
 class GameInitalizer {
   constructor(gameState) {
     this.gameState = gameState;
@@ -36,7 +37,10 @@ class GameInitalizer {
       }
 
       if (typeof decreaseTimer === 'function') decreaseTimer();
-      if (this.gameState.renderer) this.gameState.renderer.animate();
+        if (this.gameState.renderer) {
+          this.gameState.renderer.lastTimestamp = null;
+          this.gameState.renderer.animate();
+        }
     }, 4900);
   }
 
@@ -146,4 +150,4 @@ class GameInitalizer {
 
     this.startFightCountdown();
   } 
-} 
+}

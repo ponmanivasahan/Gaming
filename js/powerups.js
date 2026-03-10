@@ -95,21 +95,20 @@ class powerupManager{
     }
     _endEffect(type){
         const player=this.gameState.player;
-        if(!player) return;
-    switch(type){
-        case 'damage':
-            this.gameState.activeDamageBoost=false;
-            break;
-        case 'speed':
-            player.speedBoostActive=false;
-            break;
-        case 'timeFreeze':
-            this.gameState.timerFrozen=false;
-            break;
-        case 'invincibility':
-            player.invincible=false;
-            break;
-    }
+        switch(type){
+            case 'damage':
+                this.gameState.activeDamageBoost=false;
+                break;
+            case 'speed':
+                if(player) player.speedBoostActive=false;
+                break;
+            case 'timeFreeze':
+                this.gameState.timerFrozen=false;
+                break;
+            case 'invincibility':
+                if(player) player.invincible=false;
+                break;
+        }
     }
 }
 

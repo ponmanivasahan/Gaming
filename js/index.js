@@ -66,7 +66,6 @@ function startRound() {
     if (timerEl) timerEl.innerHTML = window.timer;
   }
 
-  // Reset active round effects so powerups do not carry over between rounds
   if (gameState.powerupManager) {
     gameState.powerupManager.activeEffects = [];
   }

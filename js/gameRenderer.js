@@ -13,7 +13,8 @@ class GameRenderer {
     
     if (!gs || !ctx || !canvas) return;
     const now=performance.now();
-    const delta=this.lastTimestamp ?(now-this.lastTimestamp)/1000:0;
+    const rawDelta=this.lastTimestamp ?(now-this.lastTimestamp)/1000:0;
+    const delta=Math.min(rawDelta,0.05);
     this.lastTimestamp=now;
     gs.animationId = requestAnimationFrame(() => this.animate());
 
@@ -28,12 +29,6 @@ class GameRenderer {
     if (gs.isPaused) {
       if (gs.player) gs.player.draw();  
       if (gs.enemy)  gs.enemy.draw();
-      this._drawPauseMenu(ctx, canvas);
-      return;
-    }
-    if (gs.isPaused) {
-      if (gs.player) gs.player.draw();
-      if (gs.enemy) gs.enemy.draw();
       this._drawPauseMenu(ctx, canvas);
       return;
     }
@@ -224,7 +219,6 @@ class GameRenderer {
     
     const lines = [
       'ESC - Resume',
-      'R - Replay Round',
       'Q - Quit to Menu'
     ];
     
