@@ -31,18 +31,34 @@ class GameRenderer {
       this._drawPauseMenu(ctx, canvas);
       return;
     }
+    if (gs.isPaused) {
+      if (gs.player) gs.player.draw();
+      if (gs.enemy) gs.enemy.draw();
+      this._drawPauseMenu(ctx, canvas);
+      return;
+    }
+
+    if (!gs.gameStarted) {
+      if (gs.player) gs.player.draw();
+      if (gs.enemy) gs.enemy.draw();
+      if (gs.bloodEffects && gs.bloodEffects.length) {
+        this._drawBloodEffects(ctx,delta);
+      }
+      return;
+    }
+
     if (gs.player) gs.player.update();
     if (gs.enemy) gs.enemy.update();
 
-    if(gs.bloodEffects && gs.bloodEffects.length){
+    if (gs.bloodEffects && gs.bloodEffects.length) {
       this._drawBloodEffects(ctx,delta);
     }
 
-    if (gs.gameStarted && gs.player && gs.enemy) {
+    if (gs.player && gs.enemy) {
       const keys = gs.inputHandler ? gs.inputHandler.keys : null;
       const player = gs.player;
       const enemy = gs.enemy;
-      if(gs.powerupManager){
+      if (gs.powerupManager) {
         gs.powerupManager.update(delta);
       }
 
@@ -142,19 +158,26 @@ class GameRenderer {
       const e=effects[i];
       e.age+=delta;
       const t=Math.min(1,e.age/e.life);
-      const alpha=Math.max(0,1-t);
-      const radius=e.r*(1-t)*0.12;
+      const alpha = Math.max(0, 1 - t);
+      const radius = e.r * (1 - t) * 0.55;
 
       ctx.save();
-      ctx.globalAlpha=alpha*0.8;
-      const grad=ctx.createRadialGradient(e.x,e.y,0,e.x,e.y,radius);
-      grad.addColorStop(0,'rgba(200,20,20,0.9)');
-      grad.addColorStop(0.6,'rgba(180,0,0,0.4)');
-      grad.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.fillStyle=grad;
+      ctx.globalAlpha = alpha;
+      const grad = ctx.createRadialGradient(e.x, e.y, 0, e.x, e.y, radius);
+      grad.addColorStop(0, 'rgba(255, 80, 80, 0.95)');
+      grad.addColorStop(0.35, 'rgba(255, 40, 40, 0.65)');
+      grad.addColorStop(0.65, 'rgba(220, 20, 20, 0.35)');
+      grad.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = grad;
       ctx.beginPath();
-      ctx.arc(e.x,e.y,radius,0,Math.PI*2);
+      ctx.arc(e.x, e.y, radius, 0, Math.PI * 2);
       ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = `rgba(255, 100, 100, ${Math.max(0, alpha - 0.2)})`;
+      ctx.beginPath();
+      ctx.arc(e.x, e.y, radius * 0.6, 0, Math.PI * 2);
+      ctx.stroke();
+
       ctx.restore();
 
       if(e.age>=e.life){
@@ -201,7 +224,7 @@ class GameRenderer {
     
     const lines = [
       'ESC - Resume',
-      'M - Match Stats',
+      'R - Replay Round',
       'Q - Quit to Menu'
     ];
     

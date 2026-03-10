@@ -1,7 +1,4 @@
 // js/utils.js
-
-
-
 function rectangularCollision({ rectangle1, rectangle2 }) {
   return (
     rectangle1.attackBox.position.x + rectangle1.attackBox.width >= rectangle2.position.x &&
@@ -85,6 +82,9 @@ function determineWinner({ player, enemy }) {
       window.gameState.rounds.player++;
       window.gameState.coins += 50;
       localStorage.setItem('fighterCoins', window.gameState.coins.toString());
+      if (typeof window.gameState.updateCoinDisplays === 'function') {
+        window.gameState.updateCoinDisplays();
+      }
     } else if (enemy.health > player.health) {
       roundWinner = 'enemy';
       window.gameState.rounds.enemy++;
@@ -108,6 +108,9 @@ function determineWinner({ player, enemy }) {
         displayMsg.innerHTML = `${player1Name} wins<br><span style="font-size:0.38em;color:#FFD700;font-family:'Cinzel Decorative','Cinzel',serif;letter-spacing:4px;text-shadow:0 0 20px rgba(255,200,0,0.9);">⚔ Match Champion ⚔</span>`;
         window.gameState.coins += 250;
         localStorage.setItem('fighterCoins', window.gameState.coins.toString());
+        if (typeof window.gameState.updateCoinDisplays === 'function') {
+          window.gameState.updateCoinDisplays();
+        }
         if (typeof launchConfetti === 'function') launchConfetti();
       } else if (window.gameState.rounds.enemy > window.gameState.rounds.player) {
         displayMsg.innerHTML = `${player2Name} wins<br><span style="font-size:0.38em;color:#FFD700;font-family:'Cinzel Decorative','Cinzel',serif;letter-spacing:4px;text-shadow:0 0 20px rgba(255,200,0,0.9);">⚔ Match Champion ⚔</span>`;
@@ -208,4 +211,4 @@ function launchConfetti() {
 
   if (frame) cancelAnimationFrame(frame);    
   drawConfetti();
-}   
+}

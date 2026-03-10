@@ -17,18 +17,19 @@ class GameState {
     this.gameEnding = false;
     this.showMatchStats = false;
     this.animationId = null;
-    this.coins = parseInt(localStorage.getItem('fighterCoins') || '500');
+    const _storedCoins = parseInt(localStorage.getItem('fighterCoins'));
+    this.coins = isNaN(_storedCoins) ? 1000 : _storedCoins;
     this.timerFrozen = false;
     this.gravity = 0.7;
     this.rounds = { player: 0, enemy: 0, current: 1, max: 3 };
     this.activeDamageBoost=false;
     this.items = {
-      shields:        parseInt(localStorage.getItem('shields')        || '0'),
-      healthBoosts:   parseInt(localStorage.getItem('healthBoosts')   || '0'),
-      damageBoosts:   parseInt(localStorage.getItem('damageBoosts')   || '0'),
-      speedBoosts:    parseInt(localStorage.getItem('speedBoosts')    || '0'),
-      timeFreezes:    parseInt(localStorage.getItem('timeFreezes')    || '0'),
-      invincibilities:parseInt(localStorage.getItem('invincibilities')|| '0')
+      shields:        parseInt(localStorage.getItem('shields'))         || 0,
+      healthBoosts:   parseInt(localStorage.getItem('healthBoosts'))    || 0,
+      damageBoosts:   parseInt(localStorage.getItem('damageBoosts'))    || 0,
+      speedBoosts:    parseInt(localStorage.getItem('speedBoosts'))     || 0,
+      timeFreezes:    parseInt(localStorage.getItem('timeFreezes'))     || 0,
+      invincibilities:parseInt(localStorage.getItem('invincibilities')) || 0
     };
 
     this.activeItems = { player: {}, enemy: {} };
@@ -68,14 +69,15 @@ class GameState {
     }
 
     this.addBloodEffect=(x,y)=>{
-      const radius=12+Math.random()*10;
+      const radius=18+Math.random()*12;
       this.bloodEffects.push({
-        x,y,r:radius,alpha:1,age:0,life:0.45+Math.random()*0.35
+        x,y,r:radius,alpha:1,age:0,life:0.55+Math.random()*0.35
       })
     }
   }
 
   addCoins(amount) {
+    if (isNaN(this.coins)) this.coins = 1000;
     this.coins += amount;
     localStorage.setItem('fighterCoins', this.coins.toString());
     this.updateCoinDisplays();

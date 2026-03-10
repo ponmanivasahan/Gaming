@@ -55,6 +55,9 @@ function startRound() {
   if (!gameState) return;
   gameState.gameEnding = false;
   gameState.gameStarted = false;
+  gameState.isPaused = false;
+  gameState.isReplaying = false;
+
   if (typeof resetTimer === 'function') {
     resetTimer(30);
   } else {
@@ -62,6 +65,13 @@ function startRound() {
     const timerEl = document.querySelector('#timer');
     if (timerEl) timerEl.innerHTML = window.timer;
   }
+
+  // Reset active round effects so powerups do not carry over between rounds
+  if (gameState.powerupManager) {
+    gameState.powerupManager.activeEffects = [];
+  }
+  gameState.timerFrozen = false;
+  gameState.activeDamageBoost = false;
 
   const canvasWidth = gameState.canvas ? gameState.canvas.width : 0;
   const leftStartX = 100;
@@ -73,6 +83,10 @@ function startRound() {
     gameState.player.dead = false;
     gameState.player.isAttacking = false;
     gameState.player.specialCharge = 0;
+    gameState.player.speedBoostActive = false;
+    gameState.player.invincible = false;
+    gameState.player.shieldCharges = 0;
+    gameState.player.lastKey = null;
     gameState.player.position.x = leftStartX;
     gameState.player.position.y = 0;
     gameState.player.velocity = { x: 0, y: 0 };
@@ -84,6 +98,10 @@ function startRound() {
     gameState.enemy.dead = false;
     gameState.enemy.isAttacking = false;
     gameState.enemy.specialCharge = 0;
+    gameState.enemy.speedBoostActive = false;
+    gameState.enemy.invincible = false;
+    gameState.enemy.shieldCharges = 0;
+    gameState.enemy.lastKey = null;
     gameState.enemy.position.x = rightStartX;
     gameState.enemy.position.y = 0;
     gameState.enemy.velocity = { x: 0, y: 0 };
@@ -98,12 +116,18 @@ function startRound() {
     cancelAnimationFrame(gameState.animationId);
     gameState.animationId = null;
   }
+
+  if (typeof updateShopDisplay === 'function') {
+    updateShopDisplay();
+  }
+
   gameInitializer.startFightCountdown();
 }
 window.startRound = startRound;
 
 function startNewGame() {
   if (!gameState) initGameSystems();
+
   gameState.initCanvas();
   gameInitializer.initGame();
 }
@@ -126,6 +150,7 @@ function backToMenu() {
       cancelAnimationFrame(gameState.animationId);
       gameState.animationId = null;
     }
+    if (typeof resetTimer === 'function') resetTimer();
     gameState.reset();
     gameState.updateCoinDisplays();
   }

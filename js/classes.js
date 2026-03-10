@@ -46,8 +46,6 @@ class Sprite {
     const drawX = this.position.x - this.offset.x;
     const drawY = this.position.y - this.offset.y;
 
-    // Determine the rendering orientation. Some sprite sheets are drawn flipped (e.g., left-facing by default)
-    // and in that case we invert the facing value only for rendering.
     const spriteFlip = (typeof this.flipSprite !== 'undefined' && this.flipSprite) ? -1 : 1;
     const renderFacing = (this.facing || 1) * spriteFlip;
 
@@ -164,7 +162,8 @@ class Fighter extends Sprite {
     if (this.facing === 1) {
       this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
     } else {
-      this.attackBox.position.x = this.position.x - this.attackBox.offset.x - this.attackBox.width;
+      
+      this.attackBox.position.x = this.position.x - this.attackBox.offset.x;
     }
     this.attackBox.position.y = this.position.y + this.attackBox.offset.y;
 
@@ -212,8 +211,6 @@ class Fighter extends Sprite {
     this.hitCooldown = true;
     setTimeout(() => { this.hitCooldown = false; }, 200);
     
-    // Health is already deducted by combatSystem before calling takeHit.
-    // Only handle animation and death state here.
     this.combo = 0;
   
     if (this.health <= 0) {

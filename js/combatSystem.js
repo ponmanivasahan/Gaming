@@ -54,6 +54,12 @@ class CombatSystem {
               enemy.health = Math.max(0, enemy.health - damage);
               enemy.takeHit(isCrit, damage);
               player.specialCharge = Math.min(player.specialChargeMax, player.specialCharge + (isCrit ? 30 : 15));
+
+              if (typeof this.gameState.addBloodEffect === 'function') {
+                const hitX = enemy.position.x + enemy.width / 2;
+                const hitY = enemy.position.y + enemy.height / 2;
+                this.gameState.addBloodEffect(hitX, hitY);
+              }
               
               // console.log(`Enemy took ${damage} damage, health: ${enemy.health}`);
             }         
@@ -68,8 +74,7 @@ class CombatSystem {
     }
     if (enemy.isAttacking) {
       // console.log('Enemy attacking, frame:', enemy.framesCurrent);
-      
-      if (enemy.framesCurrent >= 0 && enemy.framesCurrent <= 4) {
+      if (enemy.framesCurrent >= 2 && enemy.framesCurrent <= 4) {
         if (this.rectangularCollision(enemy, player)) {
           // console.log(" Enemy hit player!");
           
@@ -91,8 +96,12 @@ class CombatSystem {
               player.health = Math.max(0, player.health - damage);
               player.takeHit(isCrit, damage);
               enemy.specialCharge = Math.min(enemy.specialChargeMax, enemy.specialCharge + (isCrit ? 30 : 15));
-              
-              // console.log(`Player took ${damage} damage, health: ${player.health}`);
+
+              if (typeof this.gameState.addBloodEffect === 'function') {
+                const hitX = player.position.x + player.width / 2;
+                const hitY = player.position.y + player.height / 2;
+                this.gameState.addBloodEffect(hitX, hitY);
+              }
               
               const playerHealthEl = document.getElementById('playerHealth');
               if (playerHealthEl) {
