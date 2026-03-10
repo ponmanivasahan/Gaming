@@ -142,6 +142,7 @@ class Fighter extends Sprite {
     this.invincible = false;
     this.speedBoostActive = false;
     this.hitCooldown = false;
+    this.isGrounded = false;
     this.flipSprite = flipSprite;
 
     for (const sprite in this.sprites) {
@@ -187,7 +188,9 @@ class Fighter extends Sprite {
     if (this.position.y + this.height >= floorY) {
       this.velocity.y = 0;
       this.position.y = floorY - this.height;
+      this.isGrounded = true;
     } else {
+      this.isGrounded = false;
       this.velocity.y += window.gravity;
     }
 
@@ -198,7 +201,7 @@ class Fighter extends Sprite {
   }
 
   attack() {
-    if (this.dead || this.isAttacking) return;
+    if (this.dead || this.isAttacking || !this.isGrounded) return;
     this.switchSprite('attack1');
     this.isAttacking = true;
     this.framesCurrent = 0;

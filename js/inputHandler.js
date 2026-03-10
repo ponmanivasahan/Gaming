@@ -56,7 +56,7 @@ class InputHandler {
           }
           break;
         case 'w':
-          if (this.gameState.player && !this.gameState.player.dead) {
+          if (this.gameState.player && !this.gameState.player.dead && this.gameState.player.isGrounded) {
             this.gameState.player.velocity.y = -20;
           }
           break;
@@ -95,7 +95,7 @@ class InputHandler {
           break;
         case 'ArrowUp':
           event.preventDefault();
-          if (this.gameState.enemy && !this.gameState.enemy.dead) {
+          if (this.gameState.enemy && !this.gameState.enemy.dead && this.gameState.enemy.isGrounded) {
             this.gameState.enemy.velocity.y = -20;
           }
           break;
