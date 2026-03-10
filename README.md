@@ -82,6 +82,6 @@ If you enjoyed the project, please consider:
 - Connecting with me
 
 ## Author
-Built with passion and curiosity by PONMANI VASAN
+Built with passion and curiosity by PONMANI VASHAN
 
-This project represents my journey of learning JavaScript and experimenting with game development.
+This project represents my journey of learning JavaScript and experimenting with game development. Please Share Some Love For My Work.
