@@ -5,77 +5,96 @@ class powerupManager{
         this.activeEffects=[];
     }
 
-    getActiveEffects(){
+    getActiveEffects(owner=null){
+        if(owner==='player' || owner==='enemy'){
+            return this.activeEffects.filter((effect)=>effect.owner===owner);
+        }
         return this.activeEffects;
     }
-    activate(type){
+
+    activate(type,owner='player'){
         if(!this.gameState) return false;
         if(!this.gameState.items) return false;
 
-        const itemCount=this.gameState.items[type] || 0;
+        const effectOwner=owner==='enemy' ? 'enemy' : 'player';
+        if(this.gameState.isCpuEnemy && effectOwner==='enemy') return false;
+        const ownerLabel=effectOwner==='player' ? 'P1' : 'P2';
+
+        const itemCount=typeof this.gameState.getItemCount==='function'
+            ? this.gameState.getItemCount(effectOwner,type)
+            : (this.gameState.items[effectOwner]?.[type] || 0);
+
         if(itemCount<=0){
             if(typeof window.showShopToast==='function'){
-                window.showShopToast('No powerups left');      
+                window.showShopToast(`${ownerLabel} has no powerups left`);
             }
             return false;
         }
-        this.gameState.items[type]=itemCount-1;
-        localStorage.setItem(type,this.gameState.items[type].toString());
+
+        if(typeof this.gameState.setItemCount==='function'){
+            this.gameState.setItemCount(effectOwner,type,itemCount-1);
+        }else if(this.gameState.items[effectOwner]){
+            this.gameState.items[effectOwner][type]=itemCount-1;
+        }
+
         if(typeof window.updateShopDisplay==='function'){
             window.updateShopDisplay();
         }
 
-        const player=this.gameState.player;
-        if(!player) return true;
+        const targetFighter=effectOwner==='player' ? this.gameState.player : this.gameState.enemy;
+        if(!targetFighter) return true;
+
         const showToast=(msg)=>{
             if(typeof window.showShopToast==='function'){
                 window.showShopToast(msg);
             }
         }
 
-        const addEffect=(effectType,duration)=>{
-            const existing=this.activeEffects.find((e)=>e.type===effectType);
+        const addEffect=(effectType,duration,effectOwnerArg)=>{
+            const existing=this.activeEffects.find((e)=>e.type===effectType && e.owner===effectOwnerArg);
             if(existing){
                 existing.timeRemaining=duration;
                 return;
             }
-            this.activeEffects.push({type:effectType,timeRemaining:duration});
+            this.activeEffects.push({type:effectType,timeRemaining:duration,owner:effectOwnerArg});
         }
 
         switch(type){
             case 'shields':
-                player.shieldCharges=Math.min(player.shieldCharges+1,3);
-                showToast('🛡  Shield ready!');
-                if(typeof window.showGameMessage==='function') window.showGameMessage('🛡  Shield ready!',1200);
+                targetFighter.shieldCharges=Math.min(targetFighter.shieldCharges+1,3);
+                showToast(`🛡  ${ownerLabel} shield ready!`);
+                if(typeof window.showGameMessage==='function') window.showGameMessage(`🛡  ${ownerLabel} shield ready!`,1200);
                 break;
             case 'healthBoosts':
-                player.health=Math.min(player.maxHealth,player.health+80);
-                showToast('❤️  Health boosted!');
-                if(typeof window.showGameMessage==='function') window.showGameMessage('❤️  Health boosted!',1200);
+                targetFighter.health=Math.min(targetFighter.maxHealth,targetFighter.health+80);
+                showToast(`❤️  ${ownerLabel} health boosted!`);
+                if(typeof window.showGameMessage==='function') window.showGameMessage(`❤️  ${ownerLabel} health boosted!`,1200);
                 break;
             case 'damageBoosts':
-                this.gameState.activeDamageBoost=true;
-                addEffect('damage',5);
-                showToast('⚡  Damage boosted!');
-                if(typeof window.showGameMessage==='function') window.showGameMessage('⚡  Damage boosted!',1200);
+                if(this.gameState.damageBoost){
+                    this.gameState.damageBoost[effectOwner]=true;
+                }
+                addEffect('damage',5,effectOwner);
+                showToast(`⚡  ${ownerLabel} damage boosted!`);
+                if(typeof window.showGameMessage==='function') window.showGameMessage(`⚡  ${ownerLabel} damage boosted!`,1200);
                 break;
             case 'speedBoosts':
-                player.speedBoostActive=true;
-                addEffect('speed',10);
-                showToast('🏃‍♂️ Speed Boost active');
-                if(typeof window.showGameMessage==='function') window.showGameMessage('🏃‍♂️ Speed Boost active!',1200);
+                targetFighter.speedBoostActive=true;
+                addEffect('speed',10,effectOwner);
+                showToast(`🏃‍♂️ ${ownerLabel} speed boost active`);
+                if(typeof window.showGameMessage==='function') window.showGameMessage(`🏃‍♂️ ${ownerLabel} speed boost active!`,1200);
                 break;
             case 'timeFreezes':
                 this.gameState.timerFrozen=true;
-                addEffect('timeFreeze',5);
-                showToast('⏱  Time Frozen!');
-                if(typeof window.showGameMessage==='function') window.showGameMessage('⏱  Time Frozen!',1200);
+                addEffect('timeFreeze',5,effectOwner);
+                showToast(`⏱  ${ownerLabel} froze timer!`);
+                if(typeof window.showGameMessage==='function') window.showGameMessage(`⏱  ${ownerLabel} froze timer!`,1200);
                 break;
             case 'invincibilities':      
-                player.invincible=true;
-                addEffect('invincibility',4);
-                showToast('✨ Invincibility!');
-                if(typeof window.showGameMessage==='function') window.showGameMessage('✨ Invincibility!',1200);
+                targetFighter.invincible=true;
+                addEffect('invincibility',4,effectOwner);
+                showToast(`✨ ${ownerLabel} invincibility!`);
+                if(typeof window.showGameMessage==='function') window.showGameMessage(`✨ ${ownerLabel} invincibility!`,1200);
                 break;
             default:
                 return false;
@@ -88,33 +107,47 @@ class powerupManager{
             const effect=this.activeEffects[i];
             effect.timeRemaining-=deltaSeconds;
             if(effect.timeRemaining<=0){
-                this._endEffect(effect.type);
                 this.activeEffects.splice(i,1);
+                this._endEffect(effect.type,effect.owner);
             }
         }
     }
-    _endEffect(type){
-        const player=this.gameState.player;
+
+    _endEffect(type,owner='player'){
+        const effectOwner=owner==='enemy' ? 'enemy' : 'player';
+        const targetFighter=effectOwner==='player' ? this.gameState.player : this.gameState.enemy;
+
         switch(type){
             case 'damage':
-                this.gameState.activeDamageBoost=false;
+                if(this.gameState.damageBoost){
+                    const hasOwnerEffect=this.activeEffects.some((e)=>e.type==='damage' && e.owner===effectOwner);
+                    if(!hasOwnerEffect){
+                        this.gameState.damageBoost[effectOwner]=false;
+                    }
+                }
                 break;
             case 'speed':
-                if(player) player.speedBoostActive=false;
+                if(targetFighter){
+                    const hasOwnerEffect=this.activeEffects.some((e)=>e.type==='speed' && e.owner===effectOwner);
+                    if(!hasOwnerEffect) targetFighter.speedBoostActive=false;
+                }
                 break;
             case 'timeFreeze':
-                this.gameState.timerFrozen=false;
+                this.gameState.timerFrozen=this.activeEffects.some((e)=>e.type==='timeFreeze');
                 break;
             case 'invincibility':
-                if(player) player.invincible=false;
+                if(targetFighter){
+                    const hasOwnerEffect=this.activeEffects.some((e)=>e.type==='invincibility' && e.owner===effectOwner);
+                    if(!hasOwnerEffect) targetFighter.invincible=false;
+                }
                 break;
         }
     }
 }
 
-function activatePowerup(type){
+function activatePowerup(type,owner='player'){
     if(!window.gameState || !window.gameState.powerupManager) return;
-    window.gameState.powerupManager.activate(type);
+    window.gameState.powerupManager.activate(type,owner);
 }
 
 function setupPowerupHud(){
@@ -130,9 +163,10 @@ function setupPowerupHud(){
     Object.entries(idToType).forEach(([id,type])=>{
         const el=document.getElementById(id);
         if(!el) return;
+        el.title='Click to use';
         el.style.cursor='pointer';
         el.addEventListener('click',()=>{
-            activatePowerup(type);
+            activatePowerup(type,'player');
         });
     })
 }

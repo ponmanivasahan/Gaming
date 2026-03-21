@@ -30,15 +30,21 @@ function startGame() {
   showNameEntryModal();
 }
 
-function launchGame(player1Name, player2Name) {
+function launchGame(player1Name, levelKey = 'arena') {
+  localStorage.setItem('selectedLevel', levelKey);
   const p1 = (player1Name || '').trim() || 'Samurai';
-  const p2 = (player2Name || '').trim() || 'Kenji';
+  if (gameState && typeof gameState.setLevel === 'function') {
+    gameState.setLevel(levelKey);
+  }
+  const cpuName = gameState?.getLevelConfig?.().enemyName || 'Kenji CPU';
+
   localStorage.setItem('player1Name', p1);
-  localStorage.setItem('player2Name', p2);
+  localStorage.setItem('player2Name', cpuName);
+
   const p1Label = document.getElementById('player1NameLabel');
   const p2Label = document.getElementById('player2NameLabel');
   if (p1Label) p1Label.textContent = p1;
-  if (p2Label) p2Label.textContent = p2;
+  if (p2Label) p2Label.textContent = cpuName;
 
   document.getElementById('startScreen').style.display = 'none';
   document.getElementById('gameContainer').style.display = 'block';
@@ -70,7 +76,13 @@ function startRound() {
     gameState.powerupManager.activeEffects = [];
   }
   gameState.timerFrozen = false;
-  gameState.activeDamageBoost = false;
+  gameState.damageBoost = { player: false, enemy: false };
+  gameState.bloodEffects = [];
+  gameState.hitFlash = 0;
+
+  if (typeof updateShopDisplay === 'function') {
+    updateShopDisplay();
+  }
 
   const canvasWidth = gameState.canvas ? gameState.canvas.width : 0;
   const leftStartX = 100;
@@ -85,6 +97,7 @@ function startRound() {
     gameState.player.speedBoostActive = false;
     gameState.player.invincible = false;
     gameState.player.shieldCharges = 0;
+    gameState.player.isBlocking = false;
     gameState.player.lastKey = null;
     gameState.player.position.x = leftStartX;
     gameState.player.position.y = 0;
@@ -100,6 +113,7 @@ function startRound() {
     gameState.enemy.speedBoostActive = false;
     gameState.enemy.invincible = false;
     gameState.enemy.shieldCharges = 0;
+    gameState.enemy.isBlocking = false;
     gameState.enemy.lastKey = null;
     gameState.enemy.position.x = rightStartX;
     gameState.enemy.position.y = 0;
@@ -116,6 +130,13 @@ function startRound() {
     gameState.animationId = null;
   }
 
+  if (gameState.renderer && typeof gameState.renderer.resetCpuState === 'function') {
+    gameState.renderer.resetCpuState();
+  }
+  if (gameState.renderer && typeof gameState.renderer.resetRuntimeCaches === 'function') {
+    gameState.renderer.resetRuntimeCaches();
+  }
+
   if (typeof updateShopDisplay === 'function') {
     updateShopDisplay();
   }
@@ -128,6 +149,12 @@ function startNewGame() {
   if (!gameState) initGameSystems();
 
   gameState.initCanvas();
+  if (typeof updateShopDisplay === 'function') {
+    updateShopDisplay();
+  }
+  if (typeof window.setupPowerupHud === 'function') {
+    window.setupPowerupHud();
+  }
   gameInitializer.initGame();
 }
 
@@ -164,11 +191,13 @@ function showNameEntryModal() {
   const overlay = document.getElementById('modalOverlay');
   const msgEl   = document.getElementById('modalMessage');
   const btnsEl  = document.getElementById('modalButtons');
-  if (!overlay || !msgEl || !btnsEl) { launchGame('Player 1', 'Player 2'); return; }
+  if (!overlay || !msgEl || !btnsEl) { launchGame('Player 1', 'arena'); return; }
+
+  const savedLevel = localStorage.getItem('selectedLevel') || 'arena';
 
   msgEl.innerHTML = `
     <div style="font-family:'Press Start 2P',cursive;font-size:11px;letter-spacing:2px;margin-bottom:22px;color:#fff;">
-      ENTER PLAYER NAMES
+      PLAYER VS CPU
     </div>
     <div style="display:flex;flex-direction:column;gap:14px;">
       <div style="display:flex;align-items:center;gap:12px;">
@@ -181,11 +210,15 @@ function showNameEntryModal() {
       </div>
       <div style="display:flex;align-items:center;gap:12px;">
         <label style="font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;
-                      color:#ff5555;width:76px;text-align:left;letter-spacing:1px;flex-shrink:0;">P2 NAME</label>
-        <input id="nameInput2" type="text" maxlength="14" placeholder="Player 2"
-          style="flex:1;min-width:0;background:#0a0a1a;border:2px solid #ff5555;color:#fff;
-                 font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:600;
-                 padding:8px 12px;border-radius:6px;outline:none;letter-spacing:1px;" />
+                      color:#ffb347;width:76px;text-align:left;letter-spacing:1px;flex-shrink:0;">LEVEL</label>
+        <select id="levelSelect"
+          style="flex:1;min-width:0;background:#0a0a1a;border:2px solid #ffb347;color:#fff;
+                 font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;
+                 padding:8px 12px;border-radius:6px;outline:none;letter-spacing:1px;">
+          <option value="dojo" ${savedLevel === 'dojo' ? 'selected' : ''}>DOJO (EASY)</option>
+          <option value="arena" ${savedLevel === 'arena' ? 'selected' : ''}>ARENA (NORMAL)</option>
+          <option value="citadel" ${savedLevel === 'citadel' ? 'selected' : ''}>CITADEL (HARD)</option>
+        </select>
       </div>
     </div>`;
 
@@ -205,11 +238,11 @@ function showNameEntryModal() {
 
 window._confirmNames = function () {
   const n1 = document.getElementById('nameInput1');
-  const n2 = document.getElementById('nameInput2');
+  const levelSelect = document.getElementById('levelSelect');
   const p1 = (n1 ? n1.value.trim() : '') || 'Player 1';
-  const p2 = (n2 ? n2.value.trim() : '') || 'Player 2';
+  const selectedLevel = (levelSelect && levelSelect.value) ? levelSelect.value : 'arena';
   document.getElementById('modalOverlay').style.display = 'none';
-  launchGame(p1, p2);
+  launchGame(p1, selectedLevel);
 };
 
 let _shopToastTimer = null;
@@ -258,12 +291,26 @@ function buyItem(itemName, cost) {
     showShopToast('⚠  Not enough coins!');
     return;
   }  
+
+  const currentCount = typeof gameState.getItemCount === 'function'
+    ? gameState.getItemCount('player', itemName)
+    : (gameState.items?.player?.[itemName] || 0);
+
   gameState.coins -= cost;
-  gameState.items[itemName] = (gameState.items[itemName] || 0) + 1;  
+  if (isNaN(gameState.coins)) gameState.coins = 0;
   localStorage.setItem('fighterCoins', gameState.coins.toString());
-  localStorage.setItem(itemName, gameState.items[itemName].toString());
+
+  if (typeof gameState.setItemCount === 'function') {
+    gameState.setItemCount('player', itemName, currentCount + 1);
+  } else {
+    if (!gameState.items.player) gameState.items.player = {};
+    gameState.items.player[itemName] = currentCount + 1;
+  }
+
   updateShopDisplay();
-  gameState.updateCoinDisplays();
+  if (typeof gameState.updateCoinDisplays === 'function') {
+    gameState.updateCoinDisplays();
+  }
 
   const labels = {
     shields:'Shield', healthBoosts:'Health Boost', damageBoosts:'Damage Boost',
@@ -274,6 +321,14 @@ function buyItem(itemName, cost) {
 
 function updateShopDisplay() {
   if (!gameState) return;
+
+  const getCount = (itemKey) => {
+    if (typeof gameState.getItemCount === 'function') {
+      return gameState.getItemCount('player', itemKey);
+    }
+    return gameState.items?.player?.[itemKey] || 0;
+  };
+
   const panelMap = {
     shieldCount:'shields', healthBoostCount:'healthBoosts',
     damageBoostCount:'damageBoosts', speedBoostCount:'speedBoosts',
@@ -281,10 +336,16 @@ function updateShopDisplay() {
   };
   for (const [elId, itemKey] of Object.entries(panelMap)) {
     const el = document.getElementById(elId);
-    if (el) el.textContent = gameState.items[itemKey] || 0;
+    if (el) {
+      const count = getCount(itemKey);
+      el.textContent = count;
+    }
   }
+
   const walletEl = document.getElementById('coinDisplay');
+  const coinDisplaySS = document.getElementById('startScreenCoins');
   if (walletEl) walletEl.textContent = gameState.coins;
+  if (coinDisplaySS) coinDisplaySS.textContent = gameState.coins;
 
   const hudMap = {
     'pu-shield-n':'shields', 'pu-health-n':'healthBoosts',
@@ -293,7 +354,10 @@ function updateShopDisplay() {
   };
   for (const [elId, itemKey] of Object.entries(hudMap)) {
     const el = document.getElementById(elId);
-    if (el) el.textContent = gameState.items[itemKey] || 0;
+    if (el) {
+      const count = getCount(itemKey);
+      el.textContent = count;
+    }
   }
 }
 
@@ -306,7 +370,7 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') { closeShop(); return; }
   if (!gameState || !gameState.gameStarted) return;
   const numMap = { '1':'shields','2':'healthBoosts','3':'damageBoosts','4':'speedBoosts','5':'timeFreezes','6':'invincibilities' };
-  if (numMap[e.key] && typeof activatePowerup === 'function') activatePowerup(numMap[e.key]);
+  if (numMap[e.key] && typeof activatePowerup === 'function') activatePowerup(numMap[e.key], 'player');
 });
 
 window.startGame = startGame;
@@ -328,56 +392,111 @@ let loadingComplete=false;
 function showInitialLoader(){
   const loader=document.getElementById('initialLoader');
   const loaderImg=document.getElementById('initialLoaderImg');
+  const loaderOverlay=document.getElementById('loaderOverlay');
+  const loaderStatus=document.getElementById('loaderStatus');
   const loaderPercent=document.getElementById('loaderPercent');
   const loaderFill=document.querySelector('.loader-fire-fill');
-  const loaderFlames=document.getElementById('loaderFireFlames');
 
   if(!loader) return;
 
   loader.style.display='flex';
   loader.style.opacity='1';
   if(loaderImg){
-    loaderImg.style.opacity='0.4';
-    loaderImg.style.filter='blur(0)';
+    loaderImg.style.opacity='0.08';
+    loaderImg.style.filter='blur(28px)';
+    loaderImg.style.transform='scale(1.08)';
   } 
-  if(loaderFlames) loaderFlames.innerHTML='';
-   createSideFlames(loaderFlames);
-   if(loaderPercent){
-       loaderPercent.textContent='0%';
-       loaderPercent.style.opacity='1';
+  if (loaderOverlay) {
+    loaderOverlay.style.background='rgba(0,0,0,0.72)';
   }
+  if(loaderPercent){
+    loaderPercent.textContent='0%';
+    loaderPercent.style.opacity='1';
+  }
+  if (loaderStatus) loaderStatus.textContent = 'Preparing arena assets...';
+
   setTimeout(()=>{
     loader.style.opacity='1';
   },100);
 
-  setTimeout(()=>{
-    if(loaderImg) loaderImg.style.opacity='0.3';
-  },300);
-  
-  setTimeout(()=>{
-    if(loaderPercent) loaderPercent.style.opacity='1';
-  },500);
-
   let percent=0;
   clearInterval(loadingInterval);
 
-  const totalSteps=80;
+  const totalDurationMs=2200;
+  const tickMs=40;
+  const totalSteps=Math.ceil(totalDurationMs/tickMs);
   const incrementPerStep=100/totalSteps;
 
   loadingInterval=setInterval(()=>{
-    percent+=incrementPerStep;
+    percent=Math.min(100,percent+incrementPerStep);
 
-    if(percent<=100){
-      if(loaderPercent) loaderPercent.textContent=percent+'%';
-      if(loaderFill) loaderFill.style.width=percent+'%';
+    if(loaderPercent) loaderPercent.textContent=Math.round(percent)+'%';
+    if(loaderFill) loaderFill.style.width=percent+'%';
+    updateLoaderStatus(loaderStatus, percent);
+
+    if (loaderImg) {
+      let opacity = 0;
+      let blurVal = 28;
+      let scale = 1.08;
+
+      if (percent <= 25) {
+        const t = percent / 25;
+        opacity = 0.08 + (0.16 * t);
+        blurVal = 28 - (8 * t);
+        scale = 1.08;
+      } else if (percent <= 50) {
+        const t = (percent - 25) / 25;
+        opacity = 0.24 + (0.30 * t);
+        blurVal = 20 - (8 * t);
+        scale = 1.08 - (0.02 * t);
+      } else if (percent <= 75) {
+        const t = (percent - 50) / 25;
+        opacity = 0.54 + (0.40 * t);
+        blurVal = 12 - (10.5 * t);
+        scale = 1.06 - (0.035 * t);
+      } else {
+        const t = (percent - 75) / 25;
+        opacity = 0.94 + (0.04 * t);
+        blurVal = 1.5 - (1.5 * t);
+        scale = 1.025 - (0.025 * t);
+      }
+
+      loaderImg.style.opacity = opacity.toFixed(3);
+      loaderImg.style.filter = `blur(${Math.max(0, blurVal).toFixed(1)}px)`;
+      loaderImg.style.transform = `scale(${scale.toFixed(3)})`;
     }
 
-    else{
+    if (loaderOverlay) {
+      let darkness = 0.72;
+      if (percent <= 25) {
+        const t = percent / 25;
+        darkness = 0.72 - (0.08 * t);
+      } else if (percent <= 50) {
+        const t = (percent - 25) / 25;
+        darkness = 0.64 - (0.16 * t);
+      } else if (percent <= 75) {
+        const t = (percent - 50) / 25;
+        darkness = 0.48 - (0.20 * t);
+      } else {
+        const t = (percent - 75) / 25;
+        darkness = 0.28 - (0.10 * t);
+      }
+      loaderOverlay.style.background = `rgba(0,0,0,${Math.max(0.14, darkness).toFixed(3)})`;
+    }
+
+    if(percent>=100){
       clearInterval(loadingInterval);
       loadingComplete=true;
 
       if(loaderPercent) loaderPercent.textContent='100%';
-      if(loaderFill) loaderFill.style.width='100%';
+      if(loaderFill) loaderFill.style.width=percent+'%';
+      if(loaderStatus) loaderStatus.textContent='Arena ready!';
+      if(loaderImg){
+        loaderImg.style.opacity='0.94';
+        loaderImg.style.filter='blur(0px)';
+        loaderImg.style.transform='scale(1)';
+      }
+      if (loaderOverlay) loaderOverlay.style.background='rgba(0,0,0,0.2)';
 
       setTimeout(()=>{
         loader.style.opacity='0';
@@ -386,111 +505,24 @@ function showInitialLoader(){
           loader.style.display='none';
 
           document.getElementById('startScreen').style.display='flex';
-
-          if(loaderFlames)loaderFlames.innerHTML='';
-        },1000);
-      },500);
+        },120);
+      },120);
     }
-  },100);
+  },tickMs);
 }
 
-function createSideFlames(container) {
-  if (!container) return;
-    const leftFlame = document.createElement('div');
-  leftFlame.className = 'flame-side left';
-  container.appendChild(leftFlame);
-  
-  const rightFlame = document.createElement('div');
-  rightFlame.className = 'flame-side right';
-  container.appendChild(rightFlame);
-}
-
-function createFlameStreaks(container) {
-  if (!container) return;
-    for (let i = 0; i < 3; i++) {
-    const leftStreak = document.createElement('div');
-    leftStreak.className = 'flame-streak left';
-    leftStreak.style.bottom = (5 + i * 8) + 'px';
-    leftStreak.style.animationDelay = (i * 0.3) + 's';
-    container.appendChild(leftStreak);
-    
-    const rightStreak = document.createElement('div');
-    rightStreak.className = 'flame-streak right';
-    rightStreak.style.bottom = (5 + i * 8) + 'px';
-    rightStreak.style.animationDelay = (i * 0.3) + 's';
-    container.appendChild(rightStreak);
-  }
-}
-
-
-function addFlameAnimation() {
-  if (!document.querySelector('#flameAnimation')) {
-    const style = document.createElement('style');
-    style.id = 'flameAnimation';
-    style.textContent = `
-      @keyframes flameLeft {
-        0%, 100% {
-          transform: skewX(-15deg) translateX(0);
-          opacity: 0.7;
-        }
-        50% {
-          transform: skewX(-15deg) translateX(-10px);
-          opacity: 1;
-          height: 120%;
-        }
-      }
-      
-      @keyframes flameRight {
-        0%, 100% {
-          transform: skewX(15deg) translateX(0);
-          opacity: 0.7;
-        }
-        50% {
-          transform: skewX(15deg) translateX(10px);
-          opacity: 1;
-          height: 120%;
-        }
-      }
-      
-      @keyframes streakLeft {
-        0% {
-          transform: translateX(0) scaleX(1);
-          opacity: 0.5;
-        }
-        50% {
-          transform: translateX(-20px) scaleX(1.5);
-          opacity: 1;
-        }
-        100% {
-          transform: translateX(0) scaleX(1);
-          opacity: 0.5;
-        }
-      }
-      
-      @keyframes streakRight {
-        0% {
-          transform: translateX(0) scaleX(1);
-          opacity: 0.5;
-        }
-        50% {
-          transform: translateX(20px) scaleX(1.5);
-          opacity: 1;
-        }
-        100% {
-          transform: translateX(0) scaleX(1);
-          opacity: 0.5;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-  }
+function updateLoaderStatus(statusEl, percent) {
+  if (!statusEl) return;
+  if (percent < 22) statusEl.textContent = 'Loading world shell...';
+  else if (percent < 55) statusEl.textContent = 'Streaming textures...';
+  else if (percent < 90) statusEl.textContent = 'Rendering arena preview...';
+  else statusEl.textContent = 'Finalizing battle scene...';
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
-  addFlameAnimation();
   document.getElementById('startScreen').style.display='none';
   showInitialLoader();
-  setTimeout(()=>{
+  requestAnimationFrame(()=>{
     initGameSystems();
-  },500)
+  });
 })

@@ -159,6 +159,9 @@ class Fighter extends Sprite {
   update() {
     this.draw();
     if (!this.dead) this.animateFrames();
+    else if (this.image === this.sprites.death?.image && this.framesCurrent < this.framesMax - 1) {
+      this.animateFrames();
+    }
     
     if (this.facing === 1) {
       this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
@@ -205,7 +208,6 @@ class Fighter extends Sprite {
     this.switchSprite('attack1');
     this.isAttacking = true;
     this.framesCurrent = 0;
-    console.log(`${this.color} attacked!`);
   }
 
   takeHit(isCritical = false, damage = null) {
@@ -235,8 +237,7 @@ class Fighter extends Sprite {
     setTimeout(() => { 
       this.isSpecialAttack = false; 
     }, 600);
-    
-    console.log(`${this.color} used special attack!`); 
+
     return true;
   }
 
@@ -297,7 +298,10 @@ class Fighter extends Sprite {
           this.image = this.sprites.death.image; 
           this.framesMax = this.sprites.death.framesMax; 
           this.framesCurrent = 0; 
-        } 
+        }
+        if (this.framesCurrent < this.framesMax - 1) {
+          this.framesCurrent = this.framesMax - 1;
+        }
         break;
     }
   }

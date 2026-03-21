@@ -50,9 +50,12 @@ class GameInitalizer {
       this.gameState.initCanvas();
     }
 
+    const levelConfig = this.gameState.getLevelConfig ? this.gameState.getLevelConfig() : null;
+    const backgroundSrc = levelConfig?.background || './images/background1.png';
+
     this.gameState.background = new Sprite({
       position: { x: 0, y: 0 },
-      imageSrc: './images/background1.png'
+      imageSrc: backgroundSrc
     });
 
     this.gameState.player = new Fighter({
@@ -147,6 +150,10 @@ class GameInitalizer {
         height: 50
       }
     });
+
+    if (typeof window.showGameMessage === 'function' && levelConfig?.name) {
+      window.showGameMessage(`Level: ${levelConfig.name}`, 1500);
+    }
 
     this.startFightCountdown();
   } 

@@ -184,16 +184,21 @@
 </div>
 
 <!-- Initial Loading Screen (fades in) -->
-<div id="initialLoader" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;z-index:1100;opacity:1;">
-  <img id="initialLoaderImg" src="images/start.png" alt="Loading" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.4;z-index:0;" />
-  <div id="loaderOverlay" style="position:absolute;inset:0;background:rgba(0,0,0,0.5);z-index:1;"></div>
-  <div id="loaderParticles" style="position:absolute;inset:0;pointer-events:none;z-index:2;"></div>
-  <div class="loader-content" style="position:relative;z-index:3;text-align:center;">
-    <div id="loaderPercent" style="font-family:'Rajdhani',sans-serif;font-size:40px;font-weight:700;color:#fff;text-shadow:0 0 20px rgba(255,100,0,0.8);margin-bottom:20px;letter-spacing:4px;">0%</div>
-    <div id="loaderFireBar" style="width:500px;height:30px;position:relative;margin:0 auto;border:2px solid rgba(255,160,0,0.6);border-radius:20px;overflow:hidden;background:rgba(0,0,0,0.6);box-shadow:0 0 30px rgba(255,100,0,0.3);">
-      <div class="loader-fire-fill" style="position:absolute;top:0;left:0;height:100%;width:0%;background:linear-gradient(90deg, #ffaa00, #ff6600, #ff3300);box-shadow:0 0 30px #ff6600;transition:width 0.3s ease;z-index:1;"></div>
-      <div id="loaderFireFlames" style="position:absolute;inset:0;pointer-events:none;z-index:2;"></div>
+<div id="initialLoader">
+  <img id="initialLoaderImg" src="images/start.png" alt="Loading" />
+  <div id="loaderOverlay"></div>
+  <div id="loaderParticles"></div>
+  <div class="loader-content">
+    <div class="loader-brand">
+      <p class="loader-kicker">BATTLE ARENA</p>
+      <h2 class="loader-title">SAMURAI FIGHTER</h2>
     </div>
+    <div id="loaderPercent">0%</div>
+    <div id="loaderFireBar">
+      <div class="loader-fire-fill"></div>
+      <div id="loaderFireFlames"></div>
+    </div>
+    <div id="loaderStatus">Preparing arena assets...</div>
   </div>
 </div>
 
@@ -320,7 +325,7 @@
     </div>
 
     <div class="shop-panel-footer">
-      Power-ups activate at the start of your next battle &nbsp;·&nbsp; Use keys 1–6 in-game
+      Power-ups activate in battle &nbsp;·&nbsp; Use keys 1-6 as Player
     </div>
   </div>
   <div class="shop-toast" id="shopToast"></div>
@@ -332,29 +337,29 @@
   <div class="rules-container">
     <h3>GAME OBJECTIVE</h3>
     <ul>
-      <li>2-player fighting game — both players share one keyboard</li>
+      <li>Single-player battle — fight against an auto-playing CPU enemy</li>
+      <li>Select a level before each match to change CPU difficulty and arena</li>
       <li>Win <strong>2 out of 3 rounds</strong> to claim the match</li>
       <li>Reduce your opponent's health to zero to win a round instantly</li>
       <li>Or have more health when the 30-second timer runs out</li>
-      <li>Earn coins each round — spend them in the Shop for power-ups</li>
+      <li>Earn coins only when <strong>you</strong> win rounds and matches</li>
     </ul>
     <h3>PLAYER 1 CONTROLS (Left Fighter)</h3>
     <ul>
-      <li><strong>A</strong> — Move Left</li>
-      <li><strong>D</strong> — Move Right</li>
+      <li><strong>A</strong> — Move Left (hold for continuous movement)</li>
+      <li><strong>D</strong> — Move Right (hold for continuous movement)</li>
       <li><strong>W</strong> — Jump</li>
       <li><strong>SPACEBAR</strong> — Attack</li>
       <li><strong>SHIFT</strong> — Block (reduces any hit to 5 damage)</li>
       <li><strong>E</strong> — Special / Ultimate Attack (when charge bar is full)</li>
+      <li>Controls auto-reset if the game window loses focus to avoid stuck movement</li>
     </ul>
-    <h3>PLAYER 2 CONTROLS (Right Fighter)</h3>
+    <h3>ENEMY</h3>
     <ul>
-      <li><strong>&larr; Arrow</strong> — Move Left</li>
-      <li><strong>&rarr; Arrow</strong> — Move Right</li>
-      <li><strong>&uarr; Arrow</strong> — Jump</li>
-      <li><strong>&darr; Arrow</strong> — Attack</li>
-      <li><strong>CTRL (Left/Right)</strong> — Block (reduces any hit to 5 damage)</li>
-      <li><strong>ENTER</strong> — Special / Ultimate Attack (when charge bar is full)</li>
+      <li>The right-side fighter is CPU controlled</li>
+      <li>CPU tracks your movement direction and distance in real-time</li>
+      <li>CPU blocks more often when you pressure with attacks</li>
+      <li>CPU skill increases by selected level (Easy, Normal, Hard)</li>
     </ul>
     <h3>SPECIAL ATTACK (ULTIMATE)</h3>
     <ul>
@@ -370,8 +375,8 @@
     <h3>IN-GAME POWERUPS</h3>
     <ul>
       <li>Buy powerups in the Shop before the match</li>
-      <li>During the game, <strong>click a HUD icon</strong> or press its number key to use it</li>
-      <li><strong>1</strong> Shield &nbsp;·&nbsp; <strong>2</strong> Health &nbsp;·&nbsp;
+      <li>During the game, click a HUD icon or use number keys to activate powerups</li>
+      <li><strong>Keys:</strong> <strong>1</strong> Shield &nbsp;·&nbsp; <strong>2</strong> Health &nbsp;·&nbsp;
           <strong>3</strong> Damage &nbsp;·&nbsp; <strong>4</strong> Speed &nbsp;·&nbsp;
           <strong>5</strong> Freeze &nbsp;·&nbsp; <strong>6</strong> Invincibility</li>
     </ul>
@@ -391,6 +396,11 @@
     <div style="position:relative;width:100%;height:100%;">
 
       <div class="ui-overlay">
+        <div class="control-hints" id="controlHints" style="position:absolute;bottom:20px;left:20px;text-align:left;font-family:'Rajdhani',sans-serif;font-size:13px;color:rgba(200,220,255,0.9);line-height:1.6;background:rgba(10,15,30,0.85);padding:12px 16px;border-radius:8px;border:1.5px solid rgba(150,170,210,0.5);width:auto;max-width:320px;z-index:45;pointer-events:none;">
+          <div style="font-weight:700;letter-spacing:2px;margin-bottom:8px;color:#c8dcff;font-size:11px;">CONTROLS</div>
+          <div style="font-size:12px;"><strong>A/D</strong> Move&nbsp;&nbsp;|&nbsp;&nbsp;<strong>W</strong> Jump&nbsp;&nbsp;|&nbsp;&nbsp;<strong>SPC</strong> Attack</div>
+          <div style="font-size:12px;"><strong>SHIFT</strong> Block&nbsp;&nbsp;|&nbsp;&nbsp;<strong>E</strong> Special&nbsp;&nbsp;|&nbsp;&nbsp;<strong>1-6</strong> Powerups</div>
+        </div>
         <div class="player-name left" id="player1NameLabel">PLAYER 1</div>
         <div class="player-name right" id="player2NameLabel">PLAYER 2</div>
         <div class="health-timer-container">

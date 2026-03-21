@@ -73,6 +73,27 @@ function determineWinner({ player, enemy }) {
   const player1Name = localStorage.getItem('player1Name') || 'SAMURAI';
   const player2Name = localStorage.getItem('player2Name') || 'KENJI';
   const roundsNeeded = 2;
+  const roundReward = window.gameState.roundWinCoinReward || 50;
+  const matchReward = window.gameState.matchWinCoinReward || 250;
+
+  const awardWinnerCoins = (winnerKey, amount, reasonLabel) => {
+    if (winnerKey !== 'player') return;
+    if (amount <= 0) return;
+
+    if (typeof window.gameState.addCoins === 'function') {
+      window.gameState.addCoins(amount);
+    } else {
+      window.gameState.coins += amount;
+      localStorage.setItem('fighterCoins', window.gameState.coins.toString());
+      if (typeof window.gameState.updateCoinDisplays === 'function') {
+        window.gameState.updateCoinDisplays();
+      }
+    }
+
+    if (typeof window.showGameMessage === 'function') {
+      window.showGameMessage(`${player1Name} +${amount} coins (${reasonLabel})`, 1450);
+    }
+  };
 
   let roundWinner = 'tie';
 
@@ -80,11 +101,7 @@ function determineWinner({ player, enemy }) {
     if (player.health > enemy.health) {
       roundWinner = 'player';  
       window.gameState.rounds.player++;
-      window.gameState.coins += 50;
-      localStorage.setItem('fighterCoins', window.gameState.coins.toString());
-      if (typeof window.gameState.updateCoinDisplays === 'function') {
-        window.gameState.updateCoinDisplays();
-      }
+      awardWinnerCoins('player', roundReward, 'Round Win');
     } else if (enemy.health > player.health) {
       roundWinner = 'enemy';
       window.gameState.rounds.enemy++;
@@ -105,15 +122,11 @@ function determineWinner({ player, enemy }) {
 
     if (matchOver) {
       if (window.gameState.rounds.player > window.gameState.rounds.enemy) {
-        displayMsg.innerHTML = `${player1Name} wins<br><span style="font-size:0.38em;color:#FFD700;font-family:'Cinzel Decorative','Cinzel',serif;letter-spacing:4px;text-shadow:0 0 20px rgba(255,200,0,0.9);">⚔ Match Champion ⚔</span>`;
-        window.gameState.coins += 250;
-        localStorage.setItem('fighterCoins', window.gameState.coins.toString());
-        if (typeof window.gameState.updateCoinDisplays === 'function') {
-          window.gameState.updateCoinDisplays();
-        }
+        displayMsg.innerHTML = `${player1Name} wins<br><span style="font-size:0.38em;color:#FFD700;font-family:'Cinzel Decorative','Cinzel',serif;letter-spacing:4px;text-shadow:0 0 20px rgba(255,200,0,0.9);">⚔ Match Champion ⚔</span><br><span style="font-size:0.3em;color:#ffe08a;font-family:'Cinzel',serif;letter-spacing:2px;">+${matchReward} Coins</span>`;
+        awardWinnerCoins('player', matchReward, 'Match Champion');
         if (typeof launchConfetti === 'function') launchConfetti();
       } else if (window.gameState.rounds.enemy > window.gameState.rounds.player) {
-        displayMsg.innerHTML = `${player2Name} wins<br><span style="font-size:0.38em;color:#FFD700;font-family:'Cinzel Decorative','Cinzel',serif;letter-spacing:4px;text-shadow:0 0 20px rgba(255,200,0,0.9);">⚔ Match Champion ⚔</span>`;
+        displayMsg.innerHTML = `${player2Name} wins<br><span style="font-size:0.38em;color:#FFD700;font-family:'Cinzel Decorative','Cinzel',serif;letter-spacing:4px;text-shadow:0 0 20px rgba(255,200,0,0.9);">⚔ Match Champion ⚔</span><br><span style="font-size:0.3em;color:#aab4c8;font-family:'Cinzel',serif;letter-spacing:2px;">No coin reward</span>`;
         if (typeof launchConfetti === 'function') launchConfetti();
       } else {
         displayMsg.innerHTML = `Draw<br><span style="font-size:0.5em;color:#aaddff;font-family:'Cinzel Decorative','Cinzel',serif;letter-spacing:4px;">~ Match Tied ~</span>`;
