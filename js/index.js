@@ -30,6 +30,34 @@ function startGame() {
   showNameEntryModal();
 }
 
+function showGameHub() {
+  const startScreen = document.getElementById('startScreen');
+  const howToScreen = document.getElementById('howToPlayScreen');
+  const gameContainer = document.getElementById('gameContainer');
+  const displayText = document.getElementById('displayText');
+  const hubScreen = document.getElementById('gameHubScreen');
+
+  if (startScreen) startScreen.style.display = 'none';
+  if (howToScreen) howToScreen.style.display = 'none';
+  if (gameContainer) gameContainer.style.display = 'none';
+  if (displayText) displayText.style.display = 'none';
+  if (hubScreen) hubScreen.style.display = 'flex';
+
+  closeShop();
+}
+
+function openGameFromHub(gameKey) {
+  const hubScreen = document.getElementById('gameHubScreen');
+  if (hubScreen) hubScreen.style.display = 'none';
+
+  if (gameKey === 'candy') {
+    window.location.href = 'candy.html';
+    return;
+  }
+
+  document.getElementById('startScreen').style.display = 'flex';
+}
+
 function launchGame(player1Name, levelKey = 'arena') {
   localStorage.setItem('selectedLevel', levelKey);
   const p1 = (player1Name || '').trim() || 'Samurai';
@@ -385,6 +413,8 @@ window.closeShop = closeShop;
 window.buyItem = buyItem;
 window.updateShopDisplay = updateShopDisplay;
 window.showShopToast = showShopToast;
+window.showGameHub = showGameHub;
+window.openGameFromHub = openGameFromHub;
 
 let loadingInterval;
 let loadingComplete=false;
@@ -413,7 +443,7 @@ function showInitialLoader(){
     loaderPercent.textContent='0%';
     loaderPercent.style.opacity='1';
   }
-  if (loaderStatus) loaderStatus.textContent = 'Preparing arena assets...';
+  if (loaderStatus) loaderStatus.textContent = 'Preparing game assets...';
 
   setTimeout(()=>{
     loader.style.opacity='1';
@@ -490,7 +520,7 @@ function showInitialLoader(){
 
       if(loaderPercent) loaderPercent.textContent='100%';
       if(loaderFill) loaderFill.style.width=percent+'%';
-      if(loaderStatus) loaderStatus.textContent='Arena ready!';
+      if(loaderStatus) loaderStatus.textContent='Games ready!';
       if(loaderImg){
         loaderImg.style.opacity='0.94';
         loaderImg.style.filter='blur(0px)';
@@ -504,7 +534,7 @@ function showInitialLoader(){
         setTimeout(()=>{
           loader.style.display='none';
 
-          document.getElementById('startScreen').style.display='flex';
+          showGameHub();
         },120);
       },120);
     }
@@ -513,14 +543,16 @@ function showInitialLoader(){
 
 function updateLoaderStatus(statusEl, percent) {
   if (!statusEl) return;
-  if (percent < 22) statusEl.textContent = 'Loading world shell...';
-  else if (percent < 55) statusEl.textContent = 'Streaming textures...';
-  else if (percent < 90) statusEl.textContent = 'Rendering arena preview...';
-  else statusEl.textContent = 'Finalizing battle scene...';
+  if (percent < 22) statusEl.textContent = 'Loading game framework...';
+  else if (percent < 55) statusEl.textContent = 'Streaming game assets...';
+  else if (percent < 90) statusEl.textContent = 'Building game menu...';
+  else statusEl.textContent = 'Finalizing game library...';
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
   document.getElementById('startScreen').style.display='none';
+  const hubScreen = document.getElementById('gameHubScreen');
+  if (hubScreen) hubScreen.style.display = 'none';
   showInitialLoader();
   requestAnimationFrame(()=>{
     initGameSystems();

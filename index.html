@@ -185,13 +185,13 @@
 
 <!-- Initial Loading Screen (fades in) -->
 <div id="initialLoader">
-  <img id="initialLoaderImg" src="images/start.png" alt="Loading" />
+  <img id="initialLoaderImg" src="images/startbg.png" alt="Loading" />
   <div id="loaderOverlay"></div>
   <div id="loaderParticles"></div>
   <div class="loader-content">
     <div class="loader-brand">
-      <p class="loader-kicker">BATTLE ARENA</p>
-      <h2 class="loader-title">SAMURAI FIGHTER</h2>
+      <p class="loader-kicker">FLAVORTOWN ARCADE</p>
+      <h2 class="loader-title">LOADING GAMES</h2>
     </div>
     <div id="loaderPercent">0%</div>
     <div id="loaderFireBar">
@@ -199,6 +199,37 @@
       <div id="loaderFireFlames"></div>
     </div>
     <div id="loaderStatus">Preparing arena assets...</div>
+  </div>
+</div>
+
+<!-- Game Hub Screen -->
+<div id="gameHubScreen" style="display:none;">
+  <div class="gh-inner">
+    <p class="gh-kicker">FLAVORTOWN ARCADE</p>
+    <h1 class="gh-title">CHOOSE YOUR GAME</h1>
+    <p class="gh-subtitle">Click a game icon to continue</p>
+
+    <div class="gh-grid">
+      <button class="gh-card gh-card-samurai" onclick="window.openGameFromHub('samurai')" aria-label="Open Samurai Fighter">
+        <div class="gh-art-wrap">
+          <img src="images/game1.png" alt="Samurai Fighter" class="gh-art" />
+        </div>
+        <div class="gh-meta">
+          <span class="gh-name">SAMURAI FIGHTER</span>
+          <span class="gh-desc">Blade battle arena</span>
+        </div>
+      </button>
+
+      <button class="gh-card gh-card-candy" onclick="window.openGameFromHub('candy')" aria-label="Open Candy Crush">
+        <div class="gh-art-wrap">
+          <img src="images/game2.png" alt="Candy Crush" class="gh-art" />
+        </div>
+        <div class="gh-meta">
+          <span class="gh-name">CANDY CRUSH</span>
+          <span class="gh-desc">Puzzle match adventure</span>
+        </div>
+      </button>
+    </div>
   </div>
 </div>
 
@@ -224,6 +255,7 @@
     <div class="ss-actions">
       <button class="btn ss-start-btn" onclick="window.startGame()">START GAME</button>
       <div class="ss-sec-row">
+        <button class="btn ss-sec-btn" onclick="window.showGameHub()">GAME HUB</button>
         <button class="btn ss-sec-btn" onclick="window.showHowToPlay()">HOW TO PLAY</button>
       </div>
     </div>

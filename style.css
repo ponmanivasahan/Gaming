@@ -69,6 +69,156 @@ body {
   align-items: center;
   gap: 12px;
 }
+
+#gameHubScreen {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background:
+    radial-gradient(ellipse 90% 58% at 50% -5%, rgba(255, 160, 58, 0.28) 0%, transparent 60%),
+    radial-gradient(ellipse 62% 46% at 0% 100%, rgba(36, 116, 255, 0.22) 0%, transparent 62%),
+    radial-gradient(ellipse 62% 46% at 100% 100%, rgba(255, 64, 43, 0.18) 0%, transparent 62%),
+    linear-gradient(160deg, #0b111f 0%, #10172a 45%, #0a0f19 100%);
+  overflow: hidden;
+}
+
+#gameHubScreen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(255, 255, 255, 0.035) 3px,
+    rgba(255, 255, 255, 0.035) 4px
+  );
+  pointer-events: none;
+}
+
+.gh-inner {
+  position: relative;
+  z-index: 1;
+  width: min(1100px, 94vw);
+  padding: clamp(24px, 4vw, 42px);
+}
+
+.gh-kicker {
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(7px, 1vw, 10px);
+  letter-spacing: 3px;
+  color: rgba(228, 238, 255, 0.72);
+  margin-bottom: 16px;
+}
+
+.gh-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(26px, 5vw, 56px);
+  color: #ffffff;
+  letter-spacing: 2px;
+  line-height: 1.2;
+  text-shadow: 0 0 28px rgba(120, 165, 255, 0.45);
+}
+
+.gh-subtitle {
+  margin-top: 10px;
+  margin-bottom: clamp(20px, 3vw, 34px);
+  font-family: Inter, Arial, sans-serif;
+  color: rgba(212, 225, 248, 0.75);
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  font-size: clamp(10px, 1.35vw, 13px);
+}
+
+.gh-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 2.3vw, 24px);
+}
+
+.gh-card {
+  border: 1px solid rgba(177, 204, 245, 0.28);
+  background: linear-gradient(180deg, rgba(16, 26, 45, 0.9) 0%, rgba(8, 13, 22, 0.95) 100%);
+  border-radius: 18px;
+  color: white;
+  cursor: pointer;
+  padding: 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: none;
+  min-height: 240px;
+}
+
+.gh-card:hover {
+  transform: none;
+  border-color: rgba(177, 204, 245, 0.28);
+  box-shadow: none;
+}
+
+.gh-art-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: #0f172b;
+}
+
+.gh-art {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gh-candy-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(42px, 7vw, 72px);
+  background:
+    radial-gradient(circle at 30% 26%, rgba(255, 255, 255, 0.56) 0%, rgba(255, 255, 255, 0) 40%),
+    linear-gradient(140deg, #f46b45 0%, #eea849 35%, #7f53ac 70%, #5f2c82 100%);
+}
+
+.gh-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+
+.gh-name {
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(9px, 1.1vw, 12px);
+  letter-spacing: 1.8px;
+  line-height: 1.4;
+}
+
+.gh-desc {
+  font-family: Inter, Arial, sans-serif;
+  color: rgba(211, 223, 244, 0.8);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: clamp(10px, 1.2vw, 12px);
+}
+
+@media (max-width: 780px) {
+  .gh-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gh-card {
+    min-height: 200px;
+  }
+}
+
 #startScreen {
   position: fixed;
   top: 0; left: 0;
