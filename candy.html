@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <title>Candy Crush</title>
         <link rel="stylesheet" href="candy.css">
-        <link href="https://fonts.googleapis.com/css2?family=Fredoka+Onefamily=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     </head>
 
     <body>
@@ -23,8 +23,83 @@
                     </div>
             </div>
 
-            <div>
-                
+            <div id="game-screen" class="screen hidden">
+                <div class="game-ui">
+                    <div class="top-bar">
+                       <button id="back-btn" class="icon-btn">&#8592;</button>
+                       <div class="stats">
+                         <div class="stat-block">
+                            <span class="stat-label">TARGET</span>
+                            <span class="stat-val" id="target-val">5000</span>
+                         </div>
+                         <div class="stat-block">
+                            <span class="stat-label">SCORE</span>
+                            <span class="stat-val" id="score-val">0</span>
+                         </div>
+                         <div class="stat-block">
+                            <span class="stat-label">MOVES</span>
+                            <span class="stat-val" id="moves-val">30</span>
+                         </div>
+                       </div> 
+                    </div>
+
+                    <div class="progress-wrap">
+                        <div class="progress-bg">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <div class="progress-stars">
+                            <span class="p-star" id="ps1" style="left:31%">⭐</span>
+                            <span class="p-star" id="ps2" style="left:64%">⭐</span>
+                            <span class="p-star" id="ps3" style="left:97%">⭐</span>
+                        </div>
+                    </div>
+
+                    <div class="combo-box hidden" id="combo-box">
+                         <span id="combo-text">SWEET! x2</span>
+                    </div>
+
+                    <div class="board-wrap">
+                        <div id="game-board" class="board"></div>
+                        <div id="score-popups"></div>
+                    </div>
+                </div>
             </div>
+
+            <div id="victory-screen" class="overlay hidden">
+               <canvas id="confetti-canvas"></canvas>
+               <div class="victory-card">
+                  <h2 class="victory-title"> VICTORY!!!</h2>
+                  <div class="victory-stats">
+                       <p>Score: <span id="v-score">0</span></p>
+                       <p>Moves left:<span id="v-moves">0</span></p>
+                       <p>Combo: <span id="v-combo">x1</span></p>
+                  </div>
+                  <div class="victory-stars" id="victory-stars">⭐⭐⭐</div>
+                  <button id="replay-btn" class="btn-play" style="padding: 0.8rem 2rem; font-size: 1.2rem;">PLAY AGAIN</button>
+                  <button id="v-menu-btn" class="btn-htp" style="margin-top: 10px;">MENU</button>
+               </div>
+            </div>
+
+             <div id="gameover-screen" class="overlay hidden">
+        <div class="gameover-card">
+            <h2 class="gameover-title">GAME OVER</h2>
+            <p>Your score: <span id="go-score">0</span></p>
+            <p>Target: <span id="go-target">5000</span></p>
+            <button id="retry-btn" class="btn-play" style="padding: 0.8rem 2rem;">TRY AGAIN</button>
+            <button id="go-menu-btn" class="btn-htp" style="margin-top: 10px;">MENU</button>
+        </div>
+    </div>
+
+     <div id="htp-screen" class="overlay hidden">
+        <div class="htp-card">
+            <h2> HOW TO PLAY </h2>
+            <p> Swap adjacent candies to make a line of 3 or more!</p>
+            <p> Match 4 creates a striped candy (clears row or column)</p>
+            <p> Match 5 creates a color bomb (clears all of one color)</p>
+            <p> Reach the TARGET score before MOVES run out!</p>
+            <button id="htp-close" class="btn-play" style="padding: 0.6rem 2rem; margin-top: 15px;">GOT IT!</button>
+        </div>
+    </div>
+            <script src="script.js"></script>
     </body>
 </html>
