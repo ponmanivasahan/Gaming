@@ -1,4 +1,13 @@
-# Samurai Fighter: Battle Arena
+# FlavorTown Games
+
+This is a small browser games website built with vanilla HTML, CSS, and JavaScript. It currently includes two separate games: a Samurai Fighter battle game and a Candy Crush style match game.
+
+## Games
+
+- Samurai Fighter: Battle Arena
+- Candy Crush
+
+## Samurai Fighter: Battle Arena
 
 Please everyone, this is an interesting game. I have put a lot of effort into this project, and it would make me really happy if you love  this game and support it.
 
@@ -114,6 +123,85 @@ For smoother asset loading during development, you can use a local static server
 ## Feedback
 
 If you play the game, feedback is always welcome. If you enjoyed it, starring the repo would mean a lot.
+
+## Candy Crush
+
+This is the second game on the website. It is a colorful match-style candy game built with HTML, CSS, and JavaScript. I focused on the grid, candy DOM rendering, animations, score progress, and gameplay logic.
+
+## Candy Crush Overview
+
+Candy Crush is a browser match-3 game where players swap adjacent candies to create matches, trigger cascades, and reach the target score before moves run out.
+
+## Candy Crush Features
+
+- 8x8 match-3 board with animated candy rendering
+- Swap-based gameplay with match detection
+- Score progress bar with star milestones
+- Combo feedback and score popups
+- Victory and game over screens
+- How To Play overlay and return-to-menu flow
+- Animated candy fall, match, and selection effects
+
+## Candy Crush Controls
+
+### Player Controls
+
+- Click a candy to select it
+- Click an adjacent candy to swap
+- Use the Play button to start a new round
+- Use the back button to return to the menu
+
+### Menu Controls
+
+- How To Play: opens the instructions panel
+- Play Again / Try Again: restarts the current game
+- Menu: returns to the start screen
+
+## Candy Crush Gameplay Notes
+
+- Match 3 or more candies of the same color to score points.
+- Bigger matches and cascades increase the score faster.
+- The progress bar fills as the score increases toward the target.
+- The game ends when the target score is reached or the moves run out.
+
+## Candy Crush Tech Stack
+
+- HTML5
+- CSS3
+- JavaScript (Vanilla)
+
+## Candy Crush Project Structure
+
+- candy.html: game screens, overlays, and board container
+- candy.css: all Candy Crush visual styling and animations
+- script.js: board setup, swap logic, scoring, and game flow
+- candyimages/: candy sprites and supporting images
+
+## Candy Crush How To Run
+
+1. Open the project folder.
+2. Launch candy.html in a browser.
+3. Click Play to begin the game.
+
+For development, a local server can help with asset loading and browser refreshes.
+
+## Candy Crush What I Learned
+
+- Building a match-3 board with DOM elements
+- Managing swap validation and match detection
+- Creating smooth UI feedback with CSS animations
+- Keeping the gameplay loop simple and readable
+
+## Candy Crush Roadmap
+
+- Add special candy types and powerups
+- Add sound effects and background music
+- Improve combo and cascade visuals
+- Add more game polish and mobile tuning
+
+## Candy Crush Feedback
+
+If you try the game, feedback is welcome. I would like to keep improving both games on the website.
 
 ## Author
 
